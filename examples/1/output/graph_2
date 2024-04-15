@@ -1,0 +1,18 @@
+// Automaton
+digraph {
+	S0 [label=<<table border="0" cellborder="0" cellspacing="0" style="rounded" bgcolor="#D3D3D3">
+                                <tr><td border="0"><font color="black" point-size="12">S0</font></td></tr>
+                            </table>> fillcolor=lightgrey shape=rectangle style=filled]
+	S1 [label=<<table border="0" cellborder="0" cellspacing="0" style="rounded" bgcolor="#ADD8E6">
+                                <tr><td border="0"><font color="black" point-size="12">S1</font></td></tr>
+                                <hr/>
+                                <tr><td border="0"><font color="black" point-size="8">init</font></td></tr>
+                            </table>> fillcolor=lightblue shape=rectangle style=filled]
+	S2 [label=<<table border="0" cellborder="0" cellspacing="0" style="rounded" bgcolor="#ADD8E6">
+                                <tr><td border="0"><font color="black" point-size="12">S2</font></td></tr>
+                                <hr/>
+                                <tr><td border="0"><font color="black" point-size="8">t2, t1, init, a</font></td></tr>
+                            </table>> fillcolor=lightblue shape=rectangle style=filled]
+	S0 -> S1 [label=init fontsize=9]
+	S1 -> S2 [label=a1 fontsize=9]
+}

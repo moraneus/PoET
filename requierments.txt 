@@ -1,3 +1,5 @@
 docopt
 colorama
 ply
+cairosvg
+graphviz
