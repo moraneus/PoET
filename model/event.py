@@ -49,7 +49,7 @@ class Event(BaseEntity):
         self.__m_event_procs_mode[i_proc_index] = i_value
 
     @classmethod
-    def get_timeline(cls):
+    def get_timeline(cls) -> int:
         current_time = cls.__TIMELINE
         cls.increment_time()
         return current_time
@@ -61,7 +61,7 @@ class Event(BaseEntity):
     def __mode(self) -> str:
         return ''.join([self.__m_event_procs_mode[i].value for i in self.__m_active_processes])
 
-    def get_active_processes_in_event(self):
+    def get_active_processes_in_event(self) -> List[int]:
         """
         Returns the indexes of elements in the input list that are not ProcessModes.OPEN.
         """

@@ -121,24 +121,6 @@ class State(BaseEntity):
         cls.increment_counter()
         return current
 
-    def get_now_subformula(self, i_key: str):
-        return self.__m_now.get(i_key)
-
-    def set_now_subformula(self, i_key: str, i_value: bool) -> bool:
-        if i_key in self.__m_now:
-            self.__m_now[i_key] = i_value
-            return True
-        return False
-
-    def get_pre_subformula(self, i_key: str):
-        return self.__m_pre[i_key]
-
-    def set_pre_subformula(self, i_key: str, i_value: bool) -> bool:
-        if i_key in self.__m_pre:
-            self.__m_pre[i_key] = i_value
-            return True
-        return False
-
     def __add_successors(self, i_event: Event, i_state: 'State', i_state_name: str):
         self.__m_successors.update({i_state_name: (i_event, i_state)})
 
@@ -147,10 +129,6 @@ class State(BaseEntity):
         for process in self._m_processes:
             if isinstance(process, Event):
                 state_propositions.update(process.propositions)
-
-            # # TODO: Think if needed
-            # elif process == ProcessModes.IOTA:
-            #     state_propositions.update(['i'])
 
         return state_propositions
 
