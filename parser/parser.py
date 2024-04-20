@@ -1,7 +1,8 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
-from parser.ast import *
+from parser.ast import EH, Proposition, And, Or, Implies, Not, Iff, AS, ES, AP, EP, AH, AY, EY, Paren, Constant, error, \
+    Formula
 
 errors = False
 
@@ -160,7 +161,7 @@ def p_formula_9(p):
 
 def p_formula_10(p):
     """formula : AH formula"""
-    p[0] = EP(p[2])
+    p[0] = AH(p[2])
 
 
 def p_formula_11(p):

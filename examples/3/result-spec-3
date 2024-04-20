@@ -1,0 +1,129 @@
+########## spec 3 ##########
+########## TRACE=50, REDUCE=False ##########
+[1m[RAW_PROPERTY]: EH(e_c -> (AH(c_p3 -> (EP((c_p1 | c_p2) & EY(e_c))))))[0m
+
+[1m[COMPILED_PROPERTY]: EH((e_c -> (AH((c_p3 -> (EP(((c_p1 | c_p2) & EY((e_c))))))))))[0m
+
+[1m[TOTAL_EVENTS]: 50[0m
+
+[1m[TOTAL_STATES]: 600[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-50.json --experiment
+real: 0.27s
+user: 0.19s 
+sys: 0.02s 
+memory: 34448KB 
+cpu: 81%
+########## TRACE=50, REDUCE=True ##########
+[1m[RAW_PROPERTY]: EH(e_c -> (AH(c_p3 -> (EP((c_p1 | c_p2) & EY(e_c))))))[0m
+
+[1m[COMPILED_PROPERTY]: EH((e_c -> (AH((c_p3 -> (EP(((c_p1 | c_p2) & EY((e_c))))))))))[0m
+
+[1m[TOTAL_EVENTS]: 50[0m
+
+[1m[TOTAL_STATES]: 68[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-50.json --reduce --experiment
+real: 0.20s
+user: 0.18s 
+sys: 0.01s 
+memory: 33424KB 
+cpu: 98%
+########## TRACE=100, REDUCE=False ##########
+[1m[RAW_PROPERTY]: EH(e_c -> (AH(c_p3 -> (EP((c_p1 | c_p2) & EY(e_c))))))[0m
+
+[1m[COMPILED_PROPERTY]: EH((e_c -> (AH((c_p3 -> (EP(((c_p1 | c_p2) & EY((e_c))))))))))[0m
+
+[1m[TOTAL_EVENTS]: 100[0m
+
+[1m[TOTAL_STATES]: 1980[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-100.json --experiment
+real: 0.39s
+user: 0.37s 
+sys: 0.01s 
+memory: 37728KB 
+cpu: 98%
+########## TRACE=100, REDUCE=True ##########
+[1m[RAW_PROPERTY]: EH(e_c -> (AH(c_p3 -> (EP((c_p1 | c_p2) & EY(e_c))))))[0m
+
+[1m[COMPILED_PROPERTY]: EH((e_c -> (AH((c_p3 -> (EP(((c_p1 | c_p2) & EY((e_c))))))))))[0m
+
+[1m[TOTAL_EVENTS]: 100[0m
+
+[1m[TOTAL_STATES]: 118[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-100.json --reduce --experiment
+real: 0.32s
+user: 0.29s 
+sys: 0.01s 
+memory: 34464KB 
+cpu: 99%
+########## TRACE=500, REDUCE=False ##########
+[1m[RAW_PROPERTY]: EH(e_c -> (AH(c_p3 -> (EP((c_p1 | c_p2) & EY(e_c))))))[0m
+
+[1m[COMPILED_PROPERTY]: EH((e_c -> (AH((c_p3 -> (EP(((c_p1 | c_p2) & EY((e_c))))))))))[0m
+
+[1m[TOTAL_EVENTS]: 501[0m
+
+[1m[TOTAL_STATES]: 49327[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-500.json --experiment
+real: 24.33s
+user: 24.24s 
+sys: 0.07s 
+memory: 107696KB 
+cpu: 99%
+########## TRACE=500, REDUCE=True ##########
+[1m[RAW_PROPERTY]: EH(e_c -> (AH(c_p3 -> (EP((c_p1 | c_p2) & EY(e_c))))))[0m
+
+[1m[COMPILED_PROPERTY]: EH((e_c -> (AH((c_p3 -> (EP(((c_p1 | c_p2) & EY((e_c))))))))))[0m
+
+[1m[TOTAL_EVENTS]: 501[0m
+
+[1m[TOTAL_STATES]: 567[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-500.json --reduce --experiment
+real: 13.44s
+user: 13.39s 
+sys: 0.04s 
+memory: 36256KB 
+cpu: 99%
+########## TRACE=1000, REDUCE=False ##########
+[1m[RAW_PROPERTY]: EH(e_c -> (AH(c_p3 -> (EP((c_p1 | c_p2) & EY(e_c))))))[0m
+
+[1m[COMPILED_PROPERTY]: EH((e_c -> (AH((c_p3 -> (EP(((c_p1 | c_p2) & EY((e_c))))))))))[0m
+
+[1m[TOTAL_EVENTS]: 1000[0m
+
+[1m[TOTAL_STATES]: 201798[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-1000.json --experiment
+real: 269.63s
+user: 269.02s 
+sys: 0.51s 
+memory: 324352KB 
+cpu: 99%
+########## TRACE=1000, REDUCE=True ##########
+[1m[RAW_PROPERTY]: EH(e_c -> (AH(c_p3 -> (EP((c_p1 | c_p2) & EY(e_c))))))[0m
+
+[1m[COMPILED_PROPERTY]: EH((e_c -> (AH((c_p3 -> (EP(((c_p1 | c_p2) & EY((e_c))))))))))[0m
+
+[1m[TOTAL_EVENTS]: 1000[0m
+
+[1m[TOTAL_STATES]: 1130[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-1000.json --reduce --experiment
+real: 182.03s
+user: 181.62s 
+sys: 0.29s 
+memory: 39040KB 
+cpu: 99%

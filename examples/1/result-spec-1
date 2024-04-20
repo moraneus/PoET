@@ -1,0 +1,129 @@
+########## spec 1 ##########
+########## TRACE=50, REDUCE=False ##########
+[1m[RAW_PROPERTY]: E((EH((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> !t2') & ((t1 <-> !t2) <-> !t1')))) S init)[0m
+
+[1m[COMPILED_PROPERTY]: E((EH(((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> ! t2') & ((t1 <-> ! t2) <-> ! t1'))))) S init)[0m
+
+[1m[TOTAL_EVENTS]: 49[0m
+
+[1m[TOTAL_STATES]: 626[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-50.json --experiment
+real: 0.31s
+user: 0.21s 
+sys: 0.02s 
+memory: 34800KB 
+cpu: 76%
+########## TRACE=50, REDUCE=True ##########
+[1m[RAW_PROPERTY]: E((EH((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> !t2') & ((t1 <-> !t2) <-> !t1')))) S init)[0m
+
+[1m[COMPILED_PROPERTY]: E((EH(((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> ! t2') & ((t1 <-> ! t2) <-> ! t1'))))) S init)[0m
+
+[1m[TOTAL_EVENTS]: 49[0m
+
+[1m[TOTAL_STATES]: 49[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-50.json --reduce --experiment
+real: 0.22s
+user: 0.20s 
+sys: 0.01s 
+memory: 34336KB 
+cpu: 99%
+########## TRACE=100, REDUCE=False ##########
+[1m[RAW_PROPERTY]: E((EH((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> !t2') & ((t1 <-> !t2) <-> !t1')))) S init)[0m
+
+[1m[COMPILED_PROPERTY]: E((EH(((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> ! t2') & ((t1 <-> ! t2) <-> ! t1'))))) S init)[0m
+
+[1m[TOTAL_EVENTS]: 99[0m
+
+[1m[TOTAL_STATES]: 2501[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-100.json --experiment
+real: 0.49s
+user: 0.47s 
+sys: 0.01s 
+memory: 38960KB 
+cpu: 99%
+########## TRACE=100, REDUCE=True ##########
+[1m[RAW_PROPERTY]: E((EH((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> !t2') & ((t1 <-> !t2) <-> !t1')))) S init)[0m
+
+[1m[COMPILED_PROPERTY]: E((EH(((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> ! t2') & ((t1 <-> ! t2) <-> ! t1'))))) S init)[0m
+
+[1m[TOTAL_EVENTS]: 99[0m
+
+[1m[TOTAL_STATES]: 99[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-100.json --reduce --experiment
+real: 0.42s
+user: 0.40s 
+sys: 0.01s 
+memory: 33792KB 
+cpu: 99%
+########## TRACE=500, REDUCE=False ##########
+[1m[RAW_PROPERTY]: E((EH((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> !t2') & ((t1 <-> !t2) <-> !t1')))) S init)[0m
+
+[1m[COMPILED_PROPERTY]: E((EH(((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> ! t2') & ((t1 <-> ! t2) <-> ! t1'))))) S init)[0m
+
+[1m[TOTAL_EVENTS]: 499[0m
+
+[1m[TOTAL_STATES]: 62501[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-500.json --experiment
+real: 27.12s
+user: 26.95s 
+sys: 0.12s 
+memory: 159600KB 
+cpu: 99%
+########## TRACE=500, REDUCE=True ##########
+[1m[RAW_PROPERTY]: E((EH((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> !t2') & ((t1 <-> !t2) <-> !t1')))) S init)[0m
+
+[1m[COMPILED_PROPERTY]: E((EH(((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> ! t2') & ((t1 <-> ! t2) <-> ! t1'))))) S init)[0m
+
+[1m[TOTAL_EVENTS]: 499[0m
+
+[1m[TOTAL_STATES]: 499[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-500.json --reduce --experiment
+real: 16.96s
+user: 16.87s 
+sys: 0.05s 
+memory: 38064KB 
+cpu: 99%
+########## TRACE=1000, REDUCE=False ##########
+[1m[RAW_PROPERTY]: E((EH((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> !t2') & ((t1 <-> !t2) <-> !t1')))) S init)[0m
+
+[1m[COMPILED_PROPERTY]: E((EH(((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> ! t2') & ((t1 <-> ! t2) <-> ! t1'))))) S init)[0m
+
+[1m[TOTAL_EVENTS]: 999[0m
+
+[1m[TOTAL_STATES]: 250001[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-1000.json --experiment
+real: 265.19s
+user: 262.52s 
+sys: 1.21s 
+memory: 461264KB 
+cpu: 99%
+########## TRACE=1000, REDUCE=True ##########
+[1m[RAW_PROPERTY]: E((EH((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> !t2') & ((t1 <-> !t2) <-> !t1')))) S init)[0m
+
+[1m[COMPILED_PROPERTY]: E((EH(((((a <-> a') & (b <-> b')) & ((t1 <-> t1') & (t2 <-> t2'))) | ((t2 <-> ! t2') & ((t1 <-> ! t2) <-> ! t1'))))) S init)[0m
+
+[1m[TOTAL_EVENTS]: 999[0m
+
+[1m[TOTAL_STATES]: 999[0m
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-1000.json --reduce --experiment
+real: 182.94s
+user: 181.56s 
+sys: 0.65s 
+memory: 41024KB 
+cpu: 99%

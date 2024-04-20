@@ -62,8 +62,8 @@ pip install -r requirements.txt
 To operate **PoET**, execute the following command with the required options:
 
 ```bash
-python poet.py --property=<property> --trace=<trace> [--reduce] [--debug]
-python poet.py -p <property> -t <trace> [-r] [-d]
+  poet.py --property=<property> --trace.json.json=<trace.json.json> [--reduce] [--debug] [--visual] [--experiment]
+  poet.py -p <property> -t <trace.json.json> [-r] [-d] [-v] [-e]
 ```
 
 ### Command Line Options
@@ -71,6 +71,8 @@ python poet.py -p <property> -t <trace> [-r] [-d]
 * `-t <trace>`, `--trace=<trace>`: Specifies the filename that contains the trace to be analyzed. This is also a mandatory argument.
 * `-r`, `--reduce`: Enables the reduce mode, which optimizes the graph representation by pruning unnecessary nodes. This is an optional flag.
 * `-d`, `--debug`: Activates debug mode, providing detailed logs that can assist in diagnosing and understanding the tool's operation. This is an optional flag.
+* `-v`, `--visual`: Enable visual output (state graphs files). This is an optional flag.
+* `-e`, `--experiment`: Disable all print due to experiment benchmarks. This is an optional flag.
 * `-h`, `--help`: Displays the help message and exits, useful for quick reference on command usage.
 
 #### Property File (`<property>`)
@@ -151,7 +153,7 @@ states and event occurrences.
 The blue nodes or states are the ones that satisfy the specified property. The edges in 
 the graph represent the transitions between states based on the execution of events.
 
-![graph.gif](examples%2F1%2Foutput%2Fgraph.gif)
+![graph.gif](doc%2Fimages%2Fgraph.gif)
 
 In this example, the graph is visually represented as a directed graph, with nodes 
 representing the states and edges representing the transitions between states. 

@@ -326,7 +326,7 @@ class EH(Formula):
         for predecessor, summary in evaluated_state.pre.items():
 
             # Handle the case for first event
-            if evaluated_state.name == 'S1':
+            if 'S0' in evaluated_state.pre.keys():
                 predecessor_eval = True
             else:
                 predecessor_eval = summary[self.__str__()]
@@ -370,7 +370,7 @@ class AH(Formula):
         for _, summary in evaluated_state.pre.items():
 
             # Handle the case for first event
-            if evaluated_state.name == 'S1':
+            if 'S0' in evaluated_state.pre.keys():
                 predecessor_eval = True
             else:
                 predecessor_eval = summary[self.__str__()]
@@ -438,7 +438,7 @@ class AS(Formula):
         self.formula2 = formula2
 
     def __str__(self):
-        return f'AS({self.formula1} S {self.formula2})'
+        return f'A({self.formula1} S {self.formula2})'
 
     def __repr__(self):
         return f'AS({repr(self.formula1)}, {repr(self.formula2)})'

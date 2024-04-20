@@ -1,13 +1,15 @@
 """
 Usage:
-  poet.py --property=<property> --trace=<trace> [--reduce] [--debug]
-  poet.py -p <property> -t <trace> [-r] [-d]
+  poet.py --property=<property> --trace.json.json=<trace.json.json> [--reduce] [--debug] [--visual] [--experiment]
+  poet.py -p <property> -t <trace.json.json> [-r] [-d] [-v] [-e]
 
 Options:
   -p <property>, --property=<property>  Property filename (mandatory)
-  -t <trace>, --trace=<trace>           Trace filename (mandatory)
+  -t <trace.json.json>, --trace.json.json=<trace.json.json>           Trace filename (mandatory)
   -r, --reduce                          Enable reduce (optional)
   -d, --debug                           Enable debug mode (optional)
+  -v, --visual                          Enable visual output (optional)
+  -e, --experiment                      Disable all print due to experiment benchmarks
   -h, --help                            Show this help message and exit
 """
 from typing import List, Dict, Tuple, Set
@@ -25,8 +27,10 @@ from parser.parser import parse
 from utils.generic_utils import GenericUtils
 
 
-def main(i_property: str, i_trace: str, i_reduce: bool, i_debug: bool):
-    Prints.banner()
+def main(i_property: str, i_trace: str, i_reduce: bool, i_debug: bool, i_visual: bool, i_experiment: bool):
+
+    if not i_experiment:
+        Prints.banner()
 
     # Read property file
     raw_prop = GenericUtils.read_property(i_property)
@@ -34,7 +38,7 @@ def main(i_property: str, i_trace: str, i_reduce: bool, i_debug: bool):
     Prints.raw_property(''.join(raw_prop))
     Prints.compiled_property(prop)
 
-    # Read trace file
+    # Read trace.json.json file
     trace_data = GenericUtils.read_json(i_trace)
     trace = trace_data['events']
     num_of_processes = trace_data['processes']
@@ -47,6 +51,9 @@ def main(i_property: str, i_trace: str, i_reduce: bool, i_debug: bool):
     states = initialize_states(num_of_processes, formulas)
     res = prop.eval(state=states[0])
     states[0].value = res
+
+    if i_experiment:
+        Prints.total_events(len(trace))
 
     for event_data in trace:
         event = initialize_event(event_data, num_of_processes)
@@ -85,12 +92,18 @@ def main(i_property: str, i_trace: str, i_reduce: bool, i_debug: bool):
                     del states[i]
 
         states.extend(new_states)
+        if i_debug and i_visual:
+            create_automaton(states)
+
+    if not i_experiment:
         Prints.display_states(states, i_title="ALL", i_debug=i_debug)
+    else:
+        Prints.total_states(len(states))
+
+    if i_visual:
         create_automaton(states)
-
-    Automaton.make_gif('output')
-
-    # create_automaton(states)
+        if i_debug:
+            Automaton.make_gif('output')
 
 
 def initialize_processes(i_num_of_processes: int) -> Dict[str, Process]:
@@ -149,8 +162,10 @@ if __name__ == '__main__':
     arguments = docopt(__doc__)
 
     property_value = arguments['--property']
-    trace_value = arguments['--trace']
+    trace_value = arguments['--trace.json.json']
     reduce_enabled = arguments['--reduce']
     debug_enabled = arguments['--debug']
+    visual_enabled = arguments['--visual']
+    experiment_mode = arguments['--experiment']
 
-    main(property_value, trace_value, reduce_enabled, debug_enabled)
+    main(property_value, trace_value, reduce_enabled, debug_enabled, visual_enabled, experiment_mode)

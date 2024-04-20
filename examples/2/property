@@ -1,0 +1,3 @@
+EH((s_p1 -> AY(A(!s_p2 S e_p2))) |
+   (s_p2 -> AY(A(!s_p1 S e_p1)))
+)
