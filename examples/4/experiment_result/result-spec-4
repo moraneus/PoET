@@ -1,0 +1,185 @@
+########## spec 4 ##########
+########## TRACE=50, REDUCE=False ##########
+[1m[RAW_PROPERTY]: EH (s_p1 -> AH (s_p1 -> EP (e_p1 & EY sr_p1))) |
+EH (s_p2 -> AH (s_p2 -> EP (e_p2 & EY sr_p2)))[0m
+
+[1m[COMPILED_PROPERTY]: EH((s_p1 -> AH((s_p1 -> EP((e_p1 & EY(sr_p1)))))) | EH((s_p2 -> AH((s_p2 -> EP((e_p2 & EY(sr_p2))))))))[0m
+
+[TOTAL_EVENTS]: 50
+
+[TOTAL_STATES]: 141
+
+[MAX_EVENT]: It takes 0.0004999637603759766 for the event 27
+
+[MIN_EVENT]: It takes 7.295608520507812e-05 for the event 0
+
+[AVG_EVENTS]: It takes 0.00027103424072265624 in average per event
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-50.json --experiment
+real: 0.21s
+user: 0.16s 
+sys: 0.02s 
+memory: 34432KB 
+cpu: 86%
+########## TRACE=50, REDUCE=True ##########
+[1m[RAW_PROPERTY]: EH (s_p1 -> AH (s_p1 -> EP (e_p1 & EY sr_p1))) |
+EH (s_p2 -> AH (s_p2 -> EP (e_p2 & EY sr_p2)))[0m
+
+[1m[COMPILED_PROPERTY]: EH((s_p1 -> AH((s_p1 -> EP((e_p1 & EY(sr_p1)))))) | EH((s_p2 -> AH((s_p2 -> EP((e_p2 & EY(sr_p2))))))))[0m
+
+[TOTAL_EVENTS]: 50
+
+[TOTAL_STATES]: 6
+
+[MAX_EVENT]: It takes 0.00038123130798339844 for the event 21
+
+[MIN_EVENT]: It takes 6.008148193359375e-05 for the event 48
+
+[AVG_EVENTS]: It takes 0.0001815986633300781 in average per event
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-50.json --reduce --experiment
+real: 0.17s
+user: 0.15s 
+sys: 0.01s 
+memory: 33472KB 
+cpu: 98%
+########## TRACE=100, REDUCE=False ##########
+[1m[RAW_PROPERTY]: EH (s_p1 -> AH (s_p1 -> EP (e_p1 & EY sr_p1))) |
+EH (s_p2 -> AH (s_p2 -> EP (e_p2 & EY sr_p2)))[0m
+
+[1m[COMPILED_PROPERTY]: EH((s_p1 -> AH((s_p1 -> EP((e_p1 & EY(sr_p1)))))) | EH((s_p2 -> AH((s_p2 -> EP((e_p2 & EY(sr_p2))))))))[0m
+
+[TOTAL_EVENTS]: 101
+
+[TOTAL_STATES]: 294
+
+[MAX_EVENT]: It takes 0.0009279251098632812 for the event 79
+
+[MIN_EVENT]: It takes 6.723403930664062e-05 for the event 2
+
+[AVG_EVENTS]: It takes 0.0003809362354845104 in average per event
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-100.json --experiment
+real: 0.20s
+user: 0.18s 
+sys: 0.01s 
+memory: 35280KB 
+cpu: 98%
+########## TRACE=100, REDUCE=True ##########
+[1m[RAW_PROPERTY]: EH (s_p1 -> AH (s_p1 -> EP (e_p1 & EY sr_p1))) |
+EH (s_p2 -> AH (s_p2 -> EP (e_p2 & EY sr_p2)))[0m
+
+[1m[COMPILED_PROPERTY]: EH((s_p1 -> AH((s_p1 -> EP((e_p1 & EY(sr_p1)))))) | EH((s_p2 -> AH((s_p2 -> EP((e_p2 & EY(sr_p2))))))))[0m
+
+[TOTAL_EVENTS]: 101
+
+[TOTAL_STATES]: 6
+
+[MAX_EVENT]: It takes 0.0006630420684814453 for the event 87
+
+[MIN_EVENT]: It takes 6.103515625e-05 for the event 24
+
+[AVG_EVENTS]: It takes 0.00019292548151299504 in average per event
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-100.json --reduce --experiment
+real: 0.18s
+user: 0.16s 
+sys: 0.01s 
+memory: 34256KB 
+cpu: 98%
+########## TRACE=500, REDUCE=False ##########
+[1m[RAW_PROPERTY]: EH (s_p1 -> AH (s_p1 -> EP (e_p1 & EY sr_p1))) |
+EH (s_p2 -> AH (s_p2 -> EP (e_p2 & EY sr_p2)))[0m
+
+[1m[COMPILED_PROPERTY]: EH((s_p1 -> AH((s_p1 -> EP((e_p1 & EY(sr_p1)))))) | EH((s_p2 -> AH((s_p2 -> EP((e_p2 & EY(sr_p2))))))))[0m
+
+[TOTAL_EVENTS]: 500
+
+[TOTAL_STATES]: 1485
+
+[MAX_EVENT]: It takes 0.0030679702758789062 for the event 392
+
+[MIN_EVENT]: It takes 6.67572021484375e-05 for the event 2
+
+[AVG_EVENTS]: It takes 0.0011643309593200684 in average per event
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-500.json --experiment
+real: 0.74s
+user: 0.72s 
+sys: 0.01s 
+memory: 37456KB 
+cpu: 99%
+########## TRACE=500, REDUCE=True ##########
+[1m[RAW_PROPERTY]: EH (s_p1 -> AH (s_p1 -> EP (e_p1 & EY sr_p1))) |
+EH (s_p2 -> AH (s_p2 -> EP (e_p2 & EY sr_p2)))[0m
+
+[1m[COMPILED_PROPERTY]: EH((s_p1 -> AH((s_p1 -> EP((e_p1 & EY(sr_p1)))))) | EH((s_p2 -> AH((s_p2 -> EP((e_p2 & EY(sr_p2))))))))[0m
+
+[TOTAL_EVENTS]: 500
+
+[TOTAL_STATES]: 9
+
+[MAX_EVENT]: It takes 0.001344919204711914 for the event 393
+
+[MIN_EVENT]: It takes 5.888938903808594e-05 for the event 231
+
+[AVG_EVENTS]: It takes 0.00020531749725341797 in average per event
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-500.json --reduce --experiment
+real: 0.26s
+user: 0.24s 
+sys: 0.01s 
+memory: 33568KB 
+cpu: 99%
+########## TRACE=1000, REDUCE=False ##########
+[1m[RAW_PROPERTY]: EH (s_p1 -> AH (s_p1 -> EP (e_p1 & EY sr_p1))) |
+EH (s_p2 -> AH (s_p2 -> EP (e_p2 & EY sr_p2)))[0m
+
+[1m[COMPILED_PROPERTY]: EH((s_p1 -> AH((s_p1 -> EP((e_p1 & EY(sr_p1)))))) | EH((s_p2 -> AH((s_p2 -> EP((e_p2 & EY(sr_p2))))))))[0m
+
+[TOTAL_EVENTS]: 1000
+
+[TOTAL_STATES]: 2997
+
+[MAX_EVENT]: It takes 0.0050506591796875 for the event 975
+
+[MIN_EVENT]: It takes 7.104873657226562e-05 for the event 0
+
+[AVG_EVENTS]: It takes 0.0021498193740844725 in average per event
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-1000.json --experiment
+real: 2.31s
+user: 2.29s 
+sys: 0.02s 
+memory: 40288KB 
+cpu: 99%
+########## TRACE=1000, REDUCE=True ##########
+[1m[RAW_PROPERTY]: EH (s_p1 -> AH (s_p1 -> EP (e_p1 & EY sr_p1))) |
+EH (s_p2 -> AH (s_p2 -> EP (e_p2 & EY sr_p2)))[0m
+
+[1m[COMPILED_PROPERTY]: EH((s_p1 -> AH((s_p1 -> EP((e_p1 & EY(sr_p1)))))) | EH((s_p2 -> AH((s_p2 -> EP((e_p2 & EY(sr_p2))))))))[0m
+
+[TOTAL_EVENTS]: 1000
+
+[TOTAL_STATES]: 12
+
+[MAX_EVENT]: It takes 0.0013649463653564453 for the event 790
+
+[MIN_EVENT]: It takes 5.91278076171875e-05 for the event 462
+
+[AVG_EVENTS]: It takes 0.00021979570388793945 in average per event
+
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-1000.json --reduce --experiment
+real: 0.38s
+user: 0.36s 
+sys: 0.01s 
+memory: 35120KB 
+cpu: 98%

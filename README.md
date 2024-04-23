@@ -62,8 +62,8 @@ pip install -r requirements.txt
 To operate **PoET**, execute the following command with the required options:
 
 ```bash
-  poet.py --property=<property> --trace.json.json=<trace.json.json> [--reduce] [--debug] [--visual] [--experiment]
-  poet.py -p <property> -t <trace.json.json> [-r] [-d] [-v] [-e]
+  poet.py --property=<property> --trace.json.json.json=<trace.json.json.json> [--reduce] [--debug] [--visual] [--experiment]
+  poet.py -p <property> -t <trace.json.json.json> [-r] [-d] [-v] [-e]
 ```
 
 ### Command Line Options

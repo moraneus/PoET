@@ -55,11 +55,17 @@ class Prints:
 
     @staticmethod
     def total_states(i_num_of_states):
-        print(f'{Style.BRIGHT}[TOTAL_STATES]: {i_num_of_states}{Style.RESET_ALL}\n')
+        print(f'[TOTAL_STATES]: {i_num_of_states}\n')
+
+    @staticmethod
+    def events_time(i_max_event, i_min_event, i_avg_events):
+        print(f"""[MAX_EVENT]: It takes {i_max_event[0]} for the event {i_max_event[1]}\n""")
+        print(f"""[MIN_EVENT]: It takes {i_min_event[0]} for the event {i_min_event[1]}\n""")
+        print(f"""[AVG_EVENTS]: It takes {i_avg_events} in average per event\n""")
 
     @staticmethod
     def total_events(i_num_of_events):
-        print(f'{Style.BRIGHT}[TOTAL_EVENTS]: {i_num_of_events}{Style.RESET_ALL}\n')
+        print(f'[TOTAL_EVENTS]: {i_num_of_events}\n')
 
     @staticmethod
     def display_states(i_states: List[State], i_title: str = '', i_debug: bool = False):
@@ -76,3 +82,8 @@ class Prints:
         if i_debug:
             i_state = repr(i_state)
             print(f'{Fore.LIGHTYELLOW_EX}[DELETE STATE]: {i_state}{Style.RESET_ALL}')
+
+    @staticmethod
+    def process_error(i_error):
+        print(f'{Fore.RED}[PROCESS ERROR]: {i_error} '
+              f'(check if the number of processes in the trace file is correct){Style.RESET_ALL}\n')

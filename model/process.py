@@ -1,5 +1,8 @@
+import sys
+import traceback
 from typing import List, Tuple
 
+from graphics.prints import Prints
 from model.event import Event
 from model.process_modes import ProcessModes
 
@@ -28,7 +31,11 @@ class Process:
 
         for process in i_processes:
             index = int(process[1:]) - 1
-            result[index] = process
+            try:
+                result[index] = process
+            except IndexError as e:
+                Prints.process_error(e)
+                sys.exit(1)
 
         return result
 

@@ -60,7 +60,7 @@ def save_to_json(file_path, data):
 
 
 if __name__ == "__main__":
-    trace_len = input("Write the trace.json.json len: ")
+    trace_len = input("Write the trace.json.json.json len: ")
     event_data = generate_events(int(trace_len))
-    save_to_json(f"trace.json.json-{trace_len}.json", event_data)
+    save_to_json(f"trace.json.json.json-{trace_len}.json", event_data)
     print("JSON file has been created successfully.")

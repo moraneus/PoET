@@ -1,11 +1,11 @@
 """
 Usage:
-  poet.py --property=<property> --trace.json.json=<trace.json.json> [--reduce] [--debug] [--visual] [--experiment]
-  poet.py -p <property> -t <trace.json.json> [-r] [-d] [-v] [-e]
+  poet.py --property=<property> --trace.json.json.json=<trace.json.json.json> [--reduce] [--debug] [--visual] [--experiment]
+  poet.py -p <property> -t <trace.json.json.json> [-r] [-d] [-v] [-e]
 
 Options:
   -p <property>, --property=<property>  Property filename (mandatory)
-  -t <trace.json.json>, --trace.json.json=<trace.json.json>           Trace filename (mandatory)
+  -t <trace.json.json.json>, --trace.json.json.json=<trace.json.json.json>           Trace filename (mandatory)
   -r, --reduce                          Enable reduce (optional)
   -d, --debug                           Enable debug mode (optional)
   -v, --visual                          Enable visual output (optional)
@@ -14,6 +14,7 @@ Options:
 """
 from typing import List, Dict, Tuple, Set
 from docopt import docopt
+import time
 
 from graphics.automaton import Automaton
 from graphics.prints import Prints
@@ -28,7 +29,6 @@ from utils.generic_utils import GenericUtils
 
 
 def main(i_property: str, i_trace: str, i_reduce: bool, i_debug: bool, i_visual: bool, i_experiment: bool):
-
     if not i_experiment:
         Prints.banner()
 
@@ -38,7 +38,7 @@ def main(i_property: str, i_trace: str, i_reduce: bool, i_debug: bool, i_visual:
     Prints.raw_property(''.join(raw_prop))
     Prints.compiled_property(prop)
 
-    # Read trace.json.json file
+    # Read trace.json.json.json file
     trace_data = GenericUtils.read_json(i_trace)
     trace = trace_data['events']
     num_of_processes = trace_data['processes']
@@ -52,10 +52,17 @@ def main(i_property: str, i_trace: str, i_reduce: bool, i_debug: bool, i_visual:
     res = prop.eval(state=states[0])
     states[0].value = res
 
+    # Used for measure the maximum time it takes process the events
     if i_experiment:
         Prints.total_events(len(trace))
+        events_processing_time = []
 
     for event_data in trace:
+
+        # Used for measure the maximum time it takes process the events
+        if i_experiment:
+            start_time = time.time()
+
         event = initialize_event(event_data, num_of_processes)
         Prints.event(event)
 
@@ -95,10 +102,19 @@ def main(i_property: str, i_trace: str, i_reduce: bool, i_debug: bool, i_visual:
         if i_debug and i_visual:
             create_automaton(states)
 
+        # Measures the maximum time taken to process events
+        if i_experiment:
+            current_time = time.time() - start_time
+            events_processing_time.append(current_time)
+
     if not i_experiment:
         Prints.display_states(states, i_title="ALL", i_debug=i_debug)
     else:
         Prints.total_states(len(states))
+        max_time, max_index = max((t, idx) for idx, t in enumerate(events_processing_time))
+        min_time, min_index = min((t, idx) for idx, t in enumerate(events_processing_time))
+        avg_time = sum(events_processing_time) / len(events_processing_time)
+        Prints.events_time((max_time, max_index), (min_time, min_index), avg_time)
 
     if i_visual:
         create_automaton(states)
@@ -162,7 +178,7 @@ if __name__ == '__main__':
     arguments = docopt(__doc__)
 
     property_value = arguments['--property']
-    trace_value = arguments['--trace.json.json']
+    trace_value = arguments['--trace.json.json.json']
     reduce_enabled = arguments['--reduce']
     debug_enabled = arguments['--debug']
     visual_enabled = arguments['--visual']
