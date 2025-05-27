@@ -1,3 +1,6 @@
+# model/state.py
+
+
 from typing import Dict, Set, Union, Tuple, Optional
 from typing import List
 
@@ -46,7 +49,7 @@ class State(BaseEntity):
 
     def __repr__(self):
         newline = '\n\t'
-        processes =  f"PROCESSES: ({', '.join([str(p) for p in self._m_processes])})"
+        processes = f"PROCESSES: ({', '.join([str(p) for p in self._m_processes])})"
         transitions = "TRANSITIONS: (" + \
                       ', '.join([f"{self.name} -> {k} ({v[0]})" for k, v in self.__m_successors.items()]) + ")"
         propositions = f"PROPOSITIONS: ({', '.join([p for p in self.__m_propositions])})"
@@ -273,8 +276,6 @@ class State(BaseEntity):
     def __initialize_formula_dict(self) -> Dict[str, bool]:
         """
         Initialize a dictionary from a list of formulas where each is set to False.
-
-        :param formulas: A list of formulas as strings.
         :return: A dictionary with each formula as a key and False as its value.
         """
         return {formula: False for formula in State.__SUBFORMULAS}

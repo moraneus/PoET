@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'rightAEleftSleftIFFleftIMPLIESleftORleftANDrightNOTA AH AND AP AY E EH EP EY FALSE IFF IMPLIES LPAREN NOT OR PROPOSITION RPAREN S TRUEformula : PROPOSITIONformula : formula AND formulaformula : formula OR formulaformula : formula IMPLIES formulaformula : formula IFF formulaformula : NOT formulaformula : A LPAREN formula S formula RPARENformula : E LPAREN formula S formula RPARENformula : AP formulaformula : EP formulaformula : AH formulaformula : EH formulaformula : AY formulaformula : EY formulaformula : LPAREN formula RPARENformula : TRUEformula : FALSE'
+_lr_signature = 'rightAEleftSleftIFFleftIMPLIESleftORleftANDrightNOTEHAHEYAYEPAPA AH AND AP AY E EH EP EY FALSE IFF IMPLIES LPAREN NOT OR PROPOSITION RPAREN S TRUEformula : PROPOSITIONformula : formula AND formulaformula : formula OR formulaformula : formula IMPLIES formulaformula : formula IFF formulaformula : NOT formulaformula : A LPAREN formula S formula RPARENformula : E LPAREN formula S formula RPARENformula : AP formulaformula : EP formulaformula : AH formulaformula : EH formulaformula : AY formulaformula : EY formulaformula : LPAREN formula RPARENformula : TRUEformula : FALSE'
     
-_lr_action_items = {'PROPOSITION':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,]),'NOT':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,]),'A':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,]),'E':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,]),'AP':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,]),'EP':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,]),'AH':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,]),'EH':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,]),'AY':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,]),'EY':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,]),'LPAREN':([0,3,4,5,6,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[5,5,20,5,22,5,5,5,5,5,5,5,5,5,5,5,5,5,5,]),'TRUE':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,]),'FALSE':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,]),'$end':([1,2,13,14,19,23,24,25,26,27,28,29,30,31,32,34,40,41,],[0,-1,-16,-17,-6,-9,-10,-11,-12,-13,-14,-2,-3,-4,-5,-15,-7,-8,]),'AND':([1,2,13,14,19,21,23,24,25,26,27,28,29,30,31,32,33,34,35,38,39,40,41,],[15,-1,-16,-17,-6,15,15,15,15,15,15,15,-2,15,15,15,15,-15,15,15,15,-7,-8,]),'OR':([1,2,13,14,19,21,23,24,25,26,27,28,29,30,31,32,33,34,35,38,39,40,41,],[16,-1,-16,-17,-6,16,16,16,16,16,16,16,-2,-3,16,16,16,-15,16,16,16,-7,-8,]),'IMPLIES':([1,2,13,14,19,21,23,24,25,26,27,28,29,30,31,32,33,34,35,38,39,40,41,],[17,-1,-16,-17,-6,17,17,17,17,17,17,17,-2,-3,-4,17,17,-15,17,17,17,-7,-8,]),'IFF':([1,2,13,14,19,21,23,24,25,26,27,28,29,30,31,32,33,34,35,38,39,40,41,],[18,-1,-16,-17,-6,18,18,18,18,18,18,18,-2,-3,-4,-5,18,-15,18,18,18,-7,-8,]),'RPAREN':([2,13,14,19,21,23,24,25,26,27,28,29,30,31,32,34,38,39,40,41,],[-1,-16,-17,-6,34,-9,-10,-11,-12,-13,-14,-2,-3,-4,-5,-15,40,41,-7,-8,]),'S':([2,13,14,19,23,24,25,26,27,28,29,30,31,32,33,34,35,40,41,],[-1,-16,-17,-6,-9,-10,-11,-12,-13,-14,-2,-3,-4,-5,36,-15,37,-7,-8,]),}
+_lr_action_items = {'PROPOSITION':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,]),'NOT':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,]),'A':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,]),'E':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,]),'AP':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,]),'EP':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,]),'AH':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,]),'EH':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,]),'AY':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,]),'EY':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,]),'LPAREN':([0,3,4,5,6,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[5,5,20,5,22,5,5,5,5,5,5,5,5,5,5,5,5,5,5,]),'TRUE':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,]),'FALSE':([0,3,5,7,8,9,10,11,12,15,16,17,18,20,22,36,37,],[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,]),'$end':([1,2,13,14,19,23,24,25,26,27,28,29,30,31,32,34,40,41,],[0,-1,-16,-17,-6,-9,-10,-11,-12,-13,-14,-2,-3,-4,-5,-15,-7,-8,]),'AND':([1,2,13,14,19,21,23,24,25,26,27,28,29,30,31,32,33,34,35,38,39,40,41,],[15,-1,-16,-17,-6,15,-9,-10,-11,-12,-13,-14,-2,15,15,15,15,-15,15,15,15,-7,-8,]),'OR':([1,2,13,14,19,21,23,24,25,26,27,28,29,30,31,32,33,34,35,38,39,40,41,],[16,-1,-16,-17,-6,16,-9,-10,-11,-12,-13,-14,-2,-3,16,16,16,-15,16,16,16,-7,-8,]),'IMPLIES':([1,2,13,14,19,21,23,24,25,26,27,28,29,30,31,32,33,34,35,38,39,40,41,],[17,-1,-16,-17,-6,17,-9,-10,-11,-12,-13,-14,-2,-3,-4,17,17,-15,17,17,17,-7,-8,]),'IFF':([1,2,13,14,19,21,23,24,25,26,27,28,29,30,31,32,33,34,35,38,39,40,41,],[18,-1,-16,-17,-6,18,-9,-10,-11,-12,-13,-14,-2,-3,-4,-5,18,-15,18,18,18,-7,-8,]),'RPAREN':([2,13,14,19,21,23,24,25,26,27,28,29,30,31,32,34,38,39,40,41,],[-1,-16,-17,-6,34,-9,-10,-11,-12,-13,-14,-2,-3,-4,-5,-15,40,41,-7,-8,]),'S':([2,13,14,19,23,24,25,26,27,28,29,30,31,32,33,34,35,40,41,],[-1,-16,-17,-6,-9,-10,-11,-12,-13,-14,-2,-3,-4,-5,36,-15,37,-7,-8,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -27,21 +27,21 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> formula","S'",1,None,None,None),
-  ('formula -> PROPOSITION','formula',1,'p_formula_0','parser.py',112),
-  ('formula -> formula AND formula','formula',3,'p_formula_1','parser.py',117),
-  ('formula -> formula OR formula','formula',3,'p_formula_2','parser.py',122),
-  ('formula -> formula IMPLIES formula','formula',3,'p_formula_3','parser.py',127),
-  ('formula -> formula IFF formula','formula',3,'p_formula_4','parser.py',132),
-  ('formula -> NOT formula','formula',2,'p_formula_5','parser.py',137),
-  ('formula -> A LPAREN formula S formula RPAREN','formula',6,'p_formula_6','parser.py',142),
-  ('formula -> E LPAREN formula S formula RPAREN','formula',6,'p_formula_7','parser.py',147),
-  ('formula -> AP formula','formula',2,'p_formula_8','parser.py',152),
-  ('formula -> EP formula','formula',2,'p_formula_9','parser.py',157),
-  ('formula -> AH formula','formula',2,'p_formula_10','parser.py',162),
-  ('formula -> EH formula','formula',2,'p_formula_11','parser.py',167),
-  ('formula -> AY formula','formula',2,'p_formula_12','parser.py',172),
-  ('formula -> EY formula','formula',2,'p_formula_14','parser.py',177),
-  ('formula -> LPAREN formula RPAREN','formula',3,'p_formula_15','parser.py',182),
-  ('formula -> TRUE','formula',1,'p_formula_true','parser.py',187),
-  ('formula -> FALSE','formula',1,'p_formula_false','parser.py',192),
+  ('formula -> PROPOSITION','formula',1,'p_formula_0','parser.py',113),
+  ('formula -> formula AND formula','formula',3,'p_formula_1','parser.py',118),
+  ('formula -> formula OR formula','formula',3,'p_formula_2','parser.py',123),
+  ('formula -> formula IMPLIES formula','formula',3,'p_formula_3','parser.py',128),
+  ('formula -> formula IFF formula','formula',3,'p_formula_4','parser.py',133),
+  ('formula -> NOT formula','formula',2,'p_formula_5','parser.py',138),
+  ('formula -> A LPAREN formula S formula RPAREN','formula',6,'p_formula_6','parser.py',143),
+  ('formula -> E LPAREN formula S formula RPAREN','formula',6,'p_formula_7','parser.py',148),
+  ('formula -> AP formula','formula',2,'p_formula_8','parser.py',153),
+  ('formula -> EP formula','formula',2,'p_formula_9','parser.py',158),
+  ('formula -> AH formula','formula',2,'p_formula_10','parser.py',163),
+  ('formula -> EH formula','formula',2,'p_formula_11','parser.py',168),
+  ('formula -> AY formula','formula',2,'p_formula_12','parser.py',173),
+  ('formula -> EY formula','formula',2,'p_formula_14','parser.py',178),
+  ('formula -> LPAREN formula RPAREN','formula',3,'p_formula_15','parser.py',183),
+  ('formula -> TRUE','formula',1,'p_formula_true','parser.py',188),
+  ('formula -> FALSE','formula',1,'p_formula_false','parser.py',193),
 ]

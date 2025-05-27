@@ -1,3 +1,5 @@
+# model/event.py
+
 from typing import List
 
 from model.base_entity import BaseEntity
@@ -7,12 +9,18 @@ from model.process_modes import ProcessModes
 class Event(BaseEntity):
     __TIMELINE = 0
 
-    def __init__(self, i_name: str, i_processes: List[ProcessModes | str], i_propositions: List[str] = None):
+    def __init__(self,
+                 i_name: str,
+                 i_processes: List[ProcessModes | str],
+                 i_propositions: List[str] = None,
+                 vector_clock: List[int] = None):
         super().__init__(i_name, i_processes)
         self.__m_active_processes = self.get_active_processes_in_event()
         self.__m_time = self.get_timeline()
         self.__m_propositions = i_propositions
         self.__m_event_procs_mode = [ProcessModes.IOTA] * len(i_processes)
+        self.vector_clock = vector_clock if vector_clock is not None else [0] * len(i_processes)
+
 
     def __str__(self):
         return f"""{self.name}"""

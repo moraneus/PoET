@@ -1,3 +1,5 @@
+# graphics/prints.py
+
 from typing import List
 
 from colorama import Fore, Style
@@ -69,13 +71,13 @@ class Prints:
 
     @staticmethod
     def display_states(i_states: List[State], i_title: str = '', i_debug: bool = False):
-        Prints.seperator(f'START {i_title} STATES')
+        Prints.seperator(f'START {i_title}')
         for state in i_states:
             color = Fore.RED if not state.value else Fore.LIGHTBLUE_EX
             if i_debug:
                 state = repr(state)
             print(f'{color}{state}{Style.RESET_ALL}')
-        Prints.seperator(f'END {i_title} STATES')
+        Prints.seperator(f'END {i_title}')
 
     @staticmethod
     def del_state(i_state, i_debug: bool = False):
