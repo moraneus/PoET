@@ -1,3 +1,5 @@
+# model/base_entity.py
+
 from typing import List
 
 from model.process_modes import ProcessModes

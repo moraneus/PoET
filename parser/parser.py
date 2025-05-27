@@ -1,3 +1,6 @@
+# parser/parser.py
+
+
 import ply.lex as lex
 import ply.yacc as yacc
 
@@ -185,12 +188,12 @@ def p_formula_15(p):
 
 
 def p_formula_true(p):
-    "formula : TRUE"
+    """formula : TRUE"""
     p[0] = Constant(True)
 
 
 def p_formula_false(p):
-    "formula : FALSE"
+    """formula : FALSE"""
     p[0] = Constant(False)
 
 
@@ -201,7 +204,7 @@ precedence = (
     ('left', 'IMPLIES'),
     ('left', 'OR'),
     ('left', 'AND'),
-    ('right', 'NOT')
+    ('right', 'NOT', 'EH', 'AH', 'EY', 'AY', 'EP', 'AP')
 )
 
 

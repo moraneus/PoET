@@ -1,0 +1,1 @@
+EP(status_ok & load_lt_100 & !critical_alarm)

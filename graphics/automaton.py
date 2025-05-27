@@ -1,3 +1,5 @@
+# graphics/automaton.py
+
 import os.path
 from typing import List, Tuple
 

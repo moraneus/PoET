@@ -1,3 +1,5 @@
+# parser/ast.py
+
 import sys
 
 from model.state import State
@@ -391,10 +393,9 @@ class AH(Formula):
 
 
 class ES(Formula):
-    def __init__(self, formula1, formula2, i_always_since=False):
+    def __init__(self, formula1, formula2):
         self.formula1 = formula1
         self.formula2 = formula2
-        self.always_since_formula = i_always_since
 
     def __str__(self):
         return f'E({self.formula1} S {self.formula2})'
@@ -426,10 +427,7 @@ class ES(Formula):
         # Update the current evaluated result
         evaluated_state.now[self.__str__()] = current_eval
 
-        if self.always_since_formula:
-            return p, q
-        else:
-            return current_eval
+        return current_eval
 
 
 class AS(Formula):
@@ -444,6 +442,7 @@ class AS(Formula):
         return f'AS({repr(self.formula1)}, {repr(self.formula2)})'
 
     def eval(self, **kwargs):
+
         # Check if 'state' is in kwargs to avoid KeyError
         if "state" not in kwargs:
             raise ValueError("Missing required 'state' parameter.")
@@ -454,12 +453,11 @@ class AS(Formula):
         # Init temporal result to None
         temporal_res = None
 
-        es = ES(self.formula1, self.formula2, i_always_since=True)
-        p, q = es.eval(**kwargs)
+        p = self.formula1.eval(**kwargs)
+        q = self.formula2.eval(**kwargs)
 
         for predecessor, summary in evaluated_state.pre.items():
-            es_key = f"E{self.__str__()[1:]}"
-            predecessor_eval = summary.get(es_key, False)
+            predecessor_eval = summary.get(self.__str__(), False)
 
             temporal_res = predecessor_eval if temporal_res is None else (temporal_res and predecessor_eval)
 
