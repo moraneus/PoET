@@ -228,6 +228,8 @@ When using `--visual`, PoET generates SVG state diagrams showing:
 - **Edges**: State transitions labeled with triggering events
 - **Node labels**: State names and active propositions
 
+![PoET Graph GIF](https://raw.githubusercontent.com/moraneus/PoET/main/doc/images/graph.gif)
+
 ### Console Output Modes
 
 **Default Mode**:
