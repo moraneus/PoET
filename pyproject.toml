@@ -1,0 +1,183 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "poet"
+version = "1.0.0"
+description = "Partial Order Execution Tracer - A PCTL Runtime Verification Tool for Distributed Systems"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Moran Omer", email = "moraneus@gmail.com"},
+    {name = "Doron Peled"},
+    {name = "Ely Porat"},
+    {name = "Vijay K. Garg"}
+]
+maintainers = [
+    {name = "Moran Omer", email = "moraneus@gmail.com"}
+]
+keywords = [
+    "runtime-verification",
+    "temporal-logic",
+    "distributed-systems",
+    "pctl",
+    "partial-order",
+    "vector-clocks",
+    "fidge-mattern",
+    "past-computation-tree-logic"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Testing",
+    "Topic :: System :: Distributed Computing",
+    "Topic :: System :: Monitoring",
+    "Topic :: Software Development :: Quality Assurance"
+]
+requires-python = ">=3.10"
+dependencies = [
+    "docopt>=0.6.2",
+    "colorama>=0.4.6",
+    "ply>=3.11",
+    "cairosvg>=2.7.0",
+    "graphviz>=0.20.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.10.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.0.0",
+    "flake8>=5.0.0",
+    "pre-commit>=2.20.0",
+    "ipython>=8.0.0",
+    "jupyter>=1.0.0"
+]
+docs = [
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.2.0"
+]
+visualization = [
+    "pillow>=9.0.0"
+]
+
+[project.scripts]
+poet = "poet:main"
+
+[project.urls]
+Homepage = "https://github.com/moraneus/PoET"
+Documentation = "https://github.com/moraneus/PoET#readme"
+Repository = "https://github.com/moraneus/PoET"
+"Bug Tracker" = "https://github.com/moraneus/PoET/issues"
+
+[tool.setuptools.packages.find]
+include = ["core*", "parser*", "utils*", "model*", "graphics*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.pctl", "*.json"]
+
+[tool.black]
+line-length = 88
+target-version = ['py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    # directories
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+  | output
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["core", "parser", "utils", "model", "graphics"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = [
+    "ply.*",
+    "docopt.*",
+    "colorama.*",
+    "cairosvg.*",
+    "graphviz.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--verbose",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "pctl: marks tests for PCTL parsing and evaluation",
+    "vector_clock: marks tests for vector clock functionality",
+    "state_management: marks tests for state management",
+]
+
+[tool.coverage.run]
+source = ["core", "parser", "utils", "model", "graphics"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+show_missing = true
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".venv",
+    "output"
+]

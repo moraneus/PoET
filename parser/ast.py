@@ -1,38 +1,43 @@
 # parser/ast.py
+# This file is part of PoET - A PCTL Runtime Verification Tool
+#
+# Abstract Syntax Tree classes for PCTL formula representation and evaluation,
+# implementing past-time temporal logic operators over distributed system states.
 
 import sys
+from typing import List
 
 from model.state import State
 
 
-def error(msg: str):
-    print(f'*** Error - {msg}')
+def error(msg: str) -> None:
+    """Print error message and exit."""
+    print(f"*** Error - {msg}")
     sys.exit(1)
 
 
 class Formula:
+    """Base class for all PCTL formula nodes."""
 
-    def eval(self, **kwargs):
+    def eval(self, **kwargs) -> bool:
+        """Evaluate formula in given context."""
         pass
 
     @staticmethod
-    def collect_formulas(formula):
+    def collect_formulas(formula: "Formula") -> List[str]:
+        """Collect all subformulas from given formula tree."""
         formulas = []
 
-        def recurse(f):
-            # If the formula is a proposition or constant bool, add it directly to the list
+        def recurse(f: "Formula") -> None:
             if isinstance(f, (Proposition, Constant)):
                 formulas.append(str(f))
-            # Handle binary operations
             elif isinstance(f, (And, Or, Implies, ES, AS, Iff)):
                 formulas.append(str(f))
                 recurse(f.formula1)
                 recurse(f.formula2)
-            # Handle unary operations
             elif isinstance(f, (Not, EY, AY, EP, AP, AH, EH)):
                 formulas.append(str(f))
                 recurse(f.formula)
-            # Handle parenthesized formulas
             elif isinstance(f, Paren):
                 formulas.append(str(f))
                 recurse(f.formula)
@@ -44,16 +49,19 @@ class Formula:
 
 
 class Proposition(Formula):
-    def __init__(self, proposition):
+    """Atomic proposition formula."""
+
+    def __init__(self, proposition: str):
         self.proposition = proposition
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.proposition
 
-    def __repr__(self):
-        return f'{repr(self.proposition)}'
+    def __repr__(self) -> str:
+        return f"{repr(self.proposition)}"
 
-    def eval(self, **kwargs):
+    def eval(self, **kwargs) -> bool:
+        """Evaluate proposition in current state."""
         evaluated_state: State = kwargs["state"]
         res = self.proposition in evaluated_state
         evaluated_state.now[self.__str__()] = res
@@ -61,17 +69,20 @@ class Proposition(Formula):
 
 
 class And(Formula):
-    def __init__(self, formula1, formula2):
+    """Logical AND formula."""
+
+    def __init__(self, formula1: Formula, formula2: Formula):
         self.formula1 = formula1
         self.formula2 = formula2
 
-    def __str__(self):
-        return f'{self.formula1} & {self.formula2}'
+    def __str__(self) -> str:
+        return f"{self.formula1} & {self.formula2}"
 
-    def __repr__(self):
-        return f'&({repr(self.formula1)}, {repr(self.formula2)})'
+    def __repr__(self) -> str:
+        return f"&({repr(self.formula1)}, {repr(self.formula2)})"
 
-    def eval(self, **kwargs):
+    def eval(self, **kwargs) -> bool:
+        """Evaluate logical AND of two formulas."""
         evaluated_state: State = kwargs["state"]
         p = self.formula1.eval(**kwargs)
         q = self.formula2.eval(**kwargs)
@@ -81,17 +92,20 @@ class And(Formula):
 
 
 class Or(Formula):
-    def __init__(self, formula1, formula2):
+    """Logical OR formula."""
+
+    def __init__(self, formula1: Formula, formula2: Formula):
         self.formula1 = formula1
         self.formula2 = formula2
 
-    def __str__(self):
-        return f'{self.formula1} | {self.formula2}'
+    def __str__(self) -> str:
+        return f"{self.formula1} | {self.formula2}"
 
-    def __repr__(self):
-        return f'|({repr(self.formula1)}, {repr(self.formula2)})'
+    def __repr__(self) -> str:
+        return f"|({repr(self.formula1)}, {repr(self.formula2)})"
 
-    def eval(self, **kwargs):
+    def eval(self, **kwargs) -> bool:
+        """Evaluate logical OR of two formulas."""
         evaluated_state: State = kwargs["state"]
         p = self.formula1.eval(**kwargs)
         q = self.formula2.eval(**kwargs)
@@ -101,17 +115,20 @@ class Or(Formula):
 
 
 class Implies(Formula):
-    def __init__(self, formula1, formula2):
+    """Logical implication formula."""
+
+    def __init__(self, formula1: Formula, formula2: Formula):
         self.formula1 = formula1
         self.formula2 = formula2
 
-    def __str__(self):
-        return f'{self.formula1} -> {self.formula2}'
+    def __str__(self) -> str:
+        return f"{self.formula1} -> {self.formula2}"
 
-    def __repr__(self):
-        return f'->({repr(self.formula1)}, {repr(self.formula2)})'
+    def __repr__(self) -> str:
+        return f"->({repr(self.formula1)}, {repr(self.formula2)})"
 
-    def eval(self, **kwargs):
+    def eval(self, **kwargs) -> bool:
+        """Evaluate logical implication."""
         evaluated_state: State = kwargs["state"]
         p = self.formula1.eval(**kwargs)
         q = self.formula2.eval(**kwargs)
@@ -121,17 +138,20 @@ class Implies(Formula):
 
 
 class Iff(Formula):
-    def __init__(self, formula1, formula2):
+    """Logical biconditional formula."""
+
+    def __init__(self, formula1: Formula, formula2: Formula):
         self.formula1 = formula1
         self.formula2 = formula2
 
-    def __str__(self):
-        return f'{self.formula1} <-> {self.formula2}'
+    def __str__(self) -> str:
+        return f"{self.formula1} <-> {self.formula2}"
 
-    def __repr__(self):
-        return f'<->({repr(self.formula1)}, {repr(self.formula2)})'
+    def __repr__(self) -> str:
+        return f"<->({repr(self.formula1)}, {repr(self.formula2)})"
 
-    def eval(self, **kwargs):
+    def eval(self, **kwargs) -> bool:
+        """Evaluate logical biconditional."""
         evaluated_state: State = kwargs["state"]
         p = self.formula1.eval(**kwargs)
         q = self.formula2.eval(**kwargs)
@@ -141,345 +161,289 @@ class Iff(Formula):
 
 
 class Not(Formula):
-    def __init__(self, formula):
+    """Logical negation formula."""
+
+    def __init__(self, formula: Formula):
         self.formula = formula
 
-    def __str__(self):
-        return f'! {self.formula}'
+    def __str__(self) -> str:
+        return f"! {self.formula}"
 
-    def __repr__(self):
-        return f'!({repr(self.formula)})'
+    def __repr__(self) -> str:
+        return f"!({repr(self.formula)})"
 
-    def eval(self, **kwargs):
+    def eval(self, **kwargs) -> bool:
+        """Evaluate logical negation."""
         evaluated_state: State = kwargs["state"]
-
         p = self.formula.eval(**kwargs)
-
         res = not p
         evaluated_state.now[self.__str__()] = res
         return res
 
 
 class EY(Formula):
-    def __init__(self, formula):
+    """Existential yesterday temporal operator."""
+
+    def __init__(self, formula: Formula):
         self.formula = formula
 
-    def __str__(self):
-        return f'EY({self.formula})'
+    def __str__(self) -> str:
+        return f"EY({self.formula})"
 
-    def __repr__(self):
-        return f'EY({repr(self.formula)})'
+    def __repr__(self) -> str:
+        return f"EY({repr(self.formula)})"
 
-    def eval(self, **kwargs):
-        # Check if 'state' is in kwargs to avoid KeyError
+    def eval(self, **kwargs) -> bool:
+        """Evaluate existential yesterday: true if formula held in some predecessor."""
         if "state" not in kwargs:
             raise ValueError("Missing required 'state' parameter.")
 
-        # Fetch the current evaluated state from kwargs
         evaluated_state: State = kwargs["state"]
-
-        # Init temporal result to None
-        temporal_res = None
-
-        for _, summary in evaluated_state.pre.items():
-            predecessor_eval = summary[self.formula.__str__()]
-            temporal_res = predecessor_eval if temporal_res is None else (temporal_res or predecessor_eval)
-
-        # Continue evaluate the sub-formula inside EY
         self.formula.eval(**kwargs)
 
-        # Update the current evaluated result
-        evaluated_state.now[self.__str__()] = temporal_res
+        temporal_res = False
+        sub_formula_str = str(self.formula)
 
+        for _, summary in evaluated_state.pre.items():
+            if summary.get(sub_formula_str, False):
+                temporal_res = True
+                break
+
+        evaluated_state.now[self.__str__()] = temporal_res
         return temporal_res
 
 
 class AY(Formula):
-    def __init__(self, formula):
+    """Universal yesterday temporal operator."""
+
+    def __init__(self, formula: Formula):
         self.formula = formula
 
-    def __str__(self):
-        return f'AY({self.formula})'
+    def __str__(self) -> str:
+        return f"AY({self.formula})"
 
-    def __repr__(self):
-        return f'AY({repr(self.formula)})'
+    def __repr__(self) -> str:
+        return f"AY({repr(self.formula)})"
 
-    def eval(self, **kwargs):
-        # Check if 'state' is in kwargs to avoid KeyError
+    def eval(self, **kwargs) -> bool:
+        """Evaluate universal yesterday: true if formula held in all predecessors."""
         if "state" not in kwargs:
             raise ValueError("Missing required 'state' parameter.")
 
-        # Fetch the current evaluated state from kwargs
         evaluated_state: State = kwargs["state"]
-
-        # Init temporal result to None
-        temporal_res = None
-
-        for _, summary in evaluated_state.pre.items():
-            predecessor_eval = summary[self.formula.__str__()]
-            temporal_res = predecessor_eval if temporal_res is None else (temporal_res and predecessor_eval)
-
-        # Continue evaluate the sub-formula inside EY
         self.formula.eval(**kwargs)
 
-        # Update the current evaluated result
-        evaluated_state.now[self.__str__()] = temporal_res
+        temporal_res = True
+        sub_formula_str = str(self.formula)
 
+        if evaluated_state.pre:
+            for _, summary in evaluated_state.pre.items():
+                if not summary.get(sub_formula_str, False):
+                    temporal_res = False
+                    break
+
+        evaluated_state.now[self.__str__()] = temporal_res
         return temporal_res
 
 
 class EP(Formula):
-    def __init__(self, formula):
+    """Existential previously temporal operator."""
+
+    def __init__(self, formula: Formula):
         self.formula = formula
 
-    def __str__(self):
-        return f'EP({self.formula})'
+    def __str__(self) -> str:
+        return f"EP({self.formula})"
 
-    def __repr__(self):
-        return f'EP({repr(self.formula)})'
+    def __repr__(self) -> str:
+        return f"EP({repr(self.formula)})"
 
-    def eval(self, **kwargs):
-        # Check if 'state' is in kwargs to avoid KeyError
-        if "state" not in kwargs:
-            raise ValueError("Missing required 'state' parameter.")
-
-        # Fetch the current evaluated state from kwargs
+    def eval(self, **kwargs) -> bool:
+        """Evaluate existential previously: E(true S φ)."""
         evaluated_state: State = kwargs["state"]
 
-        # Init temporal result to None
-        temporal_res = None
+        holds_now = self.formula.eval(**kwargs)
+        held_in_past = False
+        ep_formula_str = str(self)
 
         for _, summary in evaluated_state.pre.items():
-            predecessor_eval = summary[self.__str__()]
-            temporal_res = predecessor_eval if temporal_res is None else (temporal_res or predecessor_eval)
+            if summary.get(ep_formula_str, False):
+                held_in_past = True
+                break
 
-        # Evaluate the sub-formula inside EP
-        formula_eval = self.formula.eval(**kwargs)
-
-        # EP('a') considered True if EP('a') was true is at least
-        # one predecessor, or we have 'a' in our current state
-        current_eval = formula_eval or temporal_res
-
-        # Update the current evaluated result
-        evaluated_state.now[self.__str__()] = current_eval
-
-        return current_eval
+        res = holds_now or held_in_past
+        evaluated_state.now[ep_formula_str] = res
+        return res
 
 
 class AP(Formula):
-    def __init__(self, formula):
+    """Universal previously temporal operator."""
+
+    def __init__(self, formula: Formula):
         self.formula = formula
 
-    def __str__(self):
-        return f'AP({self.formula})'
+    def __str__(self) -> str:
+        return f"AP({self.formula})"
 
-    def __repr__(self):
-        return f'AP({repr(self.formula)})'
+    def __repr__(self) -> str:
+        return f"AP({repr(self.formula)})"
 
-    def eval(self, **kwargs):
-        # Check if 'state' is in kwargs to avoid KeyError
-        if "state" not in kwargs:
-            raise ValueError("Missing required 'state' parameter.")
-
-        # Fetch the current evaluated state from kwargs
+    def eval(self, **kwargs) -> bool:
+        """Evaluate universal previously: A(true S φ)."""
         evaluated_state: State = kwargs["state"]
 
-        # Init temporal result to None
-        temporal_res = None
+        holds_now = self.formula.eval(**kwargs)
+        held_in_all_past = True
+        ap_formula_str = str(self)
 
-        for _, summary in evaluated_state.pre.items():
-            predecessor_eval = summary[self.__str__()]
-            temporal_res = predecessor_eval if temporal_res is None else (temporal_res and predecessor_eval)
+        if evaluated_state.pre:
+            for _, summary in evaluated_state.pre.items():
+                if not summary.get(ap_formula_str, False):
+                    held_in_all_past = False
+                    break
 
-        # Evaluate the sub-formula inside AP
-        formula_eval = self.formula.eval(**kwargs)
-
-        # AP('a') considered True if AP('a') was true is all last
-        # predecessors, or we have 'a' in our current state
-        current_eval = formula_eval or temporal_res
-
-        # Update the current evaluated result
-        evaluated_state.now[self.__str__()] = current_eval
-
-        return current_eval
+        res = holds_now or held_in_all_past
+        evaluated_state.now[ap_formula_str] = res
+        return res
 
 
 class EH(Formula):
-    def __init__(self, formula):
+    """Existential historically temporal operator."""
+
+    def __init__(self, formula: Formula):
         self.formula = formula
 
-    def __str__(self):
-        return f'EH({self.formula})'
+    def __str__(self) -> str:
+        return f"EH({self.formula})"
 
-    def __repr__(self):
-        return f'EH({repr(self.formula)})'
+    def __repr__(self) -> str:
+        return f"EH({repr(self.formula)})"
 
-    def eval(self, **kwargs):
-        # Check if 'state' is in kwargs to avoid KeyError
-        if "state" not in kwargs:
-            raise ValueError("Missing required 'state' parameter.")
+    def eval(self, **kwargs) -> bool:
+        """Evaluate existential historically: ¬AP(¬φ)."""
+        negated_formula = Not(self.formula)
+        ap_of_negated = AP(negated_formula)
 
-        # Fetch the current evaluated state from kwargs
+        res = not ap_of_negated.eval(**kwargs)
+        self.formula.eval(**kwargs)
+
         evaluated_state: State = kwargs["state"]
-
-        # Init temporal result to None
-        temporal_res = None
-
-        for predecessor, summary in evaluated_state.pre.items():
-
-            # Handle the case for first event
-            if 'S0' in evaluated_state.pre.keys():
-                predecessor_eval = True
-            else:
-                predecessor_eval = summary[self.__str__()]
-
-            temporal_res = predecessor_eval if temporal_res is None else (temporal_res or predecessor_eval)
-
-        # Evaluate the sub-formula inside EH
-        formula_eval = self.formula.eval(**kwargs)
-
-        # EH('a') considered True if EH('a') was true is at least
-        # one predecessor, and we have 'a' in our current state
-        current_eval = formula_eval and temporal_res
-
-        # Update the current evaluated result
-        evaluated_state.now[self.__str__()] = current_eval
-
-        return current_eval
+        evaluated_state.now[self.__str__()] = res
+        return res
 
 
 class AH(Formula):
-    def __init__(self, formula):
+    """Universal historically temporal operator."""
+
+    def __init__(self, formula: Formula):
         self.formula = formula
 
-    def __str__(self):
-        return f'AH({self.formula})'
+    def __str__(self) -> str:
+        return f"AH({self.formula})"
 
-    def __repr__(self):
-        return f'AH({repr(self.formula)})'
+    def __repr__(self) -> str:
+        return f"AH({repr(self.formula)})"
 
-    def eval(self, **kwargs):
-        # Check if 'state' is in kwargs to avoid KeyError
-        if "state" not in kwargs:
-            raise ValueError("Missing required 'state' parameter.")
+    def eval(self, **kwargs) -> bool:
+        """Evaluate universal historically: ¬EP(¬φ)."""
+        negated_formula = Not(self.formula)
+        ep_of_negated = EP(negated_formula)
 
-        # Fetch the current evaluated state from kwargs
+        res = not ep_of_negated.eval(**kwargs)
+        self.formula.eval(**kwargs)
+
         evaluated_state: State = kwargs["state"]
-
-        # Init temporal result to None
-        temporal_res = None
-
-        for _, summary in evaluated_state.pre.items():
-
-            # Handle the case for first event
-            if 'S0' in evaluated_state.pre.keys():
-                predecessor_eval = True
-            else:
-                predecessor_eval = summary[self.__str__()]
-
-            temporal_res = predecessor_eval if temporal_res is None else (temporal_res and predecessor_eval)
-
-        # Evaluate the sub-formula inside AH
-        formula_eval = self.formula.eval(**kwargs)
-
-        # AH('a') considered True if AH('a') was true is all last
-        # predecessors, and we have 'a' in our current state
-        current_eval = formula_eval and temporal_res
-
-        # Update the current evaluated result
-        evaluated_state.now[self.__str__()] = current_eval
-
-        return current_eval
+        evaluated_state.now[self.__str__()] = res
+        return res
 
 
 class ES(Formula):
-    def __init__(self, formula1, formula2):
+    """Existential since temporal operator."""
+
+    def __init__(self, formula1: Formula, formula2: Formula):
         self.formula1 = formula1
         self.formula2 = formula2
 
-    def __str__(self):
-        return f'E({self.formula1} S {self.formula2})'
+    def __str__(self) -> str:
+        return f"E({self.formula1} S {self.formula2})"
 
-    def __repr__(self):
-        return f'ES({repr(self.formula1)}, {repr(self.formula2)})'
+    def __repr__(self) -> str:
+        return f"ES({repr(self.formula1)}, {repr(self.formula2)})"
 
-    def eval(self, **kwargs):
-        # Check if 'state' is in kwargs to avoid KeyError
+    def eval(self, **kwargs) -> bool:
+        """Evaluate existential since operator."""
         if "state" not in kwargs:
             raise ValueError("Missing required 'state' parameter.")
 
-        # Fetch the current evaluated state from kwargs
         evaluated_state: State = kwargs["state"]
-
-        # Init temporal result to None
-        temporal_res = None
 
         p = self.formula1.eval(**kwargs)
         q = self.formula2.eval(**kwargs)
 
-        for predecessor, summary in evaluated_state.pre.items():
-            predecessor_eval = summary.get(self.__str__(), False)
+        temporal_res = False
+        es_formula_str = str(self)
 
-            temporal_res = predecessor_eval if temporal_res is None else (temporal_res or predecessor_eval)
+        for _, summary in evaluated_state.pre.items():
+            if summary.get(es_formula_str, False):
+                temporal_res = True
+                break
 
         current_eval = q or (p and temporal_res)
-
-        # Update the current evaluated result
-        evaluated_state.now[self.__str__()] = current_eval
-
+        evaluated_state.now[es_formula_str] = current_eval
         return current_eval
 
 
 class AS(Formula):
-    def __init__(self, formula1, formula2):
+    """Universal since temporal operator."""
+
+    def __init__(self, formula1: Formula, formula2: Formula):
         self.formula1 = formula1
         self.formula2 = formula2
 
-    def __str__(self):
-        return f'A({self.formula1} S {self.formula2})'
+    def __str__(self) -> str:
+        return f"A({self.formula1} S {self.formula2})"
 
-    def __repr__(self):
-        return f'AS({repr(self.formula1)}, {repr(self.formula2)})'
+    def __repr__(self) -> str:
+        return f"AS({repr(self.formula1)}, {repr(self.formula2)})"
 
-    def eval(self, **kwargs):
-
-        # Check if 'state' is in kwargs to avoid KeyError
+    def eval(self, **kwargs) -> bool:
+        """Evaluate universal since operator."""
         if "state" not in kwargs:
             raise ValueError("Missing required 'state' parameter.")
 
-        # Fetch the current evaluated state from kwargs
         evaluated_state: State = kwargs["state"]
-
-        # Init temporal result to None
-        temporal_res = None
 
         p = self.formula1.eval(**kwargs)
         q = self.formula2.eval(**kwargs)
 
-        for predecessor, summary in evaluated_state.pre.items():
-            predecessor_eval = summary.get(self.__str__(), False)
+        temporal_res = True
+        as_formula_str = str(self)
 
-            temporal_res = predecessor_eval if temporal_res is None else (temporal_res and predecessor_eval)
+        if evaluated_state.pre:
+            for _, summary in evaluated_state.pre.items():
+                if not summary.get(as_formula_str, False):
+                    temporal_res = False
+                    break
 
         current_eval = q or (p and temporal_res)
-
-        # Update the current evaluated result
-        evaluated_state.now[self.__str__()] = current_eval
-
+        evaluated_state.now[as_formula_str] = current_eval
         return current_eval
 
 
 class Paren(Formula):
-    def __init__(self, formula):
+    """Parenthesized formula for grouping."""
+
+    def __init__(self, formula: Formula):
         self.formula = formula
 
-    def __str__(self):
-        return f'({self.formula})'
+    def __str__(self) -> str:
+        return f"({self.formula})"
 
-    def __repr__(self):
-        return f'({repr(self.formula)})'
+    def __repr__(self) -> str:
+        return f"({repr(self.formula)})"
 
-    def eval(self, **kwargs):
+    def eval(self, **kwargs) -> bool:
+        """Evaluate parenthesized formula."""
         evaluated_state: State = kwargs["state"]
         res = self.formula.eval(**kwargs)
         evaluated_state.now[self.__str__()] = res
@@ -487,16 +451,19 @@ class Paren(Formula):
 
 
 class Constant(Formula):
-    def __init__(self, constant):
+    """Boolean constant formula."""
+
+    def __init__(self, constant: bool):
         self.constant = constant
 
-    def __str__(self):
-        return f'{self.constant}'
+    def __str__(self) -> str:
+        return f"{self.constant}"
 
-    def __repr__(self):
-        return f'{repr(self.constant)}'
+    def __repr__(self) -> str:
+        return f"{repr(self.constant)}"
 
-    def eval(self, **kwargs):
+    def eval(self, **kwargs) -> bool:
+        """Evaluate boolean constant."""
         evaluated_state: State = kwargs["state"]
         res = self.constant
         evaluated_state.now[self.__str__()] = res
