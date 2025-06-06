@@ -1,4 +1,10 @@
-# Development dependencies for Kairos
+# Development dependencies for PoET
+
+docopt
+colorama
+ply
+cairosvg
+graphviz
 
 # Testing framework
 pytest>=7.0.0

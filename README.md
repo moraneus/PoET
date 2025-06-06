@@ -10,7 +10,7 @@
         Partial Order Execution Tracer
 ```
 
-[![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://python.org)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Research%20Tool-orange.svg)]()
 
@@ -43,7 +43,7 @@ python --version  # Should output Python 3.12.x or higher
 
 1. **Clone the repository** (or download the source code):
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/moraneus/PoET.git
    cd PoET
    ```
 
@@ -314,8 +314,8 @@ Event Stream → Vector Clock Manager → State Manager → PCTL Evaluator → V
   "process_names": ["Client", "Primary", "Replica"], 
   "events": [
     ["begin_txn", ["P1"], ["txn_active"], [1, 0, 0]],
-    ["write_primary", ["P2"], ["data_written"], [1, 1, 0]],
-    ["replicate", ["P2", "P3"], ["replicated"], [1, 2, 1]],
+    ["write_primary", ["P2"], ["data_written"], [0, 1, 0]],
+    ["replicate", ["P2", "P3"], ["replicated"], [0, 2, 1]],
     ["commit", ["P1", "P2"], ["committed"], [2, 3, 1]]
   ]
 }
@@ -333,8 +333,8 @@ Property: `AH(committed -> EP(replicated))`
     ["request_cs", ["P1"], ["requesting"], [1, 0]],
     ["grant_cs", ["P1"], ["in_critical"], [2, 0]], 
     ["release_cs", ["P1"], ["released"], [3, 0]],
-    ["request_cs", ["P2"], ["requesting"], [3, 1]],
-    ["grant_cs", ["P2"], ["in_critical"], [3, 2]]
+    ["request_cs", ["P2"], ["requesting"], [0, 1]],
+    ["grant_cs", ["P2"], ["in_critical"], [0, 2]]
   ]
 }
 ```
@@ -422,18 +422,6 @@ PoET implements algorithms from research on runtime verification of distributed 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Citation
-
-If you use PoET in academic work, please cite:
-```bibtex
-@misc{poet2024,
-  title={PoET: Partial Order Execution Tracer for Runtime Verification},
-  author={[Authors]},
-  year={2024},
-  url={https://github.com/[repository]}
-}
-```
 
 ---
 
