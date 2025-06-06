@@ -66,10 +66,17 @@ jobs:
 
     - name: Test CLI functionality
       run: |
-        echo "EP(ready)" > test_property.pbtl
-        echo "eid,processes,vc,props" > test_trace.csv
-        echo "ev1,P1,P1:1,ready" >> test_trace.csv
-        python run_monitor.py -p test_property.pbtl -t test_trace.csv --validate-only
+        echo "EP(ready_p1 & ready_p2)" > test_property.pctl
+        cat > test_trace.csv << 'EOF'
+        {
+          "processes": 2,
+          "events": [
+            ["log_event", ["P1"], ["ready_p1"], [1, 0]],
+            ["response", ["P2"], ["ready_p2"], [0, 1]]
+          ]
+        }
+        EOF
+        python poet.py -p test_property.pctl -t test_trace.csv --reduce --output-level=max_state  
 
     - name: Report test results
       if: always()

@@ -101,8 +101,9 @@ class VectorClockGenerator:
             # Step 1: Merge vector clocks (take maximum for each position)
             merged_clock = [0] * self.num_processes
             for i in range(self.num_processes):
-                merged_clock[i] = max(self.process_clocks[proc][i]
-                                      for proc in involved_processes)
+                merged_clock[i] = max(
+                    self.process_clocks[proc][i] for proc in involved_processes
+                )
 
             # Step 2: Increment clocks for all involved processes
             for proc_idx in involved_processes:
@@ -125,7 +126,9 @@ class VectorClockGenerator:
             Updated trace data with vector clocks added
         """
         events = trace_data["events"]
-        print(f"Processing trace with {self.num_processes} processes and {len(events)} events...")
+        print(
+            f"Processing trace with {self.num_processes} processes and {len(events)} events..."
+        )
 
         updated_events = []
 
@@ -162,7 +165,9 @@ class VectorClockGenerator:
             if i < 10:
                 proc_info = ", ".join([f"P{idx + 1}" for idx in involved_indices])
                 event_type = "local" if len(involved_indices) == 1 else "communication"
-                print(f"Event {i:2d}: {event_name:15s} [{proc_info:8s}] {event_type:13s} -> VC: {vector_clock}")
+                print(
+                    f"Event {i:2d}: {event_name:15s} [{proc_info:8s}] {event_type:13s} -> VC: {vector_clock}"
+                )
 
         # Create updated trace data
         updated_trace = trace_data.copy()
@@ -210,7 +215,9 @@ def validate_trace_format(trace_data: Dict[str, Any]) -> bool:
     # Validate event structure
     for i, event in enumerate(trace_data["events"]):
         if not isinstance(event, list) or len(event) < 3:
-            print(f"Error: Event {i} must be a list with at least 3 elements: [name, processes, propositions]")
+            print(
+                f"Error: Event {i} must be a list with at least 3 elements: [name, processes, propositions]"
+            )
             return False
 
         if not isinstance(event[1], list):
@@ -266,7 +273,9 @@ def analyze_trace_causality(trace_data: Dict[str, Any]) -> None:
 def main():
     """Main function to process command line arguments and fix trace file."""
     if len(sys.argv) < 2:
-        print("Usage: python vector_clock_fixer.py <input_trace.json> [output_trace.json]")
+        print(
+            "Usage: python vector_clock_fixer.py <input_trace.json> [output_trace.json]"
+        )
         print("If output file is not specified, input file will be overwritten.")
         sys.exit(1)
 
@@ -275,7 +284,7 @@ def main():
 
     # Read input trace
     try:
-        with open(input_file, 'r') as f:
+        with open(input_file, "r") as f:
             trace_data = json.load(f)
         print(f"Loaded trace from: {input_file}")
     except FileNotFoundError:
@@ -303,12 +312,13 @@ def main():
     except Exception as e:
         print(f"Error adding vector clocks: {e}")
         import traceback
+
         traceback.print_exc()
         sys.exit(1)
 
     # Write output trace
     try:
-        with open(output_file, 'w') as f:
+        with open(output_file, "w") as f:
             json.dump(updated_trace, f, indent=2)
         print(f"\nFixed trace written to: {output_file}")
     except Exception as e:
@@ -320,7 +330,9 @@ def main():
     fixed_events = len(updated_trace["events"])
 
     if original_events != fixed_events:
-        print(f"Warning: {original_events - fixed_events} events were skipped due to errors")
+        print(
+            f"Warning: {original_events - fixed_events} events were skipped due to errors"
+        )
 
     print("Vector clock fixing completed successfully!")
 
