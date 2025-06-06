@@ -1,0 +1,536 @@
+########## experiment 4 ##########
+########## TRACE=1K, REDUCE=True ##########
+INFO: PoET Runtime Verification Starting
+INFO: Property File: property
+INFO: Trace File: traces/trace-1K.json
+INFO: Output Level: max_state
+INFO: Reduce Mode: True
+INFO: Visual Output: False
+INFO: Trace Validation: False
+INFO: Property: EP( (EP(s1) & !EP(j1)) | (EP(j2) & ms & !EP(s2)) )
+INFO: Parsed formula: EP(((EP((s1)) & ! EP((j1))) | (EP((j2)) & ms & ! EP((s2)))))
+Initial:[P1:0,P2:0,P3:0,P4:0,P5:0,P6:0] → state=S0, props=[], verdict=FALSE ❌
+s1_int1:[P1:1,P2:0,P3:0,P4:0,P5:0,P6:0] → state=S1, props=['dS1'], verdict=FALSE ❌
+j1_int2:[P1:1,P2:1,P3:0,P4:0,P5:0,P6:0] → state=S3, props=['dJ1', 'dS1'], verdict=FALSE ❌
+j2_int3:[P1:1,P2:1,P3:1,P4:0,P5:0,P6:0] → state=S7, props=['dJ1', 'dJ2', 'dS1'], verdict=FALSE ❌
+ms_int4:[P1:1,P2:1,P3:1,P4:1,P5:0,P6:0] → state=S15, props=['dJ1', 'dJ2', 'dMS', 'dS1'], verdict=FALSE ❌
+s2_int5:[P1:1,P2:1,P3:1,P4:1,P5:1,P6:0] → state=S31, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2'], verdict=FALSE ❌
+j2_po_comm6:[P1:1,P2:1,P3:2,P4:1,P5:1,P6:1] → state=S47, props=['cJ2PO', 'dJ1', 'dMS', 'dS1', 'dS2'], verdict=FALSE ❌
+s2_po_comm7:[P1:1,P2:1,P3:2,P4:1,P5:2,P6:2] → state=S55, props=['cJ2PO', 'cS2PO', 'dJ1', 'dMS', 'dS1'], verdict=FALSE ❌
+po_eval8:[P1:1,P2:1,P3:2,P4:1,P5:2,P6:3] → state=S72, props=['cJ2PO', 'cS2PO', 'dJ1', 'dMS', 'dS1', 'poe'], verdict=FALSE ❌
+s1_int9:[P1:2,P2:1,P3:2,P4:1,P5:2,P6:3] → state=S113, props=['cJ2PO', 'cS2PO', 'dJ1', 'dMS', 'dS1', 'poe'], verdict=FALSE ❌
+j1_int10:[P1:2,P2:2,P3:2,P4:1,P5:2,P6:3] → state=S175, props=['cJ2PO', 'cS2PO', 'dJ1', 'dMS', 'dS1', 'poe'], verdict=FALSE ❌
+j2_int11:[P1:2,P2:2,P3:3,P4:1,P5:2,P6:3] → state=S263, props=['cS2PO', 'dJ1', 'dJ2', 'dMS', 'dS1', 'poe'], verdict=FALSE ❌
+ms_int12:[P1:2,P2:2,P3:3,P4:2,P5:2,P6:3] → state=S392, props=['cS2PO', 'dJ1', 'dJ2', 'dS1', 'poe'], verdict=FALSE ❌
+s2_int13:[P1:2,P2:2,P3:3,P4:2,P5:3,P6:3] → state=S516, props=['dJ1', 'dJ2', 'dS1', 'poe', 's2'], verdict=FALSE ❌
+ms_po_comm14:[P1:2,P2:2,P3:3,P4:3,P5:3,P6:4] → state=S566, props=['cMSPO', 'dJ1', 'dJ2', 'dS1', 's2'], verdict=FALSE ❌
+po_eval15:[P1:2,P2:2,P3:3,P4:3,P5:3,P6:5] → state=S609, props=['cMSPO', 'dJ1', 'dJ2', 'dS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=FALSE ❌
+s1_int16:[P1:3,P2:2,P3:3,P4:3,P5:3,P6:5] → state=S789, props=['cMSPO', 'dJ1', 'dJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int17:[P1:3,P2:3,P3:3,P4:3,P5:3,P6:5] → state=S1023, props=['cMSPO', 'dJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int18:[P1:3,P2:3,P3:4,P4:3,P5:3,P6:5] → state=S1386, props=['cMSPO', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int19:[P1:3,P2:3,P3:4,P4:4,P5:3,P6:5] → state=S1596, props=['k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int20:[P1:3,P2:3,P3:4,P4:4,P5:4,P6:5] → state=S2095, props=['k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s1_po_comm21:[P1:4,P2:3,P3:4,P4:4,P5:4,P6:6] → state=S2185, props=['cS1PO'], verdict=TRUE ✅
+j1_po_comm22:[P1:4,P2:4,P3:4,P4:4,P5:4,P6:7] → state=S2212, props=['cJ1PO', 'cS1PO'], verdict=TRUE ✅
+j2_po_comm23:[P1:4,P2:4,P3:5,P4:4,P5:4,P6:8] → state=S2224, props=['cJ1PO', 'cJ2PO', 'cS1PO'], verdict=TRUE ✅
+s2_po_comm24:[P1:4,P2:4,P3:5,P4:4,P5:5,P6:9] → state=S2229, props=['cJ1PO', 'cJ2PO', 'cS1PO', 'cS2PO'], verdict=TRUE ✅
+po_eval25:[P1:4,P2:4,P3:5,P4:4,P5:5,P6:10] → state=S2232, props=['cJ1PO', 'cJ2PO', 'cS1PO', 'cS2PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int26:[P1:5,P2:4,P3:5,P4:4,P5:5,P6:10] → state=S2333, props=['cJ1PO', 'cJ2PO', 'cS2PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int27:[P1:5,P2:5,P3:5,P4:4,P5:5,P6:10] → state=S2413, props=['cJ2PO', 'cS2PO', 'j1', 'kS1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int28:[P1:5,P2:5,P3:6,P4:4,P5:5,P6:10] → state=S2474, props=['cS2PO', 'j1', 'j2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int29:[P1:5,P2:5,P3:6,P4:5,P5:5,P6:10] → state=S2928, props=['cS2PO', 'j1', 'j2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int30:[P1:5,P2:5,P3:6,P4:5,P5:6,P6:10] → state=S2994, props=['j1', 'j2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_po_comm31:[P1:6,P2:5,P3:6,P4:5,P5:6,P6:11] → state=S3028, props=['cS1PO', 'j1', 'j2'], verdict=TRUE ✅
+j1_po_comm32:[P1:6,P2:6,P3:6,P4:5,P5:6,P6:12] → state=S3045, props=['cJ1PO', 'cS1PO', 'j2'], verdict=TRUE ✅
+ms_po_comm33:[P1:6,P2:6,P3:6,P4:6,P5:6,P6:13] → state=S3055, props=['cJ1PO', 'cMSPO', 'cS1PO', 'j2'], verdict=TRUE ✅
+po_eval34:[P1:6,P2:6,P3:6,P4:6,P5:6,P6:14] → state=S3062, props=['cJ1PO', 'cMSPO', 'cS1PO', 'j2', 'kJ1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int35:[P1:7,P2:6,P3:6,P4:6,P5:6,P6:14] → state=S3110, props=['cJ1PO', 'cMSPO', 'j2', 'kJ1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_int36:[P1:7,P2:7,P3:6,P4:6,P5:6,P6:14] → state=S3171, props=['cMSPO', 'j2', 'kJ1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_int37:[P1:7,P2:7,P3:7,P4:6,P5:6,P6:14] → state=S3337, props=['cMSPO', 'j2', 'kJ1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+ms_int38:[P1:7,P2:7,P3:7,P4:7,P5:6,P6:14] → state=S3401, props=['j2', 'kJ1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s2_int39:[P1:7,P2:7,P3:7,P4:7,P5:7,P6:14] → state=S3606, props=['j2', 'kJ1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm40:[P1:8,P2:7,P3:7,P4:7,P5:7,P6:15] → state=S3658, props=['cS1PO', 'j2', 's2'], verdict=TRUE ✅
+j2_po_comm41:[P1:8,P2:7,P3:8,P4:7,P5:7,P6:16] → state=S3676, props=['cJ2PO', 'cS1PO', 's2'], verdict=TRUE ✅
+ms_po_comm42:[P1:8,P2:7,P3:8,P4:8,P5:7,P6:17] → state=S3688, props=['cJ2PO', 'cMSPO', 'cS1PO', 's2'], verdict=TRUE ✅
+s2_po_comm43:[P1:8,P2:7,P3:8,P4:8,P5:8,P6:18] → state=S3695, props=['cJ2PO', 'cMSPO', 'cS1PO', 'cS2PO'], verdict=TRUE ✅
+po_eval44:[P1:8,P2:7,P3:8,P4:8,P5:8,P6:19] → state=S3698, props=['cJ2PO', 'cMSPO', 'cS1PO', 'cS2PO', 'kJ2', 'kS1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+s1_int45:[P1:9,P2:7,P3:8,P4:8,P5:8,P6:19] → state=S3757, props=['cJ2PO', 'cMSPO', 'cS2PO', 'kJ2', 'kS1', 'kS2', 'k_not_j1', 'poe', 's1'], verdict=TRUE ✅
+j1_int46:[P1:9,P2:8,P3:8,P4:8,P5:8,P6:19] → state=S3965, props=['cJ2PO', 'cMSPO', 'cS2PO', 'j1', 'kJ2', 'kS1', 'kS2', 'k_not_j1', 'poe', 's1'], verdict=TRUE ✅
+j2_int47:[P1:9,P2:8,P3:9,P4:8,P5:8,P6:19] → state=S4049, props=['cMSPO', 'cS2PO', 'j1', 'kJ2', 'kS1', 'kS2', 'k_not_j1', 'poe', 's1'], verdict=TRUE ✅
+ms_int48:[P1:9,P2:8,P3:9,P4:9,P5:8,P6:19] → state=S4130, props=['cS2PO', 'j1', 'kJ2', 'kS1', 'kS2', 'k_not_j1', 'poe', 's1'], verdict=TRUE ✅
+s2_int49:[P1:9,P2:8,P3:9,P4:9,P5:9,P6:19] → state=S4196, props=['j1', 'kJ2', 'kS1', 'kS2', 'k_not_j1', 'poe', 's1'], verdict=TRUE ✅
+s1_po_comm50:[P1:10,P2:8,P3:9,P4:9,P5:9,P6:20] → state=S4230, props=['cS1PO', 'j1'], verdict=TRUE ✅
+j1_po_comm51:[P1:10,P2:9,P3:9,P4:9,P5:9,P6:21] → state=S4243, props=['cJ1PO', 'cS1PO'], verdict=TRUE ✅
+j2_po_comm52:[P1:10,P2:9,P3:10,P4:9,P5:9,P6:22] → state=S4250, props=['cJ1PO', 'cJ2PO', 'cS1PO'], verdict=TRUE ✅
+s2_po_comm53:[P1:10,P2:9,P3:10,P4:9,P5:10,P6:23] → state=S4256, props=['cJ1PO', 'cJ2PO', 'cS1PO', 'cS2PO'], verdict=TRUE ✅
+po_eval54:[P1:10,P2:9,P3:10,P4:9,P5:10,P6:24] → state=S4259, props=['cJ1PO', 'cJ2PO', 'cS1PO', 'cS2PO', 'kJ1', 'kS1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int55:[P1:11,P2:9,P3:10,P4:9,P5:10,P6:24] → state=S4300, props=['cJ1PO', 'cJ2PO', 'cS2PO', 'kJ1', 'kS1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int56:[P1:11,P2:10,P3:10,P4:9,P5:10,P6:24] → state=S4356, props=['cJ2PO', 'cS2PO', 'kJ1', 'kS1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int57:[P1:11,P2:10,P3:11,P4:9,P5:10,P6:24] → state=S4409, props=['cS2PO', 'j2', 'kJ1', 'kS1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int58:[P1:11,P2:10,P3:11,P4:10,P5:10,P6:24] → state=S4583, props=['cS2PO', 'j2', 'kJ1', 'kS1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int59:[P1:11,P2:10,P3:11,P4:10,P5:11,P6:24] → state=S4649, props=['j2', 'kJ1', 'kS1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_po_comm60:[P1:12,P2:10,P3:11,P4:10,P5:11,P6:25] → state=S4683, props=['cS1PO', 'j2'], verdict=TRUE ✅
+j1_po_comm61:[P1:12,P2:11,P3:11,P4:10,P5:11,P6:26] → state=S4700, props=['cJ1PO', 'cS1PO', 'j2'], verdict=TRUE ✅
+j2_po_comm62:[P1:12,P2:11,P3:12,P4:10,P5:11,P6:27] → state=S4712, props=['cJ1PO', 'cJ2PO', 'cS1PO'], verdict=TRUE ✅
+s2_po_comm63:[P1:12,P2:11,P3:12,P4:10,P5:12,P6:28] → state=S4719, props=['cJ1PO', 'cJ2PO', 'cS1PO', 'cS2PO'], verdict=TRUE ✅
+po_eval64:[P1:12,P2:11,P3:12,P4:10,P5:12,P6:29] → state=S4724, props=['cJ1PO', 'cJ2PO', 'cS1PO', 'cS2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int65:[P1:13,P2:11,P3:12,P4:10,P5:12,P6:29] → state=S4774, props=['cJ1PO', 'cJ2PO', 'cS2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int66:[P1:13,P2:12,P3:12,P4:10,P5:12,P6:29] → state=S4846, props=['cJ2PO', 'cS2PO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int67:[P1:13,P2:12,P3:13,P4:10,P5:12,P6:29] → state=S4915, props=['cS2PO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int68:[P1:13,P2:12,P3:13,P4:11,P5:12,P6:29] → state=S5169, props=['cS2PO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int69:[P1:13,P2:12,P3:13,P4:11,P5:13,P6:29] → state=S5242, props=['j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_po_comm70:[P1:13,P2:12,P3:14,P4:11,P5:13,P6:30] → state=S5284, props=['cJ2PO', 'j1'], verdict=TRUE ✅
+po_eval71:[P1:13,P2:12,P3:14,P4:11,P5:13,P6:31] → state=S5324, props=['cJ2PO', 'j1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int72:[P1:14,P2:12,P3:14,P4:11,P5:13,P6:31] → state=S5528, props=['cJ2PO', 'j1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int73:[P1:14,P2:13,P3:14,P4:11,P5:13,P6:31] → state=S5785, props=['cJ2PO', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int74:[P1:14,P2:13,P3:15,P4:11,P5:13,P6:31] → state=S5946, props=['j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int75:[P1:14,P2:13,P3:15,P4:12,P5:13,P6:31] → state=S6379, props=['j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int76:[P1:14,P2:13,P3:15,P4:12,P5:14,P6:31] → state=S6749, props=['j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_po_comm77:[P1:15,P2:13,P3:15,P4:12,P5:14,P6:32] → state=S6856, props=['cS1PO', 'j2'], verdict=TRUE ✅
+j2_po_comm78:[P1:15,P2:13,P3:16,P4:12,P5:14,P6:33] → state=S6911, props=['cJ2PO', 'cS1PO'], verdict=TRUE ✅
+s2_po_comm79:[P1:15,P2:13,P3:16,P4:12,P5:15,P6:34] → state=S6937, props=['cJ2PO', 'cS1PO', 'cS2PO'], verdict=TRUE ✅
+po_eval80:[P1:15,P2:13,P3:16,P4:12,P5:15,P6:35] → state=S6958, props=['cJ2PO', 'cS1PO', 'cS2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int81:[P1:16,P2:13,P3:16,P4:12,P5:15,P6:35] → state=S7129, props=['cJ2PO', 'cS2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_int82:[P1:16,P2:14,P3:16,P4:12,P5:15,P6:35] → state=S7740, props=['cJ2PO', 'cS2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_int83:[P1:16,P2:14,P3:17,P4:12,P5:15,P6:35] → state=S7950, props=['cS2PO', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+ms_int84:[P1:16,P2:14,P3:17,P4:13,P5:15,P6:35] → state=S8676, props=['cS2PO', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s2_int85:[P1:16,P2:14,P3:17,P4:13,P5:16,P6:35] → state=S8878, props=['j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_po_comm86:[P1:16,P2:15,P3:17,P4:13,P5:16,P6:36] → state=S8937, props=['cJ1PO', 'j2', 's1'], verdict=TRUE ✅
+j2_po_comm87:[P1:16,P2:15,P3:18,P4:13,P5:16,P6:37] → state=S8968, props=['cJ1PO', 'cJ2PO', 's1'], verdict=TRUE ✅
+po_eval88:[P1:16,P2:15,P3:18,P4:13,P5:16,P6:38] → state=S8999, props=['cJ1PO', 'cJ2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s1_int89:[P1:17,P2:15,P3:18,P4:13,P5:16,P6:38] → state=S9536, props=['cJ1PO', 'cJ2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int90:[P1:17,P2:16,P3:18,P4:13,P5:16,P6:38] → state=S9697, props=['cJ2PO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int91:[P1:17,P2:16,P3:19,P4:13,P5:16,P6:38] → state=S9862, props=['j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int92:[P1:17,P2:16,P3:19,P4:14,P5:16,P6:38] → state=S10769, props=['j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int93:[P1:17,P2:16,P3:19,P4:14,P5:17,P6:38] → state=S11366, props=['j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_po_comm94:[P1:18,P2:16,P3:19,P4:14,P5:17,P6:39] → state=S11467, props=['cS1PO', 'j1', 's2'], verdict=TRUE ✅
+j1_po_comm95:[P1:18,P2:17,P3:19,P4:14,P5:17,P6:40] → state=S11517, props=['cJ1PO', 'cS1PO', 's2'], verdict=TRUE ✅
+j2_po_comm96:[P1:18,P2:17,P3:20,P4:14,P5:17,P6:41] → state=S11545, props=['cJ1PO', 'cJ2PO', 'cS1PO', 's2'], verdict=TRUE ✅
+ms_po_comm97:[P1:18,P2:17,P3:20,P4:15,P5:17,P6:42] → state=S11553, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'cS1PO', 's2'], verdict=TRUE ✅
+po_eval98:[P1:18,P2:17,P3:20,P4:15,P5:17,P6:43] → state=S11558, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'cS1PO', 'kJ1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int99:[P1:19,P2:17,P3:20,P4:15,P5:17,P6:43] → state=S11713, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'kJ1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int100:[P1:19,P2:18,P3:20,P4:15,P5:17,P6:43] → state=S11875, props=['cJ2PO', 'cMSPO', 'kJ1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int101:[P1:19,P2:18,P3:21,P4:15,P5:17,P6:43] → state=S12004, props=['cMSPO', 'kJ1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int102:[P1:19,P2:18,P3:21,P4:16,P5:17,P6:43] → state=S12070, props=['kJ1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int103:[P1:19,P2:18,P3:21,P4:16,P5:18,P6:43] → state=S12873, props=['kJ1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_po_comm104:[P1:19,P2:18,P3:22,P4:16,P5:18,P6:44] → state=S12914, props=['cJ2PO', 's1'], verdict=TRUE ✅
+ms_po_comm105:[P1:19,P2:18,P3:22,P4:17,P5:18,P6:45] → state=S12938, props=['cJ2PO', 'cMSPO', 's1'], verdict=TRUE ✅
+s2_po_comm106:[P1:19,P2:18,P3:22,P4:17,P5:19,P6:46] → state=S12949, props=['cJ2PO', 'cMSPO', 'cS2PO', 's1'], verdict=TRUE ✅
+po_eval107:[P1:19,P2:18,P3:22,P4:17,P5:19,P6:47] → state=S12957, props=['cJ2PO', 'cMSPO', 'cS2PO', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s1_int108:[P1:20,P2:18,P3:22,P4:17,P5:19,P6:47] → state=S13389, props=['cJ2PO', 'cMSPO', 'cS2PO', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_int109:[P1:20,P2:19,P3:22,P4:17,P5:19,P6:47] → state=S13879, props=['cJ2PO', 'cMSPO', 'cS2PO', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_int110:[P1:20,P2:19,P3:23,P4:17,P5:19,P6:47] → state=S14021, props=['cMSPO', 'cS2PO', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+ms_int111:[P1:20,P2:19,P3:23,P4:18,P5:19,P6:47] → state=S14150, props=['cS2PO', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s2_int112:[P1:20,P2:19,P3:23,P4:18,P5:20,P6:47] → state=S14240, props=['k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm113:[P1:21,P2:19,P3:23,P4:18,P5:20,P6:48] → state=S14275, props=['cS1PO', 's2'], verdict=TRUE ✅
+po_eval114:[P1:21,P2:19,P3:23,P4:18,P5:20,P6:49] → state=S14304, props=['cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int115:[P1:22,P2:19,P3:23,P4:18,P5:20,P6:49] → state=S14364, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int116:[P1:22,P2:20,P3:23,P4:18,P5:20,P6:49] → state=S14987, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int117:[P1:22,P2:20,P3:24,P4:18,P5:20,P6:49] → state=S15347, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int118:[P1:22,P2:20,P3:24,P4:19,P5:20,P6:49] → state=S15748, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int119:[P1:22,P2:20,P3:24,P4:19,P5:21,P6:49] → state=S16125, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm120:[P1:23,P2:20,P3:24,P4:19,P5:21,P6:50] → state=S16250, props=['cS1PO', 's2'], verdict=TRUE ✅
+po_eval121:[P1:23,P2:20,P3:24,P4:19,P5:21,P6:51] → state=S16369, props=['cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int122:[P1:24,P2:20,P3:24,P4:19,P5:21,P6:51] → state=S16600, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int123:[P1:24,P2:21,P3:24,P4:19,P5:21,P6:51] → state=S17605, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int124:[P1:24,P2:21,P3:25,P4:19,P5:21,P6:51] → state=S18546, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int125:[P1:24,P2:21,P3:25,P4:20,P5:21,P6:51] → state=S19638, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int126:[P1:24,P2:21,P3:25,P4:20,P5:22,P6:51] → state=S20771, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm127:[P1:25,P2:21,P3:25,P4:20,P5:22,P6:52] → state=S21105, props=['cS1PO', 's2'], verdict=TRUE ✅
+po_eval128:[P1:25,P2:21,P3:25,P4:20,P5:22,P6:53] → state=S21439, props=['cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int129:[P1:26,P2:21,P3:25,P4:20,P5:22,P6:53] → state=S22094, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int130:[P1:26,P2:22,P3:25,P4:20,P5:22,P6:53] → state=S23981, props=['j1', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int131:[P1:26,P2:22,P3:26,P4:20,P5:22,P6:53] → state=S26155, props=['j1', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int132:[P1:26,P2:22,P3:26,P4:21,P5:22,P6:53] → state=S28689, props=['j1', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int133:[P1:26,P2:22,P3:26,P4:21,P5:23,P6:53] → state=S31403, props=['j1', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm134:[P1:27,P2:22,P3:26,P4:21,P5:23,P6:54] → state=S32167, props=['cS1PO', 'j1', 's2'], verdict=TRUE ✅
+ms_po_comm135:[P1:27,P2:22,P3:26,P4:22,P5:23,P6:55] → state=S32331, props=['cMSPO', 'cS1PO', 'j1', 's2'], verdict=TRUE ✅
+po_eval136:[P1:27,P2:22,P3:26,P4:22,P5:23,P6:56] → state=S32493, props=['cMSPO', 'cS1PO', 'j1', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int137:[P1:28,P2:22,P3:26,P4:22,P5:23,P6:56] → state=S33552, props=['cMSPO', 'j1', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int138:[P1:28,P2:23,P3:26,P4:22,P5:23,P6:56] → state=S37022, props=['cMSPO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int139:[P1:28,P2:23,P3:27,P4:22,P5:23,P6:56] → state=S41262, props=['cMSPO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int140:[P1:28,P2:23,P3:27,P4:23,P5:23,P6:56] → state=S42114, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int141:[P1:28,P2:23,P3:27,P4:23,P5:24,P6:56] → state=S46668, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm142:[P1:29,P2:23,P3:27,P4:23,P5:24,P6:57] → state=S47184, props=['cS1PO', 's2'], verdict=TRUE ✅
+ms_po_comm143:[P1:29,P2:23,P3:27,P4:24,P5:24,P6:58] → state=S47447, props=['cMSPO', 'cS1PO', 's2'], verdict=TRUE ✅
+po_eval144:[P1:29,P2:23,P3:27,P4:24,P5:24,P6:59] → state=S47708, props=['cMSPO', 'cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int145:[P1:30,P2:23,P3:27,P4:24,P5:24,P6:59] → state=S48725, props=['cMSPO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int146:[P1:30,P2:24,P3:27,P4:24,P5:24,P6:59] → state=S53855, props=['cMSPO', 'j1', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int147:[P1:30,P2:24,P3:28,P4:24,P5:24,P6:59] → state=S60107, props=['cMSPO', 'j1', 'j2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int148:[P1:30,P2:24,P3:28,P4:25,P5:24,P6:59] → state=S61463, props=['j1', 'j2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int149:[P1:30,P2:24,P3:28,P4:25,P5:25,P6:59] → state=S68201, props=['j1', 'j2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm150:[P1:31,P2:24,P3:28,P4:25,P5:25,P6:60] → state=S68997, props=['cS1PO', 'j1', 'j2', 's2'], verdict=TRUE ✅
+po_eval151:[P1:31,P2:24,P3:28,P4:25,P5:25,P6:61] → state=S69792, props=['cS1PO', 'j1', 'j2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int152:[P1:32,P2:24,P3:28,P4:25,P5:25,P6:61] → state=S71372, props=['j1', 'j2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int153:[P1:32,P2:25,P3:28,P4:25,P5:25,P6:61] → state=S78679, props=['j2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int154:[P1:32,P2:25,P3:29,P4:25,P5:25,P6:61] → state=S87511, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int155:[P1:32,P2:25,P3:29,P4:26,P5:25,P6:61] → state=S91555, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int156:[P1:32,P2:25,P3:29,P4:26,P5:26,P6:61] → state=S101366, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm157:[P1:33,P2:25,P3:29,P4:26,P5:26,P6:62] → state=S103107, props=['cS1PO', 's2'], verdict=TRUE ✅
+j2_po_comm158:[P1:33,P2:25,P3:30,P4:26,P5:26,P6:63] → state=S103336, props=['cJ2PO', 'cS1PO', 's2'], verdict=TRUE ✅
+po_eval159:[P1:33,P2:25,P3:30,P4:26,P5:26,P6:64] → state=S103564, props=['cJ2PO', 'cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int160:[P1:34,P2:25,P3:30,P4:26,P5:26,P6:64] → state=S105733, props=['cJ2PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int161:[P1:34,P2:26,P3:30,P4:26,P5:26,P6:64] → state=S116039, props=['cJ2PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int162:[P1:34,P2:26,P3:31,P4:26,P5:26,P6:64] → state=S117010, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int163:[P1:34,P2:26,P3:31,P4:27,P5:26,P6:64] → state=S124068, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int164:[P1:34,P2:26,P3:31,P4:27,P5:27,P6:64] → state=S136560, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm165:[P1:35,P2:26,P3:31,P4:27,P5:27,P6:65] → state=S137292, props=['cS1PO', 's2'], verdict=TRUE ✅
+po_eval166:[P1:35,P2:26,P3:31,P4:27,P5:27,P6:66] → state=S138023, props=['cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int167:[P1:36,P2:26,P3:31,P4:27,P5:27,P6:66] → state=S139475, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int168:[P1:36,P2:27,P3:31,P4:27,P5:27,P6:66] → state=S152114, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int169:[P1:36,P2:27,P3:32,P4:27,P5:27,P6:66] → state=S155294, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int170:[P1:36,P2:27,P3:32,P4:28,P5:27,P6:66] → state=S165609, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int171:[P1:36,P2:27,P3:32,P4:28,P5:28,P6:66] → state=S181198, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm172:[P1:37,P2:27,P3:32,P4:28,P5:28,P6:67] → state=S182861, props=['cS1PO', 's2'], verdict=TRUE ✅
+po_eval173:[P1:37,P2:27,P3:32,P4:28,P5:28,P6:68] → state=S184524, props=['cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int174:[P1:38,P2:27,P3:32,P4:28,P5:28,P6:68] → state=S187839, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int175:[P1:38,P2:28,P3:32,P4:28,P5:28,P6:68] → state=S203718, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int176:[P1:38,P2:28,P3:33,P4:28,P5:28,P6:68] → state=S210931, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int177:[P1:38,P2:28,P3:33,P4:29,P5:28,P6:68] → state=S226305, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int178:[P1:38,P2:28,P3:33,P4:29,P5:29,P6:68] → state=S246287, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm179:[P1:39,P2:28,P3:33,P4:29,P5:29,P6:69] → state=S249469, props=['cS1PO', 's2'], verdict=TRUE ✅
+j1_po_comm180:[P1:39,P2:29,P3:33,P4:29,P5:29,P6:70] → state=S249747, props=['cJ1PO', 'cS1PO', 's2'], verdict=TRUE ✅
+po_eval181:[P1:39,P2:29,P3:33,P4:29,P5:29,P6:71] → state=S250021, props=['cJ1PO', 'cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int182:[P1:40,P2:29,P3:33,P4:29,P5:29,P6:71] → state=S253726, props=['cJ1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int183:[P1:40,P2:30,P3:33,P4:29,P5:29,P6:71] → state=S254800, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int184:[P1:40,P2:30,P3:34,P4:29,P5:29,P6:71] → state=S266431, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int185:[P1:40,P2:30,P3:34,P4:30,P5:29,P6:71] → state=S286683, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int186:[P1:40,P2:30,P3:34,P4:30,P5:30,P6:71] → state=S310327, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm187:[P1:41,P2:30,P3:34,P4:30,P5:30,P6:72] → state=S311179, props=['cS1PO', 's2'], verdict=TRUE ✅
+po_eval188:[P1:41,P2:30,P3:34,P4:30,P5:30,P6:73] → state=S312030, props=['cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+
+Execution interrupted by user
+Command exited with non-zero status 130
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-1K.json --reduce --output-level=max_state --log-categories=
+real: 6353.71s
+user: 3788.29s 
+sys: 15.37s 
+memory: 1781552KB 
+cpu: 59%
+########## TRACE=10K, REDUCE=True ##########
+INFO: PoET Runtime Verification Starting
+INFO: Property File: property
+INFO: Trace File: traces/trace-10K.json
+INFO: Output Level: max_state
+INFO: Reduce Mode: True
+INFO: Visual Output: False
+INFO: Trace Validation: False
+INFO: Property: EP( (EP(s1) & !EP(j1)) | (EP(j2) & ms & !EP(s2)) )
+INFO: Parsed formula: EP(((EP((s1)) & ! EP((j1))) | (EP((j2)) & ms & ! EP((s2)))))
+Initial:[P1:0,P2:0,P3:0,P4:0,P5:0,P6:0] → state=S0, props=[], verdict=FALSE ❌
+s1_int1:[P1:1,P2:0,P3:0,P4:0,P5:0,P6:0] → state=S1, props=['dS1'], verdict=FALSE ❌
+j1_int2:[P1:1,P2:1,P3:0,P4:0,P5:0,P6:0] → state=S3, props=['dJ1', 'dS1'], verdict=FALSE ❌
+j2_int3:[P1:1,P2:1,P3:1,P4:0,P5:0,P6:0] → state=S7, props=['dJ1', 'dJ2', 'dS1'], verdict=FALSE ❌
+ms_int4:[P1:1,P2:1,P3:1,P4:1,P5:0,P6:0] → state=S15, props=['dJ1', 'dJ2', 'dMS', 'dS1'], verdict=FALSE ❌
+s2_int5:[P1:1,P2:1,P3:1,P4:1,P5:1,P6:0] → state=S31, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2'], verdict=FALSE ❌
+po_eval6:[P1:1,P2:1,P3:1,P4:1,P5:1,P6:1] → state=S63, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+s1_int7:[P1:2,P2:1,P3:1,P4:1,P5:1,P6:1] → state=S95, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+j1_int8:[P1:2,P2:2,P3:1,P4:1,P5:1,P6:1] → state=S153, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+j2_int9:[P1:2,P2:2,P3:2,P4:1,P5:1,P6:1] → state=S237, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+ms_int10:[P1:2,P2:2,P3:2,P4:2,P5:1,P6:1] → state=S359, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+s2_int11:[P1:2,P2:2,P3:2,P4:2,P5:2,P6:1] → state=S537, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+j2_po_comm12:[P1:2,P2:2,P3:3,P4:2,P5:2,P6:2] → state=S634, props=['cJ2PO', 'dJ1', 'dMS', 'dS1', 'dS2'], verdict=FALSE ❌
+ms_po_comm13:[P1:2,P2:2,P3:3,P4:3,P5:2,P6:3] → state=S673, props=['cJ2PO', 'cMSPO', 'dJ1', 'dS1', 'dS2'], verdict=FALSE ❌
+po_eval14:[P1:2,P2:2,P3:3,P4:3,P5:2,P6:4] → state=S712, props=['cJ2PO', 'cMSPO', 'dJ1', 'dS1', 'dS2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+s1_int15:[P1:3,P2:2,P3:3,P4:3,P5:2,P6:4] → state=S931, props=['cJ2PO', 'cMSPO', 'dJ1', 'dS2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_int16:[P1:3,P2:3,P3:3,P4:3,P5:2,P6:4] → state=S1218, props=['cJ2PO', 'cMSPO', 'dS2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_int17:[P1:3,P2:3,P3:4,P4:3,P5:2,P6:4] → state=S1470, props=['cMSPO', 'dS2', 'j2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+ms_int18:[P1:3,P2:3,P3:4,P4:4,P5:2,P6:4] → state=S1683, props=['dS2', 'j2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s2_int19:[P1:3,P2:3,P3:4,P4:4,P5:3,P6:4] → state=S2210, props=['j2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s1_po_comm20:[P1:4,P2:3,P3:4,P4:4,P5:3,P6:5] → state=S2286, props=['cS1PO', 'j2'], verdict=TRUE ✅
+j1_po_comm21:[P1:4,P2:4,P3:4,P4:4,P5:3,P6:6] → state=S2311, props=['cJ1PO', 'cS1PO', 'j2'], verdict=TRUE ✅
+j2_po_comm22:[P1:4,P2:4,P3:5,P4:4,P5:3,P6:7] → state=S2324, props=['cJ1PO', 'cJ2PO', 'cS1PO'], verdict=TRUE ✅
+s2_po_comm23:[P1:4,P2:4,P3:5,P4:4,P5:4,P6:8] → state=S2331, props=['cJ1PO', 'cJ2PO', 'cS1PO', 'cS2PO'], verdict=TRUE ✅
+po_eval24:[P1:4,P2:4,P3:5,P4:4,P5:4,P6:9] → state=S2334, props=['cJ1PO', 'cJ2PO', 'cS1PO', 'cS2PO', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int25:[P1:5,P2:4,P3:5,P4:4,P5:4,P6:9] → state=S2427, props=['cJ1PO', 'cJ2PO', 'cS2PO', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_int26:[P1:5,P2:5,P3:5,P4:4,P5:4,P6:9] → state=S2507, props=['cJ2PO', 'cS2PO', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_int27:[P1:5,P2:5,P3:6,P4:4,P5:4,P6:9] → state=S2576, props=['cS2PO', 'j2', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+ms_int28:[P1:5,P2:5,P3:6,P4:5,P5:4,P6:9] → state=S2994, props=['cS2PO', 'j2', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s2_int29:[P1:5,P2:5,P3:6,P4:5,P5:5,P6:9] → state=S3060, props=['j2', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm30:[P1:6,P2:5,P3:6,P4:5,P5:5,P6:10] → state=S3094, props=['cS1PO', 'j2', 's2'], verdict=TRUE ✅
+j2_po_comm31:[P1:6,P2:5,P3:7,P4:5,P5:5,P6:11] → state=S3111, props=['cJ2PO', 'cS1PO', 's2'], verdict=TRUE ✅
+po_eval32:[P1:6,P2:5,P3:7,P4:5,P5:5,P6:12] → state=S3130, props=['cJ2PO', 'cS1PO', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int33:[P1:7,P2:5,P3:7,P4:5,P5:5,P6:12] → state=S3187, props=['cJ2PO', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+j1_int34:[P1:7,P2:6,P3:7,P4:5,P5:5,P6:12] → state=S3397, props=['cJ2PO', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+j2_int35:[P1:7,P2:6,P3:8,P4:5,P5:5,P6:12] → state=S3485, props=['j2', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+ms_int36:[P1:7,P2:6,P3:8,P4:6,P5:5,P6:12] → state=S4039, props=['j2', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s2_int37:[P1:7,P2:6,P3:8,P4:6,P5:6,P6:12] → state=S4288, props=['j2', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_po_comm38:[P1:7,P2:6,P3:8,P4:7,P5:6,P6:13] → state=S4341, props=['cMSPO', 'j2'], verdict=TRUE ✅
+s2_po_comm39:[P1:7,P2:6,P3:8,P4:7,P5:7,P6:14] → state=S4362, props=['cMSPO', 'cS2PO', 'j2'], verdict=TRUE ✅
+po_eval40:[P1:7,P2:6,P3:8,P4:7,P5:7,P6:15] → state=S4383, props=['cMSPO', 'cS2PO', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int41:[P1:8,P2:6,P3:8,P4:7,P5:7,P6:15] → state=S4638, props=['cMSPO', 'cS2PO', 'j2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_int42:[P1:8,P2:7,P3:8,P4:7,P5:7,P6:15] → state=S5124, props=['cMSPO', 'cS2PO', 'j2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_int43:[P1:8,P2:7,P3:9,P4:7,P5:7,P6:15] → state=S5482, props=['cMSPO', 'cS2PO', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+ms_int44:[P1:8,P2:7,P3:9,P4:8,P5:7,P6:15] → state=S5679, props=['cS2PO', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s2_int45:[P1:8,P2:7,P3:9,P4:8,P5:8,P6:15] → state=S5844, props=['k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_po_comm46:[P1:8,P2:7,P3:10,P4:8,P5:8,P6:16] → state=S5904, props=['cJ2PO', 's1', 's2'], verdict=TRUE ✅
+s2_po_comm47:[P1:8,P2:7,P3:10,P4:8,P5:9,P6:17] → state=S5936, props=['cJ2PO', 'cS2PO', 's1'], verdict=TRUE ✅
+po_eval48:[P1:8,P2:7,P3:10,P4:8,P5:9,P6:18] → state=S5969, props=['cJ2PO', 'cS2PO', 'kS2', 'k_not_j1', 'poe', 's1'], verdict=TRUE ✅
+s1_int49:[P1:9,P2:7,P3:10,P4:8,P5:9,P6:18] → state=S6562, props=['cJ2PO', 'cS2PO', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+j1_int50:[P1:9,P2:8,P3:10,P4:8,P5:9,P6:18] → state=S7381, props=['cJ2PO', 'cS2PO', 'j1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+j2_int51:[P1:9,P2:8,P3:11,P4:8,P5:9,P6:18] → state=S7552, props=['cS2PO', 'j1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+ms_int52:[P1:9,P2:8,P3:11,P4:9,P5:9,P6:18] → state=S8153, props=['cS2PO', 'j1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+s2_int53:[P1:9,P2:8,P3:11,P4:9,P5:10,P6:18] → state=S8411, props=['j1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+s1_po_comm54:[P1:10,P2:8,P3:11,P4:9,P5:10,P6:19] → state=S8485, props=['cS1PO', 'j1'], verdict=TRUE ✅
+j1_po_comm55:[P1:10,P2:9,P3:11,P4:9,P5:10,P6:20] → state=S8504, props=['cJ1PO', 'cS1PO'], verdict=TRUE ✅
+s2_po_comm56:[P1:10,P2:9,P3:11,P4:9,P5:11,P6:21] → state=S8514, props=['cJ1PO', 'cS1PO', 'cS2PO'], verdict=TRUE ✅
+po_eval57:[P1:10,P2:9,P3:11,P4:9,P5:11,P6:22] → state=S8526, props=['cJ1PO', 'cS1PO', 'cS2PO', 'kJ1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int58:[P1:11,P2:9,P3:11,P4:9,P5:11,P6:22] → state=S8616, props=['cJ1PO', 'cS2PO', 'kJ1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int59:[P1:11,P2:10,P3:11,P4:9,P5:11,P6:22] → state=S8685, props=['cS2PO', 'kJ1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int60:[P1:11,P2:10,P3:12,P4:9,P5:11,P6:22] → state=S9171, props=['cS2PO', 'j2', 'kJ1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int61:[P1:11,P2:10,P3:12,P4:10,P5:11,P6:22] → state=S10075, props=['cS2PO', 'j2', 'kJ1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int62:[P1:11,P2:10,P3:12,P4:10,P5:12,P6:22] → state=S10180, props=['j2', 'kJ1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_po_comm63:[P1:11,P2:10,P3:12,P4:11,P5:12,P6:23] → state=S10215, props=['cMSPO', 'j2'], verdict=TRUE ✅
+s2_po_comm64:[P1:11,P2:10,P3:12,P4:11,P5:13,P6:24] → state=S10234, props=['cMSPO', 'cS2PO', 'j2'], verdict=TRUE ✅
+po_eval65:[P1:11,P2:10,P3:12,P4:11,P5:13,P6:25] → state=S10255, props=['cMSPO', 'cS2PO', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int66:[P1:12,P2:10,P3:12,P4:11,P5:13,P6:25] → state=S10552, props=['cMSPO', 'cS2PO', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int67:[P1:12,P2:11,P3:12,P4:11,P5:13,P6:25] → state=S10820, props=['cMSPO', 'cS2PO', 'j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int68:[P1:12,P2:11,P3:13,P4:11,P5:13,P6:25] → state=S11688, props=['cMSPO', 'cS2PO', 'j1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int69:[P1:12,P2:11,P3:13,P4:12,P5:13,P6:25] → state=S11843, props=['cS2PO', 'j1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int70:[P1:12,P2:11,P3:13,P4:12,P5:14,P6:25] → state=S12007, props=['j1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_po_comm71:[P1:13,P2:11,P3:13,P4:12,P5:14,P6:26] → state=S12067, props=['cS1PO', 'j1', 's2'], verdict=TRUE ✅
+j1_po_comm72:[P1:13,P2:12,P3:13,P4:12,P5:14,P6:27] → state=S12090, props=['cJ1PO', 'cS1PO', 's2'], verdict=TRUE ✅
+po_eval73:[P1:13,P2:12,P3:13,P4:12,P5:14,P6:28] → state=S12111, props=['cJ1PO', 'cS1PO', 'kJ1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int74:[P1:14,P2:12,P3:13,P4:12,P5:14,P6:28] → state=S12200, props=['cJ1PO', 'kJ1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+j1_int75:[P1:14,P2:13,P3:13,P4:12,P5:14,P6:28] → state=S12282, props=['kJ1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+j2_int76:[P1:14,P2:13,P3:14,P4:12,P5:14,P6:28] → state=S13277, props=['j2', 'kJ1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+ms_int77:[P1:14,P2:13,P3:14,P4:13,P5:14,P6:28] → state=S13695, props=['j2', 'kJ1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s2_int78:[P1:14,P2:13,P3:14,P4:13,P5:15,P6:28] → state=S14192, props=['j2', 'kJ1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_po_comm79:[P1:15,P2:13,P3:14,P4:13,P5:15,P6:29] → state=S14299, props=['cS1PO', 'j2'], verdict=TRUE ✅
+s2_po_comm80:[P1:15,P2:13,P3:14,P4:13,P5:16,P6:30] → state=S14338, props=['cS1PO', 'cS2PO', 'j2'], verdict=TRUE ✅
+po_eval81:[P1:15,P2:13,P3:14,P4:13,P5:16,P6:31] → state=S14377, props=['cS1PO', 'cS2PO', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int82:[P1:16,P2:13,P3:14,P4:13,P5:16,P6:31] → state=S14536, props=['cS2PO', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int83:[P1:16,P2:14,P3:14,P4:13,P5:16,P6:31] → state=S14884, props=['cS2PO', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int84:[P1:16,P2:14,P3:15,P4:13,P5:16,P6:31] → state=S16185, props=['cS2PO', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int85:[P1:16,P2:14,P3:15,P4:14,P5:16,P6:31] → state=S17131, props=['cS2PO', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int86:[P1:16,P2:14,P3:15,P4:14,P5:17,P6:31] → state=S17430, props=['k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_po_comm87:[P1:17,P2:14,P3:15,P4:14,P5:17,P6:32] → state=S17588, props=['cS1PO'], verdict=TRUE ✅
+j2_po_comm88:[P1:17,P2:14,P3:16,P4:14,P5:17,P6:33] → state=S17621, props=['cJ2PO', 'cS1PO'], verdict=TRUE ✅
+po_eval89:[P1:17,P2:14,P3:16,P4:14,P5:17,P6:34] → state=S17653, props=['cJ2PO', 'cS1PO', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int90:[P1:18,P2:14,P3:16,P4:14,P5:17,P6:34] → state=S17854, props=['cJ2PO', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int91:[P1:18,P2:15,P3:16,P4:14,P5:17,P6:34] → state=S18624, props=['cJ2PO', 'j1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int92:[P1:18,P2:15,P3:17,P4:14,P5:17,P6:34] → state=S18762, props=['j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int93:[P1:18,P2:15,P3:17,P4:15,P5:17,P6:34] → state=S20104, props=['j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int94:[P1:18,P2:15,P3:17,P4:15,P5:18,P6:34] → state=S20994, props=['j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_po_comm95:[P1:18,P2:16,P3:17,P4:15,P5:18,P6:35] → state=S21072, props=['cJ1PO', 'j2'], verdict=TRUE ✅
+j2_po_comm96:[P1:18,P2:16,P3:18,P4:15,P5:18,P6:36] → state=S21111, props=['cJ1PO', 'cJ2PO'], verdict=TRUE ✅
+s2_po_comm97:[P1:18,P2:16,P3:18,P4:15,P5:19,P6:37] → state=S21129, props=['cJ1PO', 'cJ2PO', 'cS2PO'], verdict=TRUE ✅
+po_eval98:[P1:18,P2:16,P3:18,P4:15,P5:19,P6:38] → state=S21145, props=['cJ1PO', 'cJ2PO', 'cS2PO', 'kJ1', 'kJ2', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int99:[P1:19,P2:16,P3:18,P4:15,P5:19,P6:38] → state=S21806, props=['cJ1PO', 'cJ2PO', 'cS2PO', 'kJ1', 'kJ2', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_int100:[P1:19,P2:17,P3:18,P4:15,P5:19,P6:38] → state=S21988, props=['cJ2PO', 'cS2PO', 'j1', 'kJ1', 'kJ2', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_int101:[P1:19,P2:17,P3:19,P4:15,P5:19,P6:38] → state=S22159, props=['cS2PO', 'j1', 'j2', 'kJ1', 'kJ2', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+ms_int102:[P1:19,P2:17,P3:19,P4:16,P5:19,P6:38] → state=S23893, props=['cS2PO', 'j1', 'j2', 'kJ1', 'kJ2', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s2_int103:[P1:19,P2:17,P3:19,P4:16,P5:20,P6:38] → state=S24046, props=['j1', 'j2', 'kJ1', 'kJ2', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_po_comm104:[P1:19,P2:17,P3:20,P4:16,P5:20,P6:39] → state=S24129, props=['cJ2PO', 'j1', 's1'], verdict=TRUE ✅
+s2_po_comm105:[P1:19,P2:17,P3:20,P4:16,P5:21,P6:40] → state=S24173, props=['cJ2PO', 'cS2PO', 'j1', 's1'], verdict=TRUE ✅
+po_eval106:[P1:19,P2:17,P3:20,P4:16,P5:21,P6:41] → state=S24218, props=['cJ2PO', 'cS2PO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s1_int107:[P1:20,P2:17,P3:20,P4:16,P5:21,P6:41] → state=S25235, props=['cJ2PO', 'cS2PO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_int108:[P1:20,P2:18,P3:20,P4:16,P5:21,P6:41] → state=S25822, props=['cJ2PO', 'cS2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_int109:[P1:20,P2:18,P3:21,P4:16,P5:21,P6:41] → state=S26128, props=['cS2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+ms_int110:[P1:20,P2:18,P3:21,P4:17,P5:21,P6:41] → state=S28225, props=['cS2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s2_int111:[P1:20,P2:18,P3:21,P4:17,P5:22,P6:41] → state=S28572, props=['kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s1_po_comm112:[P1:21,P2:18,P3:21,P4:17,P5:22,P6:42] → state=S28670, props=['cS1PO'], verdict=TRUE ✅
+po_eval113:[P1:21,P2:18,P3:21,P4:17,P5:22,P6:43] → state=S28761, props=['cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int114:[P1:22,P2:18,P3:21,P4:17,P5:22,P6:43] → state=S28941, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_int115:[P1:22,P2:19,P3:21,P4:17,P5:22,P6:43] → state=S29964, props=['j1', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_int116:[P1:22,P2:19,P3:22,P4:17,P5:22,P6:43] → state=S30870, props=['j1', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+
+Execution interrupted by user
+Command exited with non-zero status 130
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-10K.json --reduce --output-level=max_state --log-categories=
+real: 22.91s
+user: 22.71s 
+sys: 0.09s 
+memory: 143600KB 
+cpu: 99%
+########## TRACE=100K, REDUCE=True ##########
+INFO: PoET Runtime Verification Starting
+INFO: Property File: property
+INFO: Trace File: traces/trace-100K.json
+INFO: Output Level: max_state
+INFO: Reduce Mode: True
+INFO: Visual Output: False
+INFO: Trace Validation: False
+INFO: Property: EP( (EP(s1) & !EP(j1)) | (EP(j2) & ms & !EP(s2)) )
+INFO: Parsed formula: EP(((EP((s1)) & ! EP((j1))) | (EP((j2)) & ms & ! EP((s2)))))
+Initial:[P1:0,P2:0,P3:0,P4:0,P5:0,P6:0] → state=S0, props=[], verdict=FALSE ❌
+s1_int1:[P1:1,P2:0,P3:0,P4:0,P5:0,P6:0] → state=S1, props=['dS1'], verdict=FALSE ❌
+j1_int2:[P1:1,P2:1,P3:0,P4:0,P5:0,P6:0] → state=S3, props=['dJ1', 'dS1'], verdict=FALSE ❌
+j2_int3:[P1:1,P2:1,P3:1,P4:0,P5:0,P6:0] → state=S7, props=['dJ1', 'dJ2', 'dS1'], verdict=FALSE ❌
+ms_int4:[P1:1,P2:1,P3:1,P4:1,P5:0,P6:0] → state=S15, props=['dJ1', 'dJ2', 'dMS', 'dS1'], verdict=FALSE ❌
+s2_int5:[P1:1,P2:1,P3:1,P4:1,P5:1,P6:0] → state=S31, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2'], verdict=FALSE ❌
+po_eval6:[P1:1,P2:1,P3:1,P4:1,P5:1,P6:1] → state=S63, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+s1_int7:[P1:2,P2:1,P3:1,P4:1,P5:1,P6:1] → state=S95, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+j1_int8:[P1:2,P2:2,P3:1,P4:1,P5:1,P6:1] → state=S153, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+j2_int9:[P1:2,P2:2,P3:2,P4:1,P5:1,P6:1] → state=S237, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+ms_int10:[P1:2,P2:2,P3:2,P4:2,P5:1,P6:1] → state=S359, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+s2_int11:[P1:2,P2:2,P3:2,P4:2,P5:2,P6:1] → state=S537, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+s1_po_comm12:[P1:3,P2:2,P3:2,P4:2,P5:2,P6:2] → state=S634, props=['cS1PO', 'dJ1', 'dJ2', 'dMS', 'dS2'], verdict=FALSE ❌
+j1_po_comm13:[P1:3,P2:3,P3:2,P4:2,P5:2,P6:3] → state=S672, props=['cJ1PO', 'cS1PO', 'dJ2', 'dMS', 'dS2'], verdict=FALSE ❌
+ms_po_comm14:[P1:3,P2:3,P3:2,P4:3,P5:2,P6:4] → state=S689, props=['cJ1PO', 'cMSPO', 'cS1PO', 'dJ2', 'dS2'], verdict=FALSE ❌
+po_eval15:[P1:3,P2:3,P3:2,P4:3,P5:2,P6:5] → state=S706, props=['cJ1PO', 'cMSPO', 'cS1PO', 'dJ2', 'dS2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+s1_int16:[P1:4,P2:3,P3:2,P4:3,P5:2,P6:5] → state=S838, props=['cJ1PO', 'cMSPO', 'dJ2', 'dS2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j1_int17:[P1:4,P2:4,P3:2,P4:3,P5:2,P6:5] → state=S949, props=['cMSPO', 'dJ2', 'dS2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+j2_int18:[P1:4,P2:4,P3:3,P4:3,P5:2,P6:5] → state=S1243, props=['cMSPO', 'dS2', 'j2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+ms_int19:[P1:4,P2:4,P3:3,P4:4,P5:2,P6:5] → state=S1348, props=['dS2', 'j2', 'k_not_j1', 'k_not_s2', 'poe', 's1'], verdict=TRUE ✅
+s2_int20:[P1:4,P2:4,P3:3,P4:4,P5:3,P6:5] → state=S1763, props=['j2', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm21:[P1:5,P2:4,P3:3,P4:4,P5:3,P6:6] → state=S1837, props=['cS1PO', 'j2', 's2'], verdict=TRUE ✅
+j2_po_comm22:[P1:5,P2:4,P3:4,P4:4,P5:3,P6:7] → state=S1861, props=['cJ2PO', 'cS1PO', 's2'], verdict=TRUE ✅
+po_eval23:[P1:5,P2:4,P3:4,P4:4,P5:3,P6:8] → state=S1883, props=['cJ2PO', 'cS1PO', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=TRUE ✅
+s1_int24:[P1:6,P2:4,P3:4,P4:4,P5:3,P6:8] → state=S1988, props=['cJ2PO', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j1_int25:[P1:6,P2:5,P3:4,P4:4,P5:3,P6:8] → state=S2326, props=['cJ2PO', 'kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+j2_int26:[P1:6,P2:5,P3:5,P4:4,P5:3,P6:8] → state=S2439, props=['kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+ms_int27:[P1:6,P2:5,P3:5,P4:5,P5:3,P6:8] → state=S2841, props=['kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s2_int28:[P1:6,P2:5,P3:5,P4:5,P5:4,P6:8] → state=S3506, props=['kJ2', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=TRUE ✅
+s1_po_comm29:[P1:7,P2:5,P3:5,P4:5,P5:4,P6:9] → state=S3606, props=['cS1PO', 's2'], verdict=TRUE ✅
+j1_po_comm30:[P1:7,P2:6,P3:5,P4:5,P5:4,P6:10] → state=S3645, props=['cJ1PO', 'cS1PO', 's2'], verdict=TRUE ✅
+j2_po_comm31:[P1:7,P2:6,P3:6,P4:5,P5:4,P6:11] → state=S3666, props=['cJ1PO', 'cJ2PO', 'cS1PO', 's2'], verdict=TRUE ✅
+ms_po_comm32:[P1:7,P2:6,P3:6,P4:6,P5:4,P6:12] → state=S3676, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'cS1PO', 's2'], verdict=TRUE ✅
+s2_po_comm33:[P1:7,P2:6,P3:6,P4:6,P5:5,P6:13] → state=S3680, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'cS1PO', 'cS2PO'], verdict=TRUE ✅
+po_eval34:[P1:7,P2:6,P3:6,P4:6,P5:5,P6:14] → state=S3681, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'cS1PO', 'cS2PO', 'kS1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+s1_int35:[P1:8,P2:6,P3:6,P4:6,P5:5,P6:14] → state=S3823, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'cS2PO', 'kS1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+j1_int36:[P1:8,P2:7,P3:6,P4:6,P5:5,P6:14] → state=S3951, props=['cJ2PO', 'cMSPO', 'cS2PO', 'j1', 'kS1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+j2_int37:[P1:8,P2:7,P3:7,P4:6,P5:5,P6:14] → state=S4060, props=['cMSPO', 'cS2PO', 'j1', 'kS1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+ms_int38:[P1:8,P2:7,P3:7,P4:7,P5:5,P6:14] → state=S4134, props=['cS2PO', 'j1', 'kS1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+s2_int39:[P1:8,P2:7,P3:7,P4:7,P5:6,P6:14] → state=S4181, props=['j1', 'kS1', 'kS2', 'k_not_j1', 'poe'], verdict=TRUE ✅
+j2_po_comm40:[P1:8,P2:7,P3:8,P4:7,P5:6,P6:15] → state=S4206, props=['cJ2PO', 'j1'], verdict=TRUE ✅
+ms_po_comm41:[P1:8,P2:7,P3:8,P4:8,P5:6,P6:16] → state=S4221, props=['cJ2PO', 'cMSPO', 'j1'], verdict=TRUE ✅
+po_eval42:[P1:8,P2:7,P3:8,P4:8,P5:6,P6:17] → state=S4236, props=['cJ2PO', 'cMSPO', 'j1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int43:[P1:9,P2:7,P3:8,P4:8,P5:6,P6:17] → state=S4543, props=['cJ2PO', 'cMSPO', 'j1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int44:[P1:9,P2:8,P3:8,P4:8,P5:6,P6:17] → state=S4871, props=['cJ2PO', 'cMSPO', 'j1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int45:[P1:9,P2:8,P3:9,P4:8,P5:6,P6:17] → state=S4959, props=['cMSPO', 'j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int46:[P1:9,P2:8,P3:9,P4:9,P5:6,P6:17] → state=S5052, props=['j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int47:[P1:9,P2:8,P3:9,P4:9,P5:7,P6:17] → state=S5245, props=['j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_po_comm48:[P1:9,P2:8,P3:10,P4:9,P5:7,P6:18] → state=S5315, props=['cJ2PO', 'j1'], verdict=TRUE ✅
+ms_po_comm49:[P1:9,P2:8,P3:10,P4:10,P5:7,P6:19] → state=S5351, props=['cJ2PO', 'cMSPO', 'j1'], verdict=TRUE ✅
+po_eval50:[P1:9,P2:8,P3:10,P4:10,P5:7,P6:20] → state=S5387, props=['cJ2PO', 'cMSPO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int51:[P1:10,P2:8,P3:10,P4:10,P5:7,P6:20] → state=S5942, props=['cJ2PO', 'cMSPO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int52:[P1:10,P2:9,P3:10,P4:10,P5:7,P6:20] → state=S6561, props=['cJ2PO', 'cMSPO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int53:[P1:10,P2:9,P3:11,P4:10,P5:7,P6:20] → state=S6765, props=['cMSPO', 'j1', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int54:[P1:10,P2:9,P3:11,P4:11,P5:7,P6:20] → state=S6978, props=['j1', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int55:[P1:10,P2:9,P3:11,P4:11,P5:8,P6:20] → state=S7505, props=['j1', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_po_comm56:[P1:10,P2:9,P3:12,P4:11,P5:8,P6:21] → state=S7645, props=['cJ2PO', 'j1'], verdict=TRUE ✅
+ms_po_comm57:[P1:10,P2:9,P3:12,P4:12,P5:8,P6:22] → state=S7721, props=['cJ2PO', 'cMSPO', 'j1'], verdict=TRUE ✅
+po_eval58:[P1:10,P2:9,P3:12,P4:12,P5:8,P6:23] → state=S7794, props=['cJ2PO', 'cMSPO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int59:[P1:11,P2:9,P3:12,P4:12,P5:8,P6:23] → state=S8789, props=['cJ2PO', 'cMSPO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int60:[P1:11,P2:10,P3:12,P4:12,P5:8,P6:23] → state=S9922, props=['cJ2PO', 'cMSPO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int61:[P1:11,P2:10,P3:13,P4:12,P5:8,P6:23] → state=S10335, props=['cMSPO', 'j1', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int62:[P1:11,P2:10,P3:13,P4:13,P5:8,P6:23] → state=S10756, props=['j1', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s2_int63:[P1:11,P2:10,P3:13,P4:13,P5:9,P6:23] → state=S11871, props=['j1', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_po_comm64:[P1:12,P2:10,P3:13,P4:13,P5:9,P6:24] → state=S11983, props=['cS1PO', 'j1', 'j2'], verdict=TRUE ✅
+ms_po_comm65:[P1:12,P2:10,P3:13,P4:14,P5:9,P6:25] → state=S12042, props=['cMSPO', 'cS1PO', 'j1', 'j2'], verdict=TRUE ✅
+po_eval66:[P1:12,P2:10,P3:13,P4:14,P5:9,P6:26] → state=S12101, props=['cMSPO', 'cS1PO', 'j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+s1_int67:[P1:13,P2:10,P3:13,P4:14,P5:9,P6:26] → state=S12310, props=['cMSPO', 'j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j1_int68:[P1:13,P2:11,P3:13,P4:14,P5:9,P6:26] → state=S13908, props=['cMSPO', 'j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+j2_int69:[P1:13,P2:11,P3:14,P4:14,P5:9,P6:26] → state=S15058, props=['cMSPO', 'j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+ms_int70:[P1:13,P2:11,P3:14,P4:15,P5:9,P6:26] → state=S15436, props=['j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=TRUE ✅
+
+Execution interrupted by user
+Command exited with non-zero status 130
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-100K.json --reduce --output-level=max_state --log-categories=
+real: 12.58s
+user: 12.46s 
+sys: 0.07s 
+memory: 186336KB 
+cpu: 99%
+########## TRACE=500k, REDUCE=True ##########
+INFO: PoET Runtime Verification Starting
+INFO: Property File: property
+INFO: Trace File: traces/trace-500K.json
+INFO: Output Level: max_state
+INFO: Reduce Mode: True
+INFO: Visual Output: False
+INFO: Trace Validation: False
+INFO: Property: EP( (EP(s1) & !EP(j1)) | (EP(j2) & ms & !EP(s2)) )
+INFO: Parsed formula: EP(((EP((s1)) & ! EP((j1))) | (EP((j2)) & ms & ! EP((s2)))))
+Initial:[P1:0,P2:0,P3:0,P4:0,P5:0,P6:0] → state=S0, props=[], verdict=FALSE ❌
+s1_int1:[P1:1,P2:0,P3:0,P4:0,P5:0,P6:0] → state=S1, props=['dS1'], verdict=FALSE ❌
+j1_int2:[P1:1,P2:1,P3:0,P4:0,P5:0,P6:0] → state=S3, props=['dJ1', 'dS1'], verdict=FALSE ❌
+j2_int3:[P1:1,P2:1,P3:1,P4:0,P5:0,P6:0] → state=S7, props=['dJ1', 'dJ2', 'dS1'], verdict=FALSE ❌
+ms_int4:[P1:1,P2:1,P3:1,P4:1,P5:0,P6:0] → state=S15, props=['dJ1', 'dJ2', 'dMS', 'dS1'], verdict=FALSE ❌
+s2_int5:[P1:1,P2:1,P3:1,P4:1,P5:1,P6:0] → state=S31, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2'], verdict=FALSE ❌
+po_eval6:[P1:1,P2:1,P3:1,P4:1,P5:1,P6:1] → state=S63, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+s1_int7:[P1:2,P2:1,P3:1,P4:1,P5:1,P6:1] → state=S95, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+j1_int8:[P1:2,P2:2,P3:1,P4:1,P5:1,P6:1] → state=S153, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+j2_int9:[P1:2,P2:2,P3:2,P4:1,P5:1,P6:1] → state=S237, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+ms_int10:[P1:2,P2:2,P3:2,P4:2,P5:1,P6:1] → state=S359, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+s2_int11:[P1:2,P2:2,P3:2,P4:2,P5:2,P6:1] → state=S537, props=['dJ1', 'dJ2', 'dMS', 'dS1', 'dS2', 'poe'], verdict=FALSE ❌
+s2_po_comm12:[P1:2,P2:2,P3:2,P4:2,P5:3,P6:2] → state=S634, props=['cS2PO', 'dJ1', 'dJ2', 'dMS', 'dS1'], verdict=FALSE ❌
+po_eval13:[P1:2,P2:2,P3:2,P4:2,P5:3,P6:3] → state=S727, props=['cS2PO', 'dJ1', 'dJ2', 'dMS', 'dS1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+s1_int14:[P1:3,P2:2,P3:2,P4:2,P5:3,P6:3] → state=S958, props=['cS2PO', 'dJ1', 'dJ2', 'dMS', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+j1_int15:[P1:3,P2:3,P3:2,P4:2,P5:3,P6:3] → state=S1258, props=['cS2PO', 'dJ2', 'dMS', 'j1', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+j2_int16:[P1:3,P2:3,P3:3,P4:2,P5:3,P6:3] → state=S1655, props=['cS2PO', 'dMS', 'j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+ms_int17:[P1:3,P2:3,P3:3,P4:3,P5:3,P6:3] → state=S2181, props=['cS2PO', 'j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+s2_int18:[P1:3,P2:3,P3:3,P4:3,P5:4,P6:3] → state=S2708, props=['j1', 'j2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+s1_po_comm19:[P1:4,P2:3,P3:3,P4:3,P5:4,P6:4] → state=S2853, props=['cS1PO', 'j1', 'j2'], verdict=FALSE ❌
+j1_po_comm20:[P1:4,P2:4,P3:3,P4:3,P5:4,P6:5] → state=S2896, props=['cJ1PO', 'cS1PO', 'j2'], verdict=FALSE ❌
+j2_po_comm21:[P1:4,P2:4,P3:4,P4:3,P5:4,P6:6] → state=S2911, props=['cJ1PO', 'cJ2PO', 'cS1PO'], verdict=FALSE ❌
+ms_po_comm22:[P1:4,P2:4,P3:4,P4:4,P5:4,P6:7] → state=S2917, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'cS1PO'], verdict=FALSE ❌
+s2_po_comm23:[P1:4,P2:4,P3:4,P4:4,P5:5,P6:8] → state=S2919, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'cS1PO', 'cS2PO'], verdict=FALSE ❌
+po_eval24:[P1:4,P2:4,P3:4,P4:4,P5:5,P6:9] → state=S2920, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'cS1PO', 'cS2PO', 'kJ1', 'kJ2', 'k_not_s2', 'poe'], verdict=FALSE ❌
+s1_int25:[P1:5,P2:4,P3:4,P4:4,P5:5,P6:9] → state=S3092, props=['cJ1PO', 'cJ2PO', 'cMSPO', 'cS2PO', 'kJ1', 'kJ2', 'k_not_s2', 'poe'], verdict=FALSE ❌
+j1_int26:[P1:5,P2:5,P3:4,P4:4,P5:5,P6:9] → state=S3204, props=['cJ2PO', 'cMSPO', 'cS2PO', 'kJ1', 'kJ2', 'k_not_s2', 'poe'], verdict=FALSE ❌
+j2_int27:[P1:5,P2:5,P3:5,P4:4,P5:5,P6:9] → state=S3273, props=['cMSPO', 'cS2PO', 'j2', 'kJ1', 'kJ2', 'k_not_s2', 'poe'], verdict=FALSE ❌
+ms_int28:[P1:5,P2:5,P3:5,P4:5,P5:5,P6:9] → state=S3323, props=['cS2PO', 'j2', 'kJ1', 'kJ2', 'k_not_s2', 'poe'], verdict=FALSE ❌
+s2_int29:[P1:5,P2:5,P3:5,P4:5,P5:6,P6:9] → state=S3369, props=['j2', 'kJ1', 'kJ2', 'k_not_s2', 'poe'], verdict=FALSE ❌
+s1_po_comm30:[P1:6,P2:5,P3:5,P4:5,P5:6,P6:10] → state=S3394, props=['cS1PO', 'j2'], verdict=FALSE ❌
+j1_po_comm31:[P1:6,P2:6,P3:5,P4:5,P5:6,P6:11] → state=S3406, props=['cJ1PO', 'cS1PO', 'j2'], verdict=FALSE ❌
+j2_po_comm32:[P1:6,P2:6,P3:6,P4:5,P5:6,P6:12] → state=S3416, props=['cJ1PO', 'cJ2PO', 'cS1PO'], verdict=FALSE ❌
+po_eval33:[P1:6,P2:6,P3:6,P4:5,P5:6,P6:13] → state=S3424, props=['cJ1PO', 'cJ2PO', 'cS1PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+s1_int34:[P1:7,P2:6,P3:6,P4:5,P5:6,P6:13] → state=S3460, props=['cJ1PO', 'cJ2PO', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+j1_int35:[P1:7,P2:7,P3:6,P4:5,P5:6,P6:13] → state=S3513, props=['cJ2PO', 'j1', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+j2_int36:[P1:7,P2:7,P3:7,P4:5,P5:6,P6:13] → state=S3563, props=['j1', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+ms_int37:[P1:7,P2:7,P3:7,P4:6,P5:6,P6:13] → state=S3690, props=['j1', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe'], verdict=FALSE ❌
+s2_int38:[P1:7,P2:7,P3:7,P4:6,P5:7,P6:13] → state=S3850, props=['j1', 'j2', 'kJ2', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=FALSE ❌
+s1_po_comm39:[P1:8,P2:7,P3:7,P4:6,P5:7,P6:14] → state=S3902, props=['cS1PO', 'j1', 'j2', 's2'], verdict=FALSE ❌
+ms_po_comm40:[P1:8,P2:7,P3:7,P4:7,P5:7,P6:15] → state=S3920, props=['cMSPO', 'cS1PO', 'j1', 'j2', 's2'], verdict=FALSE ❌
+s2_po_comm41:[P1:8,P2:7,P3:7,P4:7,P5:8,P6:16] → state=S3931, props=['cMSPO', 'cS1PO', 'cS2PO', 'j1', 'j2'], verdict=FALSE ❌
+po_eval42:[P1:8,P2:7,P3:7,P4:7,P5:8,P6:17] → state=S3939, props=['cMSPO', 'cS1PO', 'cS2PO', 'j1', 'j2', 'kS2', 'k_not_j1', 'poe'], verdict=FALSE ❌
+s1_int43:[P1:9,P2:7,P3:7,P4:7,P5:8,P6:17] → state=S3999, props=['cMSPO', 'cS2PO', 'j1', 'j2', 'kS2', 'k_not_j1', 'poe'], verdict=FALSE ❌
+j1_int44:[P1:9,P2:8,P3:7,P4:7,P5:8,P6:17] → state=S4184, props=['cMSPO', 'cS2PO', 'j1', 'j2', 'kS2', 'k_not_j1', 'poe'], verdict=FALSE ❌
+j2_int45:[P1:9,P2:8,P3:8,P4:7,P5:8,P6:17] → state=S4392, props=['cMSPO', 'cS2PO', 'j1', 'kS2', 'k_not_j1', 'poe'], verdict=FALSE ❌
+ms_int46:[P1:9,P2:8,P3:8,P4:8,P5:8,P6:17] → state=S4498, props=['cS2PO', 'j1', 'kS2', 'k_not_j1', 'poe'], verdict=FALSE ❌
+s2_int47:[P1:9,P2:8,P3:8,P4:8,P5:9,P6:17] → state=S4588, props=['j1', 'kS2', 'k_not_j1', 'poe', 's2'], verdict=FALSE ❌
+s1_po_comm48:[P1:10,P2:8,P3:8,P4:8,P5:9,P6:18] → state=S4635, props=['cS1PO', 'j1', 's2'], verdict=FALSE ❌
+ms_po_comm49:[P1:10,P2:8,P3:8,P4:9,P5:9,P6:19] → state=S4659, props=['cMSPO', 'cS1PO', 'j1', 's2'], verdict=FALSE ❌
+s2_po_comm50:[P1:10,P2:8,P3:8,P4:9,P5:10,P6:20] → state=S4677, props=['cMSPO', 'cS1PO', 'cS2PO', 'j1'], verdict=FALSE ❌
+po_eval51:[P1:10,P2:8,P3:8,P4:9,P5:10,P6:21] → state=S4692, props=['cMSPO', 'cS1PO', 'cS2PO', 'j1', 'kS2', 'k_not_j1', 'poe'], verdict=FALSE ❌
+s1_int52:[P1:11,P2:8,P3:8,P4:9,P5:10,P6:21] → state=S4770, props=['cMSPO', 'cS2PO', 'j1', 'kS2', 'k_not_j1', 'poe'], verdict=FALSE ❌
+j1_int53:[P1:11,P2:9,P3:8,P4:9,P5:10,P6:21] → state=S5121, props=['cMSPO', 'cS2PO', 'j1', 'kS2', 'k_not_j1', 'poe'], verdict=FALSE ❌
+j2_int54:[P1:11,P2:9,P3:9,P4:9,P5:10,P6:21] → state=S5522, props=['cMSPO', 'cS2PO', 'j1', 'kS2', 'k_not_j1', 'poe'], verdict=FALSE ❌
+ms_int55:[P1:11,P2:9,P3:9,P4:10,P5:10,P6:21] → state=S5660, props=['cS2PO', 'j1', 'kS2', 'k_not_j1', 'poe'], verdict=FALSE ❌
+s2_int56:[P1:11,P2:9,P3:9,P4:10,P5:11,P6:21] → state=S5805, props=['j1', 'kS2', 'k_not_j1', 'poe', 's2'], verdict=FALSE ❌
+s1_po_comm57:[P1:12,P2:9,P3:9,P4:10,P5:11,P6:22] → state=S5880, props=['cS1PO', 'j1', 's2'], verdict=FALSE ❌
+ms_po_comm58:[P1:12,P2:9,P3:9,P4:11,P5:11,P6:23] → state=S5920, props=['cMSPO', 'cS1PO', 'j1', 's2'], verdict=FALSE ❌
+po_eval59:[P1:12,P2:9,P3:9,P4:11,P5:11,P6:24] → state=S5961, props=['cMSPO', 'cS1PO', 'j1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=FALSE ❌
+s1_int60:[P1:13,P2:9,P3:9,P4:11,P5:11,P6:24] → state=S6098, props=['cMSPO', 'j1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+j1_int61:[P1:13,P2:10,P3:9,P4:11,P5:11,P6:24] → state=S6672, props=['cMSPO', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+j2_int62:[P1:13,P2:10,P3:10,P4:11,P5:11,P6:24] → state=S7332, props=['cMSPO', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+ms_int63:[P1:13,P2:10,P3:10,P4:12,P5:11,P6:24] → state=S7542, props=['k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+s2_int64:[P1:13,P2:10,P3:10,P4:12,P5:12,P6:24] → state=S8058, props=['k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+s1_po_comm65:[P1:14,P2:10,P3:10,P4:12,P5:12,P6:25] → state=S8226, props=['cS1PO', 's2'], verdict=FALSE ❌
+po_eval66:[P1:14,P2:10,P3:10,P4:12,P5:12,P6:26] → state=S8386, props=['cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=FALSE ❌
+s1_int67:[P1:15,P2:10,P3:10,P4:12,P5:12,P6:26] → state=S8698, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+j1_int68:[P1:15,P2:11,P3:10,P4:12,P5:12,P6:26] → state=S9659, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+j2_int69:[P1:15,P2:11,P3:11,P4:12,P5:12,P6:26] → state=S10762, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+ms_int70:[P1:15,P2:11,P3:11,P4:13,P5:12,P6:26] → state=S11637, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+s2_int71:[P1:15,P2:11,P3:11,P4:13,P5:13,P6:26] → state=S12951, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+s1_po_comm72:[P1:16,P2:11,P3:11,P4:13,P5:13,P6:27] → state=S13396, props=['cS1PO', 's2'], verdict=FALSE ❌
+po_eval73:[P1:16,P2:11,P3:11,P4:13,P5:13,P6:28] → state=S13841, props=['cS1PO', 'kS1', 'k_not_j1', 'k_not_s2', 'poe', 's2'], verdict=FALSE ❌
+s1_int74:[P1:17,P2:11,P3:11,P4:13,P5:13,P6:28] → state=S14720, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+j1_int75:[P1:17,P2:12,P3:11,P4:13,P5:13,P6:28] → state=S16511, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+j2_int76:[P1:17,P2:12,P3:12,P4:13,P5:13,P6:28] → state=S18554, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+ms_int77:[P1:17,P2:12,P3:12,P4:14,P5:13,P6:28] → state=S20919, props=['kS1', 'k_not_j1', 'k_not_s2', 'poe', 's1', 's2'], verdict=FALSE ❌
+
+Execution interrupted by user
+Command exited with non-zero status 130
+/usr/bin/time results
+cmd:python3.12 ../../poet.py --property=property --trace=traces/trace-500K.json --reduce --output-level=max_state --log-categories=
+real: 27.31s
+user: 26.89s 
+sys: 0.24s 
+memory: 570224KB 
+cpu: 99%

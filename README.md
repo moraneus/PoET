@@ -1,167 +1,440 @@
-# PoET (Partial Order Execution Tracer) Tool
+# PoET: Partial Order Execution Tracer
+
 ```
-██████╗          ███████╗████████╗
-██╔══██╗ ██████╗ ██╔════╝╚══██╔══╝
-██████╔╝██╔═══██╗█████╗     ██║   
+██████╗  ██████╗ ███████╗████████╗
+██╔══██╗██╔═══██╗██╔════╝╚══██╔══╝
+██████╔╝██║   ██║█████╗     ██║   
 ██╔═══╝ ██║   ██║██╔══╝     ██║   
 ██║     ╚██████╔╝███████╗   ██║   
-╚═╝      ╚═════╝ ╚══════╝   ╚═╝ 
-Partial Order Execution Tracer
+╚═╝      ╚═════╝ ╚══════╝   ╚═╝   
+        Partial Order Execution Tracer
 ```
-## Description
 
-**PoET (Partial Order Execution Tracer)** is a runtime verification (RV) tool designed to monitor and verify executions of concurrent or distributed systems against formal specifications. Developed in Python 3.12, PoET analyzes a given execution trace, which represents a partial order of events, by constructing a graph of global states (frontiers). It then checks this graph against properties specified in **PCTL (Past Computation Tree Logic)**, a temporal logic with past operators.
+[![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Research%20Tool-orange.svg)]()
 
-In concurrent or distributed systems, non-deterministic interactions can lead to numerous potential execution paths. PoET focuses on a single observed partial order execution and evaluates properties based on the branching structure of consistent global states derivable from it. This allows for the verification of complex temporal behaviors and the detection of specification violations within the observed execution.
+## Overview
 
-## Features
+**PoET (Partial Order Execution Tracer)** is a sophisticated runtime verification tool for concurrent and distributed systems. Built on solid theoretical foundations from academic research, PoET monitors execution traces against formal specifications written in **PCTL (Past Computation Tree Logic)**.
 
-- **Runtime Verification (RV):** Verifies execution traces against PCTL specifications.
-- **Partial Order Semantics:** Interprets executions based on partial order between events, focusing on the structure of global states (frontiers).
-- **PCTL Specification:** Uses Past Computation Tree Logic (PCTL) for expressing temporal properties with past operators.
-- **Vector Clock Based Analysis:** Utilizes vector clocks associated with events to manage and understand the partial order.
-- **Graphical Representation:** Can generate visualizations of the explored global state graph (frontiers and transitions), with states colored based on property satisfaction.
-- **Reduce Mode Functionality:** Offers an optional "Reduce mode" to optimize the state graph by removing redundant states that no longer affect future verdicts.
+Unlike traditional approaches that use interleaving semantics, PoET embraces **partial order semantics** to construct a branching structure of global states (frontiers) from distributed system executions. This enables precise verification of temporal properties that are naturally expressed in terms of causality and concurrency.
 
-## Installation Guide
+### Key Capabilities
+
+- 🔍 **Runtime Verification**: Monitor system executions against formal PCTL specifications
+- 🌐 **Partial Order Semantics**: Native support for concurrent and distributed system behaviors  
+- ⏱️ **Vector Clock Analysis**: Fidge-Mattern vector clocks for precise event ordering
+- 📊 **State Space Exploration**: Complete exploration of valid concurrent interleavings
+- 🎨 **Visual Analysis**: Interactive state graph generation with property satisfaction highlighting
+- ⚡ **Performance Optimized**: Efficient algorithms with optional state space reduction
+
+## Installation
 
 ### Prerequisites
 
-Ensure you have Python 3.12 installed on your machine. You can verify this by running:
-```bash
-python --version
-```
-### Setting Up a Virtual Environment
-Using a virtual environment for Python projects is recommended as it keeps dependencies required by 
-different projects separate. To set up and activate a virtual environment, follow these steps:
-1. **Install virtualenv**
-```bash 
-# Install virtualenv if it's not already installed
-pip install virtualenv
+**PoET** requires Python 3.12 or higher. Verify your installation:
 
-# Create a virtual environment
-virtualenv venv
-```
-2. **Activate the virtual environment**
-   1. On Windows:
-        ```commandline
-        venv\Scripts\activate
-        ```
-   2. On Unix or MacOS:
-        ```   
-        source venv/bin/activate
-        ```
-### Installing Dependencies
-**PoET** requires several Python packages to function properly. 
-These dependencies are listed in the `requirements.txt` file and can be installed using pip:
 ```bash
-pip install -r requirements.txt
+python --version  # Should output Python 3.12.x or higher
 ```
+
+### Quick Setup
+
+1. **Clone the repository** (or download the source code):
+   ```bash
+   git clone <repository-url>
+   cd PoET
+   ```
+
+2. **Create and activate virtual environment**:
+   ```bash
+   # Create virtual environment
+   python -m venv venv
+   
+   # Activate (Unix/macOS)
+   source venv/bin/activate
+   
+   # Activate (Windows)
+   venv\Scripts\activate
+   ```
+
+3. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Dependencies
+
+PoET relies on several key libraries:
+- **PLY (Python Lex-Yacc)**: PCTL parser generation
+- **Graphviz**: State diagram visualization  
+- **Colorama**: Colored console output
+- **Pillow**: Image processing for animations
+- **CairoSVG**: SVG to PNG conversion
 
 ## Usage
 
-To operate **PoET**, execute the following command with the required options:
+### Basic Command Structure
 
 ```bash
-  poet.py --property=<property> --trace.json.json.json=<trace.json.json.json> [--reduce] [--debug] [--visual] [--experiment]
-  poet.py -p <property> -t <trace.json.json.json> [-r] [-d] [-v] [-e]
+python poet.py --property=<property_file> --trace=<trace_file> [options]
 ```
 
 ### Command Line Options
-* `-p <property>`, `--property=<property>`: Specifies the filename that contains the property\specification to be checked. This is a mandatory argument.
-* `-t <trace>`, `--trace=<trace>`: Specifies the filename that contains the trace to be analyzed. This is also a mandatory argument.
-* `-r`, `--reduce`: Enables the reduce mode, which optimizes the graph representation by pruning unnecessary nodes. This is an optional flag.
-* `-d`, `--debug`: Activates debug mode, providing detailed logs that can assist in diagnosing and understanding the tool's operation. This is an optional flag.
-* `-v`, `--visual`: Enable visual output (state graphs files). This is an optional flag.
-* `-e`, `--experiment`: Disable all print due to experiment benchmarks. This is an optional flag.
-* `-h`, `--help`: Displays the help message and exits, useful for quick reference on command usage.
 
-#### Property File (`<property>`)
-The property file specifies the temporal properties that the trace must satisfy. It contains temporal logic expressions that define the expected behavior of the system under analysis based on the events and states captured in the trace file. For more details, refer to the specification language section provided below.
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-p, --property` | PCTL property file (required) | - |
+| `-t, --trace` | JSON trace file (required) | - |
+| `-r, --reduce` | Enable state space reduction | disabled |
+| `-v, --visual` | Generate visual state graphs | disabled |
+| `--output-level` | Output verbosity level | `default` |
+| `--log-file` | Write logs to file | none |
+| `--log-categories` | Filter log categories | all |
 
-#### Trace File (`<trace>`)
-The trace file must be a JSON formatted file describing the events, the number of processes, and vector clocks.
+### Output Levels
+
+- **`nothing`**: Suppress all non-error output
+- **`experiment`**: Minimal output for benchmarks
+- **`default`**: Standard operational messages  
+- **`max_state`**: Global state summaries after each event
+- **`debug`**: Maximum detailed output for developers
+
+### Quick Start Example
+
+```bash
+# Basic verification
+python poet.py -p property.pctl -t trace.json
+
+# With visualization and debug output
+python poet.py -p property.pctl -t trace.json --visual --output-level=debug
+
+# Performance benchmarking
+python poet.py -p property.pctl -t trace.json --output-level=experiment --reduce
+```
+
+## Input Formats
+
+### PCTL Property Files
+
+Properties are specified using **Past Computation Tree Logic (PCTL)**, a branching-time temporal logic with past operators.
+
+**Example property file** (`property.pctl`):
+```
+EP(ready & confirmed)
+```
+
+### Trace Files
+
+Traces are JSON files describing distributed system executions with vector clocks.
+
+**Example trace file** (`trace.json`):
+```json
+{
+  "processes": 3,
+  "process_names": ["Client", "Server", "Database"],
+  "events": [
+    ["client_start", ["P1"], ["init", "ready"], [1, 0, 0]],
+    ["server_req", ["P2"], ["confirmed"], [0, 1, 0]], 
+    ["db_query", ["P3"], ["data_ready"], [0, 0, 1]],
+    ["sync_point", ["P1", "P2"], ["synchronized"], [2, 2, 0]]
+  ]
+}
+```
+
+#### Trace Format Specification
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `processes` | `int` | Total number of processes in the system |
+| `process_names` | `list[str]` | Optional human-readable process names |
+| `events` | `list` | Sequence of events in chronological order |
+
+#### Event Format
+
+Each event is a 4-tuple: `[name, processes, propositions, vector_clock]`
+
+- **`name`** (`str`): Unique event identifier
+- **`processes`** (`list[str]`): Participating processes (e.g., `["P1"]`, `["P1", "P2"]`)
+- **`propositions`** (`list[str]`): Atomic propositions that become true
+- **`vector_clock`** (`list[int]`): Fidge-Mattern vector clock values
+
+## PCTL Specification Language
+
+### Grammar
+
+```bnf
+<formula> ::= <proposition>
+            | <formula> & <formula>           (* conjunction *)
+            | <formula> | <formula>           (* disjunction *)
+            | <formula> -> <formula>          (* implication *)
+            | <formula> <-> <formula>         (* biconditional *)
+            | ! <formula>                     (* negation *)
+            | A(<formula> S <formula>)        (* universal since *)
+            | E(<formula> S <formula>)        (* existential since *)
+            | AP <formula>                    (* always previously *)
+            | EP <formula>                    (* exists previously *)
+            | AH <formula>                    (* always historically *)
+            | EH <formula>                    (* exists historically *)
+            | AY <formula>                    (* always yesterday *)
+            | EY <formula>                    (* exists yesterday *)
+            | (<formula>)                     (* parentheses *)
+            | TRUE | FALSE                    (* constants *)
+
+<proposition> ::= [a-zA-Z_][a-zA-Z0-9_'\.]*  (* identifiers *)
+```
+
+### Temporal Operators
+
+| Operator | Semantics | Intuitive Meaning |
+|----------|-----------|-------------------|
+| `EP φ` | ∃path: φ held previously | "φ happened sometime in the past" |
+| `AP φ` | ∀paths: φ held previously | "φ held in all past states" |
+| `EY φ` | ∃path: φ held yesterday | "φ held in some immediate predecessor" |
+| `AY φ` | ∀paths: φ held yesterday | "φ held in all immediate predecessors" |
+| `EH φ` | ∃path: φ always held | "φ held continuously in some path" |
+| `AH φ` | ∀paths: φ always held | "φ held continuously in all paths" |
+| `E(φ S ψ)` | ∃path: φ since ψ | "ψ occurred, then φ held until now" |
+| `A(φ S ψ)` | ∀paths: φ since ψ | "In all paths: ψ occurred, then φ held" |
+
+### Example Properties
+
+```pctl
+// Safety: No deadlock detected
+AH(!deadlock)
+
+// Liveness: Request eventually confirmed  
+EP(request -> EP(confirmed))
+
+// Ordering: Initialization before operation
+EP(initialized) -> AH(initialized -> !operation | EP(operation))
+
+// Mutual exclusion: At most one in critical section
+AH(!(critical_p1 & critical_p2))
+
+// Response property: Every request gets a response
+AH(request -> EP(response))
+```
+
+## Understanding the Output
+
+### State Graph Visualization
+
+When using `--visual`, PoET generates SVG state diagrams showing:
+
+- **Gray nodes**: States that don't satisfy the property
+- **Blue nodes**: States that satisfy the property  
+- **Edges**: State transitions labeled with triggering events
+- **Node labels**: State names and active propositions
+
+### Console Output Modes
+
+**Default Mode**:
+```
+INFO: Property: EP(ready & confirmed)
+INFO: Parsed formula: EP((ready & confirmed))
+[FINAL VERDICT]: TRUE
+```
+
+**Max State Mode**:
+```
+Initial:[P1:0,P2:0,P3:0] → state=S0, props=[], verdict=FALSE ❌
+client_start:[P1:1,P2:0,P3:0] → state=S1, props=[init,ready], verdict=FALSE ❌
+server_req:[P1:1,P2:1,P3:0] → state=S3, props=[confirmed,init,ready], verdict=TRUE ✅
+```
+
+**Debug Mode**: Includes detailed state exploration, frontier calculations, and PCTL evaluation traces.
+
+## Advanced Features
+
+### State Space Reduction
+
+The `--reduce` flag enables automatic pruning of disabled states that no longer affect the verification verdict:
+
+```bash
+python poet.py -p property.pctl -t trace.json --reduce
+```
+
+### Concurrent Event Handling
+
+PoET automatically detects concurrent events using vector clock analysis and explores alternative interleavings to ensure complete verification coverage.
+
+### Performance Monitoring
+
+Use `--output-level=experiment` for benchmark-friendly output:
+```
+[TOTAL_EVENTS]: 1247
+[TOTAL_STATES]: 89
+[MAX_EVENT]: 0.023s for event sync_operation
+[FINAL VERDICT]: TRUE
+```
+
+### Logging and Debugging
+
+Fine-grained logging control:
+```bash
+# Log only state and PCTL categories to file
+python poet.py -p prop.pctl -t trace.json --log-file=debug.log --log-categories=STATE,PCTL
+
+# Enable all logging categories
+python poet.py -p prop.pctl -t trace.json --log-file=debug.log --log-categories=
+
+# Disable all logging (performance mode)
+python poet.py -p prop.pctl -t trace.json --log-categories=none
+```
+
+## Architecture Overview
+
+PoET implements the sliding window algorithm from academic research on partial order runtime verification:
+
+```
+Event Stream → Vector Clock Manager → State Manager → PCTL Evaluator → Verdict
+     ↓              ↓                      ↓              ↓
+ JSON Parser    Fidge-Mattern         Frontier        AST-based
+               Deliverability       Construction     Evaluation
+```
+
+### Core Components
+
+- **Event Processor**: Validates and initializes events from trace data
+- **Vector Clock Manager**: Manages event ordering using Fidge-Mattern clocks
+- **State Manager**: Constructs global states and manages transitions
+- **PCTL Parser**: PLY-based parser for temporal logic formulas
+- **AST Evaluator**: Recursive evaluation engine for PCTL expressions
+- **Visualization Engine**: Graphviz-based state diagram generation
+
+## Examples and Use Cases
+
+### Distributed Database Verification
+
+```json
+{
+  "processes": 3,
+  "process_names": ["Client", "Primary", "Replica"], 
+  "events": [
+    ["begin_txn", ["P1"], ["txn_active"], [1, 0, 0]],
+    ["write_primary", ["P2"], ["data_written"], [1, 1, 0]],
+    ["replicate", ["P2", "P3"], ["replicated"], [1, 2, 1]],
+    ["commit", ["P1", "P2"], ["committed"], [2, 3, 1]]
+  ]
+}
+```
+
+Property: `AH(committed -> EP(replicated))`  
+*"Commits only happen after replication"*
+
+### Mutual Exclusion Protocol
+
 ```json
 {
   "processes": 2,
   "events": [
-    ["e1", ["P1"], ["a"], [1, 0]],
-    ["e2", ["P1"], ["b"], [2, 0]],
-    ["e3", ["P1", "P2"], ["a", "c"], [3, 1]],
-    ["e4", ["P2"], ["b"], [3, 2]]
+    ["request_cs", ["P1"], ["requesting"], [1, 0]],
+    ["grant_cs", ["P1"], ["in_critical"], [2, 0]], 
+    ["release_cs", ["P1"], ["released"], [3, 0]],
+    ["request_cs", ["P2"], ["requesting"], [3, 1]],
+    ["grant_cs", ["P2"], ["in_critical"], [3, 2]]
   ]
 }
 ```
-##### Key Descriptions:
-* `processes` (int): The total number of processes in the distributed system.
-* `events` (list): A list of recorded events. Each event is an array:
-  * **event_identifier** (str): e.g., `"e1"`. 
-  * **involved_processes** (list of str): Processes participating in this event, e.g., `["P1"]`, `["P1", "P2"]`.
-  * **propositions** (list of str): Atomic propositions true in the local state(s) of the involved process(es) after this event occurs. e.g., `["a"]`, `["a", "c"]`. 
-  * **vector_clock** (list of int): The vector clock associated with this event. The length of the vector clock must match the processes count. e.g., `[1, 0]` for a 2-process system.
 
-For example, `["e3", ["P1", "P2"], ["a", "c"], [3, 1]]` denotes event `e3` involves processes `P1` and `P2`, makes propositions a (for P1) and `c` (for P2) `true`, and has a vector clock `[3, 1]`.
+Property: `AH(!(in_critical & requesting))`  
+*"Mutual exclusion: never both in critical section"*
 
-## **PoET** Specification Logic
-### Grammar
-```
-<formula> ::= <proposition>
-            | <formula> & <formula>
-            | <formula> | <formula>
-            | <formula> -> <formula>
-            | <formula> <-> <formula>
-            | ! <formula>
-            | A(<formula> S <formula>)
-            | E(<formula> S <formula>)
-            | AP <formula>
-            | EP <formula>
-            | AH <formula>
-            | EH <formula>
-            | AY <formula>
-            | EY <formula>
-            | (<formula>)
-            | TRUE
-            | FALSE
+## Troubleshooting
 
-<proposition> ::= string
+### Common Issues
+
+**Import Errors**: Ensure all dependencies are installed:
+```bash
+pip install -r requirements.txt
 ```
 
-### Formulas
-The different formulas <formula> have the following intuitive meaning:
-```commandline
-TRUE, FALSE     : Boolean truth and falsehood 
-p & q           : p and q
-p | q           : p or q
-p -> q          : p implies q
-p <-> q         : p iff q
-! p             : not p
-E(p S q)        : Exist path where p since q (q was true in the past, and since then, including that point in time, p has been true)
-E(p S q)        : Forall paths p since q
-EP p            : Exist path where p previously happened
-AP p            : Forall paths p previously happened
-EH p            : Exist path where p historically (always in the past) happened
-EH p            : Forall paths p historically happened
-EY p            : Exist path where p happened in the pervious step
-AY p            : Forall paths p happened in the pervious step
+**Graphviz Not Found**: Install Graphviz system package:
+```bash
+# Ubuntu/Debian
+sudo apt-get install graphviz
+
+# macOS
+brew install graphviz
+
+# Windows
+# Download from: https://graphviz.org/download/
 ```
 
-## Graphical Representation
-**PoET** yields a set of SVG images as its output, which describe the graph (state space) 
-construction after each event. Each node in the graph corresponds to a specific state of the 
-system, with the state name displayed at the top and the aggregated propositions that 
-hold for that state listed below. The state is determined by the combination of process 
-states and event occurrences.
-The blue nodes or states are the ones that satisfy the specified property. The edges in 
-the graph represent the transitions between states based on the execution of events.
+**Memory Issues**: Use `--reduce` for large traces:
+```bash
+python poet.py -p property.pctl -t large_trace.json --reduce
+```
 
-![graph.gif](doc%2Fimages%2Fgraph.gif)
+**Parser Errors**: Check PCTL syntax:
+```bash
+# Valid
+EP(ready & confirmed)
 
-In this example, the graph is visually represented as a directed graph, with nodes 
-representing the states and edges representing the transitions between states. 
-The propositions that hold for each state are listed within the corresponding node. 
-The blue coloring of certain nodes indicates that they satisfy the specified property.
+# Invalid - missing parentheses
+EP ready & confirmed
+```
 
-By examining the graphical representation, you can gain insights into the behavior of 
-the system and identify the states that meet the desired property. The visual representation 
-aids in understanding the flow of events and the relationships between different states 
-in the system.
+### Performance Tips
+
+1. **Use state reduction** for large state spaces: `--reduce`
+2. **Filter log categories** for better performance: `--log-categories=ERROR`
+3. **Use experiment mode** for benchmarking: `--output-level=experiment`
+4. **Optimize trace format** by minimizing vector clock dimensions
+
+## Contributing
+
+PoET is a research tool developed for academic and educational purposes. Contributions are welcome!
+
+### Development Setup
+
+```bash
+# Install development dependencies
+pip install -r requirements-dev.txt
+
+# Run tests
+python -m pytest tests/
+
+# Run specific test scenarios
+python -m pytest tests/integration_tests/test_poet_scenario.py::test_poet_scenario[EP_01_SIMPLE_TRUE]
+```
+
+### Testing
+
+PoET includes comprehensive test suites:
+- **Unit tests**: Parser, AST evaluation, vector clocks
+- **Integration tests**: End-to-end scenarios with various PCTL properties
+- **Performance tests**: Benchmarking with large traces
+
+## Academic Background
+
+PoET implements algorithms from research on runtime verification of distributed systems using partial order semantics. The tool bridges theoretical computer science with practical verification needs.
+
+### Key References
+
+- **Partial Order Semantics**: Based on Mazurkiewicz traces and event structures
+- **Vector Clocks**: Fidge-Mattern algorithm for distributed systems
+- **PCTL Logic**: Past-time Computation Tree Logic for branching-time properties
+- **Runtime Verification**: Online monitoring of system executions
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Citation
+
+If you use PoET in academic work, please cite:
+```bibtex
+@misc{poet2024,
+  title={PoET: Partial Order Execution Tracer for Runtime Verification},
+  author={[Authors]},
+  year={2024},
+  url={https://github.com/[repository]}
+}
+```
+
+---
+
+**PoET** - Bringing theoretical rigor to practical distributed system verification.

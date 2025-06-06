@@ -1,13 +1,6 @@
 {
     "events": [
-        [
-            "pa_int1",
-            [
-                "P1"
-            ],
-            [
-                "pa_dormant_ping"
-            ],
+        ["pa_int1",["P1"],["pa_dormant_ping"],
             [
                 1,
                 0,

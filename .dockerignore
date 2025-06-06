@@ -1,0 +1,72 @@
+# Git and version control
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.mypy_cache
+.pytest_cache
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Documentation
+docs/_build/
+*.pdf
+
+# Test results
+test-results/
+htmlcov/
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# Development files
+docker-compose.yml
+docker-compose.override.yml
+Dockerfile.dev
+.dockerignore
+
+# Example files (optional - include if you want them in container)
+# examples/
+# workspace/

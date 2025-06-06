@@ -1,0 +1,1 @@
+EP( (aX & EP(pX)) | (aY & EP(pY)) )
