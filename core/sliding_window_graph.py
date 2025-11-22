@@ -6,7 +6,6 @@
 # independent event commutation.
 
 from typing import Dict, List, Set, Tuple, Optional, Any
-from collections import deque
 
 from model.event import Event
 from model.process_modes import ProcessModes
@@ -48,7 +47,7 @@ class SlidingWindowGraph:
         self.maximal_node: Optional[SlidingWindowNode] = None
         self.logger = get_logger()
         self.node_counter = 0
-        self.P = set(f"P{i+1}" for i in range(num_processes))  # Set of all processes
+        self.P = set(f"P{i + 1}" for i in range(num_processes))  # Set of all processes
 
     def _generate_node_id(self) -> str:
         """Generate unique node ID."""
@@ -76,7 +75,7 @@ class SlidingWindowGraph:
         new_frontier = list(current_frontier)
 
         # Apply event to involved processes
-        for i, process_name in enumerate([f"P{j+1}" for j in range(self.num_processes)]):
+        for i, process_name in enumerate([f"P{j + 1}" for j in range(self.num_processes)]):
             if process_name in event.processes:
                 # Replace the component for this process with the new event
                 new_frontier[i] = event
@@ -114,11 +113,11 @@ class SlidingWindowGraph:
         if self.maximal_node is None:
             # Initialize with IOTA frontier
             initial_frontier = [ProcessModes.IOTA] * self.num_processes
-            self.maximal_node = self._create_or_get_node(initial_frontier)
+            self.maximal_node = self.create_or_get_node(initial_frontier)
 
         # Create new maximal frontier
         new_frontier = self._create_successor_frontier(self.maximal_node.frontier, event)
-        new_node = self._create_or_get_node(new_frontier)
+        new_node = self.create_or_get_node(new_frontier)
 
         # Add edge
         self._add_edge(self.maximal_node, new_node, event)
@@ -134,7 +133,7 @@ class SlidingWindowGraph:
 
         return [new_node]
 
-    def _create_or_get_node(self, frontier: List[Any]) -> SlidingWindowNode:
+    def create_or_get_node(self, frontier: List[Any]) -> SlidingWindowNode:
         """Create new node or return existing node with same frontier."""
         frontier_key = self._frontier_to_key(frontier)
 
@@ -178,7 +177,8 @@ class SlidingWindowGraph:
             self.logger.debug("No previous maximal node found for backward propagation", LogCategory.STATE)
             return
 
-        self.logger.debug(f"Starting backward propagation from previous maximal node {previous_maximal.node_id}", LogCategory.STATE)
+        self.logger.debug(f"Starting backward propagation from previous maximal node {previous_maximal.node_id}",
+                          LogCategory.STATE)
         visited = set()
         self._dfs_search_for_edge_patterns(previous_maximal, new_event, visited)
 
@@ -192,7 +192,8 @@ class SlidingWindowGraph:
             return
 
         visited.add(current_node.node_id)
-        self.logger.trace(f"DFS visiting node {current_node.node_id} looking for patterns with {new_event.name}", LogCategory.STATE)
+        self.logger.trace(f"DFS visiting node {current_node.node_id} looking for patterns with {new_event.name}",
+                          LogCategory.STATE)
 
         # Look for edge patterns: current_node --α--> s' --β--> s''
         # where β is new_event and α, β are independent
@@ -213,17 +214,18 @@ class SlidingWindowGraph:
             for s_double_prime, beta_in_pattern in s_prime.outgoing_edges:
                 # Check if this forms the pattern we're looking for
                 if (beta_in_pattern is beta_event and
-                    self._are_events_independent(alpha_event, beta_event)):
-
+                        self._are_events_independent(alpha_event, beta_event)):
                     self.logger.trace(
-                        f"Found commutative pattern: {s_node.node_id} --{alpha_event.name}--> {s_prime.node_id} --{beta_event.name}--> {s_double_prime.node_id}",
+                        f"Found commutative pattern: {s_node.node_id} --{alpha_event.name}--> "
+                        f"{s_prime.node_id} --{beta_event.name}--> {s_double_prime.node_id}",
                         LogCategory.STATE
                     )
 
                     # Create commutative path: s --β--> r --α--> s''
                     self._create_commutative_path_exact(s_node, alpha_event, beta_event, s_double_prime)
 
-    def _create_commutative_path_exact(self, s_node: SlidingWindowNode, alpha: Event, beta: Event, s_double_prime: SlidingWindowNode):
+    def _create_commutative_path_exact(self, s_node: SlidingWindowNode, alpha: Event, beta: Event,
+                                       s_double_prime: SlidingWindowNode):
         """
         Create commutative path exactly as described in paper:
         Given pattern s --α--> s' --β--> s'', create s --β--> r --α--> s''
@@ -231,7 +233,7 @@ class SlidingWindowGraph:
         """
         # Create intermediate node r by applying β to s
         r_frontier = self._create_successor_frontier(s_node.frontier, beta)
-        r_node = self._create_or_get_node(r_frontier)
+        r_node = self.create_or_get_node(r_frontier)
 
         # Add edges for commutative path if they don't already exist
         if not self._edge_exists(s_node, r_node, beta):
@@ -240,10 +242,12 @@ class SlidingWindowGraph:
 
         if not self._edge_exists(r_node, s_double_prime, alpha):
             self._add_edge(r_node, s_double_prime, alpha)
-            self.logger.trace(f"Added edge: {r_node.node_id} --{alpha.name}--> {s_double_prime.node_id}", LogCategory.STATE)
+            self.logger.trace(f"Added edge: {r_node.node_id} --{alpha.name}--> {s_double_prime.node_id}",
+                              LogCategory.STATE)
 
         self.logger.debug(
-            f"Created commutative path: {s_node.node_id} --{beta.name}--> {r_node.node_id} --{alpha.name}--> {s_double_prime.node_id}",
+            f"Created commutative path: {s_node.node_id} --{beta.name}--> "
+            f"{r_node.node_id} --{alpha.name}--> {s_double_prime.node_id}",
             LogCategory.STATE
         )
 
@@ -288,8 +292,8 @@ class SlidingWindowGraph:
                 if not node.is_redundant and node is not self.maximal_node:
                     # Check if all successors are redundant AND node has successors
                     if (node.outgoing_edges and
-                        len(node.outgoing_edges) > 1 and  # Only if multiple successors
-                        all(target_node.is_redundant for target_node, _ in node.outgoing_edges)):
+                            len(node.outgoing_edges) > 1 and  # Only if multiple successors
+                            all(target_node.is_redundant for target_node, _ in node.outgoing_edges)):
                         node.is_redundant = True
                         redundant_nodes.append(node)
                         changed = True

@@ -66,7 +66,7 @@ class StateManager:
         self.states = [initial_state]
 
         # Initialize sliding window graph with initial node
-        initial_node = self.sliding_window._create_or_get_node(initial_processes_modes)
+        initial_node = self.sliding_window.create_or_get_node(initial_processes_modes)
         self.sliding_window.maximal_node = initial_node
         self.node_to_state_map[initial_node.node_id] = initial_state
 
@@ -109,13 +109,15 @@ class StateManager:
         self._establish_successor_relationships()
 
         self.logger.debug(
-            f"Completed processing for event '{event.name}' using paper's algorithm. Generated {len(all_new_states)} new states.",
+            f"Completed processing for event '{event.name}' using paper's algorithm. "
+            f"Generated {len(all_new_states)} new states.",
             LogCategory.STATE,
             total_states_now=len(self.states),
         )
         if self.config.is_debug:
             print(
-                f"DEBUG_CONSOLE: Event {event.name} processing generated {len(all_new_states)} new states using paper's algorithm."
+                f"DEBUG_CONSOLE: Event {event.name} processing generated "
+                f"{len(all_new_states)} new states using paper's algorithm."
             )
 
         return all_new_states
@@ -145,7 +147,6 @@ class StateManager:
         """Convert sliding window graph edges to State successor relationships."""
         all_nodes = self.sliding_window.get_all_nodes()
 
-
         for node in all_nodes:
             if node.node_id not in self.node_to_state_map:
                 continue
@@ -158,12 +159,11 @@ class StateManager:
                     target_state = self.node_to_state_map[target_node.node_id]
 
                     # Use State's internal method to add successor
-                    source_state._add_successors(
+                    source_state.add_successors(
                         i_event=event,
                         i_state=target_state,
                         i_state_name=target_state.name
                     )
-
 
                     self.logger.trace(
                         f"Established successor: {source_state.name} --{event.name}--> {target_state.name}",
@@ -174,8 +174,8 @@ class StateManager:
         """Associate event with each process involved in its execution."""
         for proc_designator_str in event.processes:
             if (
-                isinstance(proc_designator_str, str)
-                and proc_designator_str in self.processes_map
+                    isinstance(proc_designator_str, str)
+                    and proc_designator_str in self.processes_map
             ):
                 self.processes_map[proc_designator_str].add_event(event)
                 self.logger.trace(
@@ -256,7 +256,7 @@ class StateManager:
         return None
 
     def _get_newest_state(self, states: List[State], state_type: str) -> State:
-        """Get newest state from list and log selection."""
+        """Get the newest state from list and log selection."""
         states.sort(key=lambda s: int(s.name[1:]))
         newest_state = states[-1]
 
@@ -279,7 +279,7 @@ class StateManager:
         return newest_state
 
     def find_state_by_frontier(
-        self, target_frontier_components: List[Any]
+            self, target_frontier_components: List[Any]
     ) -> Optional[State]:
         """Find existing enabled state that exactly matches given frontier components."""
         self.logger.trace(
@@ -313,7 +313,7 @@ class StateManager:
         return None
 
     def _frontiers_match(
-        self, target_frontier: List[Any], state_frontier: List[Any]
+            self, target_frontier: List[Any], state_frontier: List[Any]
     ) -> bool:
         """Check if two frontiers match exactly."""
         for i in range(self.num_processes):
