@@ -410,11 +410,55 @@ class PoETMonitor:
             if current_event_obj:
                 self._process_initialized_event(current_event_obj, event_idx)
 
+                # Create graph after processing each event
+                if self.config.visual_enabled:
+                    self._create_iteration_graph(f"After Event: {current_event_obj.name}")
+
             event_processing_duration = self.logger.end_timer(
                 f"event_processing_step_{event_idx}"
             )
             if self.config.output_level == "experiment":
                 self.performance_metrics.add_event_time(event_processing_duration)
+
+    def _create_iteration_graph(self, context: str) -> None:
+        """Create a graph for the current iteration state."""
+        if not self.state_manager:
+            self.logger.warn(
+                "StateManager not available, cannot create iteration graph.",
+                LogCategory.VISUAL,
+            )
+            return
+
+        states_to_visualize = self._get_states_for_visualization()
+
+        if states_to_visualize:
+            self.logger.debug(
+                f"Creating iteration graph for: {context}",
+                LogCategory.VISUAL,
+            )
+
+            nodes_for_graph, edges_for_graph = self._prepare_visualization_data(
+                states_to_visualize
+            )
+
+            try:
+                # This will automatically increment the counter and create graph_N.svg
+                Automaton.create_automaton(states_to_visualize, edges_for_graph)
+                self.logger.debug(
+                    f"Iteration graph created successfully for: {context}",
+                    LogCategory.VISUAL,
+                )
+            except Exception as e:
+                self.logger.error(
+                    f"Error creating iteration graph for '{context}': {e}",
+                    LogCategory.VISUAL,
+                    exc_info=True,
+                )
+        else:
+            self.logger.debug(
+                f"No states available for iteration graph: {context}",
+                LogCategory.VISUAL,
+            )
 
     def _initialize_event_safely(
         self, event_data_item: Any, event_idx: int
