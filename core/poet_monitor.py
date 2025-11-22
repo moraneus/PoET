@@ -412,7 +412,9 @@ class PoETMonitor:
 
                 # Create graph after processing each event
                 if self.config.visual_enabled:
-                    self._create_iteration_graph(f"After Event: {current_event_obj.name}")
+                    self._create_iteration_graph(
+                        f"After Event: {current_event_obj.name}"
+                    )
 
             event_processing_duration = self.logger.end_timer(
                 f"event_processing_step_{event_idx}"

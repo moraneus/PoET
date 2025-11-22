@@ -91,7 +91,9 @@ class StateManager:
             event_vc=event.vector_clock,
         )
         if self.config.is_debug:
-            print(f"DEBUG_CONSOLE: StateManager processing event {event.name} with paper's algorithm")
+            print(
+                f"DEBUG_CONSOLE: StateManager processing event {event.name} with paper's algorithm"
+            )
 
         self._attach_event_to_processes(event)
 
@@ -138,7 +140,7 @@ class StateManager:
 
             self.logger.trace(
                 f"Converted node {node.node_id} to state {state.name}",
-                LogCategory.STATE
+                LogCategory.STATE,
             )
 
         return new_states
@@ -162,20 +164,20 @@ class StateManager:
                     source_state.add_successors(
                         i_event=event,
                         i_state=target_state,
-                        i_state_name=target_state.name
+                        i_state_name=target_state.name,
                     )
 
                     self.logger.trace(
                         f"Established successor: {source_state.name} --{event.name}--> {target_state.name}",
-                        LogCategory.STATE
+                        LogCategory.STATE,
                     )
 
     def _attach_event_to_processes(self, event: Event) -> None:
         """Associate event with each process involved in its execution."""
         for proc_designator_str in event.processes:
             if (
-                    isinstance(proc_designator_str, str)
-                    and proc_designator_str in self.processes_map
+                isinstance(proc_designator_str, str)
+                and proc_designator_str in self.processes_map
             ):
                 self.processes_map[proc_designator_str].add_event(event)
                 self.logger.trace(
@@ -279,7 +281,7 @@ class StateManager:
         return newest_state
 
     def find_state_by_frontier(
-            self, target_frontier_components: List[Any]
+        self, target_frontier_components: List[Any]
     ) -> Optional[State]:
         """Find existing enabled state that exactly matches given frontier components."""
         self.logger.trace(
@@ -313,7 +315,7 @@ class StateManager:
         return None
 
     def _frontiers_match(
-            self, target_frontier: List[Any], state_frontier: List[Any]
+        self, target_frontier: List[Any], state_frontier: List[Any]
     ) -> bool:
         """Check if two frontiers match exactly."""
         for i in range(self.num_processes):

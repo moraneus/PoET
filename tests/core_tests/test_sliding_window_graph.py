@@ -20,30 +20,34 @@ from utils.config import Config
 def create_test_config(**kwargs) -> Config:
     """Create test configuration with default values."""
     defaults = {
-        'property_file': 'test_property.pctl',
-        'trace_file': 'test_trace.json',
-        'output_level': 'debug',
-        'reduce_enabled': False,
-        'visual_enabled': False,
-        'log_categories': None,
-        'log_file': None
+        "property_file": "test_property.pctl",
+        "trace_file": "test_trace.json",
+        "output_level": "debug",
+        "reduce_enabled": False,
+        "visual_enabled": False,
+        "log_categories": None,
+        "log_file": None,
     }
     defaults.update(kwargs)
 
     config = Config(
-        property_file=defaults['property_file'],
-        trace_file=defaults['trace_file'],
-        output_level=defaults['output_level'],
-        reduce_enabled=defaults['reduce_enabled'],
-        visual_enabled=defaults['visual_enabled'],
-        log_categories=defaults['log_categories'],
-        log_file=defaults['log_file']
+        property_file=defaults["property_file"],
+        trace_file=defaults["trace_file"],
+        output_level=defaults["output_level"],
+        reduce_enabled=defaults["reduce_enabled"],
+        visual_enabled=defaults["visual_enabled"],
+        log_categories=defaults["log_categories"],
+        log_file=defaults["log_file"],
     )
     return config
 
 
-def create_test_event(name: str, processes: List[str], vector_clock: List[int],
-                     propositions: List[str] = None) -> Event:
+def create_test_event(
+    name: str,
+    processes: List[str],
+    vector_clock: List[int],
+    propositions: List[str] = None,
+) -> Event:
     """Create test event with specified parameters."""
     if propositions is None:
         propositions = []
@@ -135,10 +139,14 @@ class TestSlidingWindowGraphBuilding:
         for state in state_manager.states:
             if state.enabled and len(state.processes) == 4:
                 # Count events in frontier
-                events_in_frontier = [comp for comp in state.processes if isinstance(comp, Event)]
+                events_in_frontier = [
+                    comp for comp in state.processes if isinstance(comp, Event)
+                ]
 
                 if len(events_in_frontier) >= 2:
-                    alpha_in_frontier = any(e.name == "alpha" for e in events_in_frontier)
+                    alpha_in_frontier = any(
+                        e.name == "alpha" for e in events_in_frontier
+                    )
                     beta_in_frontier = any(e.name == "beta" for e in events_in_frontier)
 
                     if alpha_in_frontier and beta_in_frontier:
@@ -176,7 +184,9 @@ class TestSlidingWindowGraphBuilding:
             if not state.enabled:
                 continue
 
-            events_in_frontier = [comp for comp in state.processes if isinstance(comp, Event)]
+            events_in_frontier = [
+                comp for comp in state.processes if isinstance(comp, Event)
+            ]
             event_names = [e.name for e in events_in_frontier]
 
             # Check for intermediate state r (has β but exploring α path)
@@ -187,8 +197,9 @@ class TestSlidingWindowGraphBuilding:
             if "alpha" in event_names and "beta" in event_names:
                 final_states_found = True
 
-        assert intermediate_states_found or final_states_found, \
-            "Should create intermediate states or final states in s --β--> r --α--> s'' pattern"
+        assert (
+            intermediate_states_found or final_states_found
+        ), "Should create intermediate states or final states in s --β--> r --α--> s'' pattern"
 
     def test_intermediate_node_frontier_correctness(self):
         """Test that intermediate node r has correct frontier (applying β to s's frontier)."""
@@ -215,8 +226,11 @@ class TestSlidingWindowGraphBuilding:
                 continue
 
             # Check if this could be an intermediate state r
-            beta_events = [comp for comp in state.processes
-                          if isinstance(comp, Event) and comp.name == "beta"]
+            beta_events = [
+                comp
+                for comp in state.processes
+                if isinstance(comp, Event) and comp.name == "beta"
+            ]
 
             if beta_events:
                 # Verify frontier correctness: β should be applied to appropriate process
@@ -226,17 +240,19 @@ class TestSlidingWindowGraphBuilding:
                         beta_process_indices.append(i)
 
                 # β affects P2, so it should be in position 1 (0-indexed)
-                assert 1 in beta_process_indices or len(beta_process_indices) > 0, \
-                    "Beta event should be properly placed in frontier"
+                assert (
+                    1 in beta_process_indices or len(beta_process_indices) > 0
+                ), "Beta event should be properly placed in frontier"
 
                 # Verify other processes maintain their expected state
                 for i, comp in enumerate(state.processes):
                     if i not in beta_process_indices:
                         # Non-beta processes should either be IOTA, CLOSED, or have alpha
-                        assert (comp == ProcessModes.IOTA or
-                               comp == ProcessModes.CLOSED or
-                               (isinstance(comp, Event) and comp.name == "alpha")), \
-                            f"Process {i} should have correct frontier component, got {comp}"
+                        assert (
+                            comp == ProcessModes.IOTA
+                            or comp == ProcessModes.CLOSED
+                            or (isinstance(comp, Event) and comp.name == "alpha")
+                        ), f"Process {i} should have correct frontier component, got {comp}"
 
     def test_duplicate_edge_prevention(self):
         """Test that duplicate edges aren't created when paths already exist."""
@@ -269,7 +285,9 @@ class TestSlidingWindowGraphBuilding:
 
         # Should have growth, but not exponential duplication
         growth_ratio = final_state_count / initial_state_count
-        assert growth_ratio < 10, f"Excessive state growth suggests duplicate edges: {growth_ratio}"
+        assert (
+            growth_ratio < 10
+        ), f"Excessive state growth suggests duplicate edges: {growth_ratio}"
 
         # Verify no states have identical frontiers
         unique_frontiers = set()
@@ -288,8 +306,9 @@ class TestSlidingWindowGraphBuilding:
                 else:
                     unique_frontiers.add(frontier_repr)
 
-        assert len(duplicate_frontiers) == 0, \
-            f"Found duplicate frontiers: {duplicate_frontiers}"
+        assert (
+            len(duplicate_frontiers) == 0
+        ), f"Found duplicate frontiers: {duplicate_frontiers}"
 
     def test_complex_concurrent_pattern_detection(self):
         """Test complex scenario with multiple concurrent events and pattern detection."""
@@ -325,8 +344,9 @@ class TestSlidingWindowGraphBuilding:
             if event_count >= 2:
                 multi_event_states.append(state)
 
-        assert len(multi_event_states) > 0, \
-            "Should have states with multiple events indicating pattern detection"
+        assert (
+            len(multi_event_states) > 0
+        ), "Should have states with multiple events indicating pattern detection"
 
     def test_backward_propagation_timing(self):
         """Test that backward propagation occurs at the right time during event processing."""
@@ -353,10 +373,12 @@ class TestSlidingWindowGraphBuilding:
 
         # Verify that state creation increases appropriately
         # (indicating backward propagation is working)
-        assert states_after_each_event[1] > states_after_each_event[0], \
-            "Should create new states after second event"
-        assert states_after_each_event[2] >= states_after_each_event[1], \
-            "Should maintain or increase states after third event"
+        assert (
+            states_after_each_event[1] > states_after_each_event[0]
+        ), "Should create new states after second event"
+        assert (
+            states_after_each_event[2] >= states_after_each_event[1]
+        ), "Should maintain or increase states after third event"
 
     def test_graph_structure_after_sequential_events(self):
         """Test that graph structure is correctly built with proper state relationships."""
@@ -384,8 +406,12 @@ class TestSlidingWindowGraphBuilding:
 
         # Verify graph grows correctly
         assert len(states_after_e1) >= 1, "Should have at least one state after e1"
-        assert len(states_after_e2) >= len(states_after_e1), "Should maintain or grow after e2"
-        assert len(states_after_e3) >= len(states_after_e2), "Should maintain or grow after e3"
+        assert len(states_after_e2) >= len(
+            states_after_e1
+        ), "Should maintain or grow after e2"
+        assert len(states_after_e3) >= len(
+            states_after_e2
+        ), "Should maintain or grow after e3"
 
         # Verify states have proper frontier composition
         final_state_found = False
@@ -400,7 +426,9 @@ class TestSlidingWindowGraphBuilding:
                         events_by_process[i] = comp.name
 
                 # Should have events in appropriate process positions
-                assert len(events_by_process) >= 3, f"Expected at least 3 events, got {events_by_process}"
+                assert (
+                    len(events_by_process) >= 3
+                ), f"Expected at least 3 events, got {events_by_process}"
 
         assert final_state_found, "Should have a state containing all three events"
 
@@ -419,7 +447,9 @@ class TestSlidingWindowGraphBuilding:
         new_states_1 = state_manager.process_event(e1)
 
         # Verify s0 has successors after e1
-        assert len(s0.successors) > 0, "Initial state should have successors after processing e1"
+        assert (
+            len(s0.successors) > 0
+        ), "Initial state should have successors after processing e1"
 
         # Get the new state created by e1
         s1 = None
@@ -434,8 +464,12 @@ class TestSlidingWindowGraphBuilding:
         s1_name_in_successors = s1.name in s0.successors
         if s1_name_in_successors:
             event_to_s1, state_obj = s0.successors[s1.name]
-            assert event_to_s1.name == "e1", f"Edge to s1 should be labeled with e1, got {event_to_s1.name}"
-            assert state_obj is s1, "Successor reference should point to correct state object"
+            assert (
+                event_to_s1.name == "e1"
+            ), f"Edge to s1 should be labeled with e1, got {event_to_s1.name}"
+            assert (
+                state_obj is s1
+            ), "Successor reference should point to correct state object"
 
         # Process second event to create more complex relationships
         e2 = create_test_event("e2", ["P2"], [0, 1], ["q"])
@@ -443,11 +477,15 @@ class TestSlidingWindowGraphBuilding:
 
         # Verify multiple successor relationships exist
         total_successors = sum(len(state.successors) for state in state_manager.states)
-        assert total_successors >= 2, f"Should have multiple successor relationships, got {total_successors}"
+        assert (
+            total_successors >= 2
+        ), f"Should have multiple successor relationships, got {total_successors}"
 
         # Verify no self-loops
         for state in state_manager.states:
-            assert state.name not in state.successors, f"State {state.name} should not have self-loop"
+            assert (
+                state.name not in state.successors
+            ), f"State {state.name} should not have self-loop"
 
     def test_edge_completion_diamond_pattern(self):
         """Test edge completion mechanism creates diamond patterns correctly."""
@@ -495,8 +533,9 @@ class TestSlidingWindowGraphBuilding:
 
         # Initial frontier should be all IOTA
         s0 = state_manager.states[0]
-        assert all(comp == ProcessModes.IOTA for comp in s0.processes), \
-            "Initial state should have all IOTA processes"
+        assert all(
+            comp == ProcessModes.IOTA for comp in s0.processes
+        ), "Initial state should have all IOTA processes"
 
         # Process event affecting P1
         e1 = create_test_event("e1", ["P1"], [1, 0, 0], ["p"])
@@ -507,14 +546,20 @@ class TestSlidingWindowGraphBuilding:
         for state in state_manager.states:
             if state.enabled and state.name != s0.name:
                 # Check if e1 is in position 0 (P1)
-                if (len(state.processes) >= 1 and
-                    isinstance(state.processes[0], Event) and
-                    state.processes[0].name == "e1"):
+                if (
+                    len(state.processes) >= 1
+                    and isinstance(state.processes[0], Event)
+                    and state.processes[0].name == "e1"
+                ):
                     s1_found = True
 
                     # Verify other positions remain IOTA
-                    assert state.processes[1] == ProcessModes.IOTA, "P2 should remain IOTA"
-                    assert state.processes[2] == ProcessModes.IOTA, "P3 should remain IOTA"
+                    assert (
+                        state.processes[1] == ProcessModes.IOTA
+                    ), "P2 should remain IOTA"
+                    assert (
+                        state.processes[2] == ProcessModes.IOTA
+                    ), "P3 should remain IOTA"
                     break
 
         assert s1_found, "Should find state with e1 properly placed in frontier"
@@ -530,18 +575,26 @@ class TestSlidingWindowGraphBuilding:
                 continue
 
             # Look for state where e2 affects both P1 and P2
-            p1_has_e2 = (isinstance(state.processes[0], Event) and
-                        state.processes[0].name == "e2")
-            p2_has_e2 = (isinstance(state.processes[1], Event) and
-                        state.processes[1].name == "e2")
+            p1_has_e2 = (
+                isinstance(state.processes[0], Event)
+                and state.processes[0].name == "e2"
+            )
+            p2_has_e2 = (
+                isinstance(state.processes[1], Event)
+                and state.processes[1].name == "e2"
+            )
 
             if p1_has_e2 and p2_has_e2:
                 multi_process_state_found = True
                 # P3 should still be IOTA since e2 doesn't affect it
-                assert state.processes[2] == ProcessModes.IOTA, "P3 should remain IOTA when unaffected by e2"
+                assert (
+                    state.processes[2] == ProcessModes.IOTA
+                ), "P3 should remain IOTA when unaffected by e2"
                 break
 
-        assert multi_process_state_found, "Should find state where e2 correctly affects P1 and P2"
+        assert (
+            multi_process_state_found
+        ), "Should find state where e2 correctly affects P1 and P2"
 
     def test_concurrent_event_ordering_impact(self):
         """Test that different orderings of concurrent events create appropriate graph structures."""
@@ -571,7 +624,9 @@ class TestSlidingWindowGraphBuilding:
         states_2 = state_manager_2.get_enabled_states()
 
         # Both scenarios should create similar graph structures (same final states)
-        assert len(states_1) > 0 and len(states_2) > 0, "Both scenarios should create states"
+        assert (
+            len(states_1) > 0 and len(states_2) > 0
+        ), "Both scenarios should create states"
 
         # Check that both scenarios have states with both events
         scenario_1_has_both = any(
@@ -583,22 +638,34 @@ class TestSlidingWindowGraphBuilding:
             for state in states_2
         )
 
-        assert scenario_1_has_both, "Scenario 1 (e1->e2) should have states with both events"
-        assert scenario_2_has_both, "Scenario 2 (e2->e1) should have states with both events"
+        assert (
+            scenario_1_has_both
+        ), "Scenario 1 (e1->e2) should have states with both events"
+        assert (
+            scenario_2_has_both
+        ), "Scenario 2 (e2->e1) should have states with both events"
 
         # The final reachable states should be similar despite different processing order
         final_frontiers_1 = {
-            tuple(comp.name if isinstance(comp, Event) else str(comp) for comp in state.processes)
+            tuple(
+                comp.name if isinstance(comp, Event) else str(comp)
+                for comp in state.processes
+            )
             for state in states_1
         }
         final_frontiers_2 = {
-            tuple(comp.name if isinstance(comp, Event) else str(comp) for comp in state.processes)
+            tuple(
+                comp.name if isinstance(comp, Event) else str(comp)
+                for comp in state.processes
+            )
             for state in states_2
         }
 
         # Should have overlap in final reachable frontiers
         common_frontiers = final_frontiers_1.intersection(final_frontiers_2)
-        assert len(common_frontiers) > 0, "Different orderings should reach some common frontier states"
+        assert (
+            len(common_frontiers) > 0
+        ), "Different orderings should reach some common frontier states"
 
     def test_graph_consistency_after_multiple_events(self):
         """Test that graph maintains consistency after processing multiple events."""
@@ -613,7 +680,7 @@ class TestSlidingWindowGraphBuilding:
             create_test_event("e2", ["P2"], [0, 1, 0], ["q"]),
             create_test_event("e3", ["P1", "P3"], [2, 0, 1], ["r"]),
             create_test_event("e4", ["P2", "P3"], [0, 2, 2], ["s"]),
-            create_test_event("e5", ["P1", "P2", "P3"], [3, 3, 3], ["t"])
+            create_test_event("e5", ["P1", "P2", "P3"], [3, 3, 3], ["t"]),
         ]
 
         # Process all events
@@ -627,10 +694,15 @@ class TestSlidingWindowGraphBuilding:
 
         # Verify reachability: should be able to reach states with later events
         final_event_reachable = any(
-            any(isinstance(comp, Event) and comp.name == "e5" for comp in state.processes)
+            any(
+                isinstance(comp, Event) and comp.name == "e5"
+                for comp in state.processes
+            )
             for state in enabled_states
         )
-        assert final_event_reachable, "Should be able to reach state containing final event e5"
+        assert (
+            final_event_reachable
+        ), "Should be able to reach state containing final event e5"
 
         # Verify frontier coherence: each state's frontier should be valid
         for state in enabled_states:
@@ -647,12 +719,15 @@ class TestSlidingWindowGraphBuilding:
         for state in enabled_states:
             # Check successor references are valid
             for succ_name, (event, succ_state) in state.successors.items():
-                assert succ_name in all_state_names, \
-                    f"Successor {succ_name} of {state.name} not found in state list"
-                assert succ_state in all_states, \
-                    f"Successor state object for {succ_name} not in state list"
-                assert isinstance(event, Event), \
-                    f"Edge label should be Event, got {type(event)}"
+                assert (
+                    succ_name in all_state_names
+                ), f"Successor {succ_name} of {state.name} not found in state list"
+                assert (
+                    succ_state in all_states
+                ), f"Successor state object for {succ_name} not in state list"
+                assert isinstance(
+                    event, Event
+                ), f"Edge label should be Event, got {type(event)}"
 
     def _verify_frontier_coherence(self, state, max_events):
         """Helper method to verify that a state's frontier is coherent."""
@@ -662,14 +737,17 @@ class TestSlidingWindowGraphBuilding:
         # - An Event object
 
         for i, comp in enumerate(state.processes):
-            assert (isinstance(comp, Event) or
-                   comp == ProcessModes.IOTA or
-                   comp == ProcessModes.CLOSED), \
-                f"Process {i} in state {state.name} has invalid component: {comp} ({type(comp)})"
+            assert (
+                isinstance(comp, Event)
+                or comp == ProcessModes.IOTA
+                or comp == ProcessModes.CLOSED
+            ), f"Process {i} in state {state.name} has invalid component: {comp} ({type(comp)})"
 
         # Check for invalid duplicate events in same frontier
         # Note: Same event affecting multiple processes is valid (e.g., e5 affecting P1, P2, P3)
-        events_in_frontier = [comp for comp in state.processes if isinstance(comp, Event)]
+        events_in_frontier = [
+            comp for comp in state.processes if isinstance(comp, Event)
+        ]
 
         # Group events by their identity (same object), not just name
         event_objects = {}
@@ -687,7 +765,9 @@ class TestSlidingWindowGraphBuilding:
                 # Same event name in different positions - check if it's the same event object
                 prev_event = events_in_frontier[event_names_by_position[event.name]]
                 if id(event) != id(prev_event):
-                    assert False, f"State {state.name} has different event objects with same name: {event.name}"
+                    assert (
+                        False
+                    ), f"State {state.name} has different event objects with same name: {event.name}"
             else:
                 event_names_by_position[event.name] = i
 
@@ -709,14 +789,17 @@ class TestSlidingWindowGraphBuilding:
         # Look for state where e2 has superseded e1 on P1
         superseding_found = False
         for state in state_manager.get_enabled_states():
-            if (len(state.processes) >= 1 and
-                isinstance(state.processes[0], Event) and
-                state.processes[0].name == "e2"):
+            if (
+                len(state.processes) >= 1
+                and isinstance(state.processes[0], Event)
+                and state.processes[0].name == "e2"
+            ):
                 superseding_found = True
 
                 # Verify e1 is no longer active in this process position
-                assert state.processes[0].name != "e1", \
-                    "e2 should have superseded e1 in process P1"
+                assert (
+                    state.processes[0].name != "e1"
+                ), "e2 should have superseded e1 in process P1"
                 break
 
         assert superseding_found, "Should find state where e2 supersedes e1"
@@ -727,7 +810,7 @@ class TestSlidingWindowGraphBuilding:
             for comp in state.processes:
                 if isinstance(comp, Event) and comp.name == "e1":
                     # Check if e1 has CLOSED mode for process 0 (P1)
-                    if hasattr(comp, 'modes') and len(comp.modes) > 0:
+                    if hasattr(comp, "modes") and len(comp.modes) > 0:
                         if comp.modes[0] == ProcessModes.CLOSED:
                             e1_closed_found = True
                             break
