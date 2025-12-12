@@ -104,20 +104,18 @@ class TestState:
         assert s_new is None
         assert closed_set is None
 
-    def test_predecessor_summary_inheritance(self):
-        """Test new state inherits parent's predecessor summaries."""
+    def test_predecessor_is_immediate_only(self):
+        """Test new state has only immediate predecessor, not inherited history."""
         s0 = State(i_processes=[ProcessModes.IOTA], i_formulas=["p"])
         s0.now["p"] = True
 
         e1 = Event("e1", ["P1"], i_propositions=[])
         s1, _ = s0 | e1
 
-        assert len(s1.pre) == 2
-        assert s0.name in s1.pre
-        assert s1.pre[s0.name] == s0.now
+        assert len(s1.pre) == 1  # Only immediate predecessor
+        assert s0.name in s1.pre  # S0 is the immediate predecessor
         assert s1.pre[s0.name]["p"] is True
-        assert "_" in s1.pre
-        assert s1.pre["_"]["p"] is False
+        assert "_" not in s1.pre  # No inherited history!
 
     def test_diamond_completion_adds_missing_edge(self):
         """Test edges_completion logic for concurrent events."""
@@ -140,7 +138,7 @@ class TestState:
         assert s_a.processes[1] == ProcessModes.CLOSED
 
     def test_diamond_completion_multiple_predecessors(self):
-        """Test predecessor accumulation in diamond patterns."""
+        """Test that diamond patterns have exactly two immediate predecessors."""
         s0 = State(
             i_processes=[ProcessModes.IOTA, ProcessModes.IOTA],
             i_formulas=["a_done", "b_done"],
@@ -156,13 +154,14 @@ class TestState:
         s_b.now["b_done"] = True
 
         s_ab, _ = s_a | e_b
-        s_ab.pre[s_b.name] = s_b.now
+        s_ab.pre[s_b.name] = s_b.now  # Manual edge completion for other path
 
-        assert len(s_ab.pre) == 4
-        assert s_a.name in s_ab.pre
-        assert s_b.name in s_ab.pre
-        assert s0.name in s_ab.pre
-        assert "_" in s_ab.pre
+        # s_ab has exactly 2 IMMEDIATE predecessors
+        assert len(s_ab.pre) == 2
+        assert s_a.name in s_ab.pre  # Immediate predecessor via e_b
+        assert s_b.name in s_ab.pre  # Immediate predecessor via e_a
+        assert s0.name not in s_ab.pre  # NOT immediate - 2 steps back
+        assert "_" not in s_ab.pre  # NOT a predecessor at all
 
     def test_edges_completion_rejects_non_immediate_successors(self):
         """Test edges_completion rejects events with order difference > 1."""
