@@ -226,7 +226,10 @@ class AY(Formula):
         return f"AY({repr(self.formula)})"
 
     def eval(self, **kwargs) -> bool:
-        """Evaluate universal yesterday: true if formula held in all predecessors."""
+        """Evaluate universal yesterday: true if formula held in all predecessors.
+
+        AY φ = ¬EY ¬φ, so AY φ is vacuously true when there are no predecessors.
+        """
         if "state" not in kwargs:
             raise ValueError("Missing required 'state' parameter.")
 
@@ -259,7 +262,10 @@ class EP(Formula):
         return f"EP({repr(self.formula)})"
 
     def eval(self, **kwargs) -> bool:
-        """Evaluate existential previously: E(true S φ)."""
+        """Evaluate existential previously: E(true S φ).
+
+        EP φ holds if φ holds now OR EP φ held in some predecessor.
+        """
         evaluated_state: State = kwargs["state"]
 
         holds_now = self.formula.eval(**kwargs)
@@ -289,14 +295,27 @@ class AP(Formula):
         return f"AP({repr(self.formula)})"
 
     def eval(self, **kwargs) -> bool:
-        """Evaluate universal previously: A(true S φ)."""
+        """Evaluate universal previously: A(true S φ).
+
+        According to the paper's semantics:
+        S |= A(φSψ) if either S |= ψ or both S |= φ and for each S' ↠ S
+        it holds that S' |= A(φSψ), where at least one such predecessor S' exists.
+
+        For AP φ = A(true S φ):
+        - At initial state (no predecessors): AP φ holds iff φ holds now
+        - Otherwise: AP φ holds iff φ holds now OR AP φ held in all predecessors
+        """
         evaluated_state: State = kwargs["state"]
 
         holds_now = self.formula.eval(**kwargs)
-        held_in_all_past = True
         ap_formula_str = str(self)
 
+        # The second disjunct requires at least one predecessor to exist
+        held_in_all_past = False
+
         if evaluated_state.pre:
+            # Only if predecessors exist, check if AP held in all of them
+            held_in_all_past = True
             for _, summary in evaluated_state.pre.items():
                 if not summary.get(ap_formula_str, False):
                     held_in_all_past = False
@@ -371,7 +390,11 @@ class ES(Formula):
         return f"ES({repr(self.formula1)}, {repr(self.formula2)})"
 
     def eval(self, **kwargs) -> bool:
-        """Evaluate existential since operator."""
+        """Evaluate existential since operator.
+
+        S |= E(φSψ) if either S |= ψ or both S |= φ and there exists
+        S' ↠ S such that S' |= E(φSψ).
+        """
         if "state" not in kwargs:
             raise ValueError("Missing required 'state' parameter.")
 
@@ -407,7 +430,14 @@ class AS(Formula):
         return f"AS({repr(self.formula1)}, {repr(self.formula2)})"
 
     def eval(self, **kwargs) -> bool:
-        """Evaluate universal since operator."""
+        """Evaluate universal since operator.
+
+        According to the paper's semantics:
+        S |= A(φSψ) if either S |= ψ or both S |= φ and for each S' ↠ S
+        it holds that S' |= A(φSψ), where at least one such predecessor S' exists.
+
+        At initial state (no predecessors): A(φSψ) holds iff ψ holds now.
+        """
         if "state" not in kwargs:
             raise ValueError("Missing required 'state' parameter.")
 
@@ -416,10 +446,14 @@ class AS(Formula):
         p = self.formula1.eval(**kwargs)
         q = self.formula2.eval(**kwargs)
 
-        temporal_res = True
         as_formula_str = str(self)
 
+        # The second disjunct requires at least one predecessor to exist
+        temporal_res = False
+
         if evaluated_state.pre:
+            # Only if predecessors exist, check if AS held in all of them
+            temporal_res = True
             for _, summary in evaluated_state.pre.items():
                 if not summary.get(as_formula_str, False):
                     temporal_res = False
