@@ -28,6 +28,10 @@ class EventProcessor:
         event_name = str(event_data[0])
         self.logger.trace(f"Initializing event: '{event_name}'", LogCategory.EVENT)
 
+        # Special handling for INIT event
+        if event_name == "INIT":
+            return self._create_init_event(event_data)
+
         if not self.validate_event_data_format(event_data):
             raise ValueError(
                 f"Event data validation failed for '{event_name}'. Data: {event_data}"
@@ -48,6 +52,56 @@ class EventProcessor:
 
         if self.config.is_debug:
             self._debug_event_validation(event)
+
+        return event
+
+    def _create_init_event(self, event_data: List[Any]) -> Event:
+        """Create the special INIT event that belongs to all processes with zero vector clock."""
+        event_name = "INIT"
+
+        # INIT event format: ["INIT", ["P1", "P2", ...], propositions, [0, 0, ...]]
+        # The process list should contain all process names
+        if len(event_data) >= 2 and isinstance(event_data[1], list):
+            # Use provided process list for INIT
+            event_processes_dist = self._process_event_processes(
+                event_data[1], event_name
+            )
+        else:
+            # If not provided, INIT belongs to all processes
+            event_processes_dist = [f"P{i+1}" for i in range(self.num_processes)]
+
+        # Get propositions if provided
+        propositions = (
+            event_data[2]
+            if len(event_data) > 2 and isinstance(event_data[2], list)
+            else []
+        )
+
+        # INIT always has zero vector clock for all processes
+        vector_clock = [0] * self.num_processes
+
+        # Log the INIT event creation
+        self.logger.info(
+            f"Creating INIT event with {self.num_processes} processes and zero vector clock",
+            LogCategory.EVENT,
+            processes=event_processes_dist,
+            vector_clock=vector_clock,
+        )
+
+        event = Event(
+            i_name=event_name,
+            i_processes=event_processes_dist,
+            i_propositions=propositions,
+            vector_clock=vector_clock,
+        )
+
+        self._log_event_creation(event)
+
+        if self.config.is_debug:
+            self._debug_event_validation(event)
+            print(
+                f"DEBUG: INIT event created with VC: {vector_clock} for all {self.num_processes} processes"
+            )
 
         return event
 

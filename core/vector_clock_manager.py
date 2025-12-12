@@ -190,6 +190,15 @@ class VectorClockManager:
         self.stats["vc_updates"] += 1
 
         old_vc = self.expected_vc.copy()
+
+        # Special handling for INIT event - it doesn't change expected VC
+        if event.name == "INIT":
+            self.logger.debug(
+                f"INIT event processed, expected VC remains: {self.expected_vc}",
+                LogCategory.VECTOR_CLOCK,
+            )
+            return
+
         involved_indices = self.get_involved_indices(event)
 
         self._update_vector_clock_components(event, involved_indices)
