@@ -4,7 +4,7 @@
 # State model representing global states (frontiers) in distributed system
 # execution with PCTL evaluation support and state transition management.
 
-from typing import Dict, Set, Union, Tuple, Optional, List, Any
+from typing import Dict, Set, Union, Tuple, Optional, List
 
 from model.base_entity import BaseEntity
 from model.event import Event
@@ -73,11 +73,11 @@ class State(BaseEntity):
             if ProcessModes.ERROR not in state_processes:
                 new_state = State(i_processes=state_processes)
 
-                new_state.pre.update(self.pre)
+                # new_state.pre.update(self.pre)
                 new_state.pre[self.name] = self.now
 
                 state_name = new_state.name
-                self.add_successors(
+                self._add_successors(
                     i_event=other, i_state_name=state_name, i_state=new_state
                 )
                 return new_state, closed_event
@@ -101,7 +101,7 @@ class State(BaseEntity):
         self.__m_evaluated_value = value
 
     @property
-    def propositions(self) -> set[list[str] | list[Any]]:
+    def propositions(self) -> Set[str]:
         """Get state propositions."""
         return self.__m_propositions
 
@@ -142,13 +142,13 @@ class State(BaseEntity):
         """Increment state counter."""
         cls.__COUNTER += 1
 
-    def add_successors(
+    def _add_successors(
         self, i_event: Event, i_state: "State", i_state_name: str
     ) -> None:
         """Add successor state."""
         self.__m_successors.update({i_state_name: (i_event, i_state)})
 
-    def _set_propositions(self) -> set[list[str] | list[Any]]:
+    def _set_propositions(self) -> Set[str]:
         """Calculate cumulative propositions from process histories."""
         state_propositions = set()
 
@@ -161,18 +161,52 @@ class State(BaseEntity):
 
         for i, process in enumerate(self._m_processes):
             if isinstance(process, Event):
-                event_props = (
-                    process.propositions if hasattr(process, "propositions") else []
-                )
-                if event_props:
-                    state_propositions.update(event_props)
+                process_id = f"P{i + 1}"
 
-                if debug_enabled:
-                    print(
-                        f"      P{i + 1}: {process.name} → {event_props} (frontier only - may be incomplete)"
+                if hasattr(self, "_processes_map"):
+                    process_events = self._get_process_history(process_id, process)
+                    cumulative_props = set()
+
+                    for event in process_events:
+                        if hasattr(event, "propositions") and event.propositions:
+                            cumulative_props.update(event.propositions)
+
+                    state_propositions.update(cumulative_props)
+
+                    if debug_enabled:
+                        print(
+                            f"      P{i + 1}: Cumulative props from {len(process_events)} events: {cumulative_props}"
+                        )
+                else:
+                    event_props = (
+                        process.propositions if hasattr(process, "propositions") else []
                     )
+                    if event_props:
+                        state_propositions.update(event_props)
+
+                    if debug_enabled:
+                        print(
+                            f"      P{i + 1}: {process.name} → {event_props} (frontier only - may be incomplete)"
+                        )
 
         return state_propositions
+
+    def _get_process_history(
+        self, process_id: str, frontier_event: Event
+    ) -> List[Event]:
+        """Get all events from a process up to the frontier event."""
+        if not hasattr(self, "_processes_map"):
+            return [frontier_event]
+
+        process_obj = self._processes_map.get(process_id)
+        if not process_obj:
+            return [frontier_event]
+
+        try:
+            frontier_index = process_obj.events.index(frontier_event)
+            return process_obj.events[: frontier_index + 1]
+        except ValueError:
+            return [frontier_event]
 
     def _compare_to_event(self, event: Event) -> Tuple[List, Set[Tuple[Event, int]]]:
         """Compare state processes to event, producing result state list."""
@@ -272,7 +306,7 @@ class State(BaseEntity):
         """Process potential replacements and establish successors."""
         potential_set = set(potential_replacements.values())
         if len(potential_set) == 1:
-            self.add_successors(
+            self._add_successors(
                 i_event=potential_set.pop(),
                 i_state_name=other_state.name,
                 i_state=other_state,
